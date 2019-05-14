@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreateDetailUserCustomerTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.CreateDetailUserCustomerLabel_customerId}" for="customerId" />
+                    <h:inputText id="customerId" value="#{detailUserCustomerController.selected.customerId}" title="#{bundle.CreateDetailUserCustomerTitle_customerId}" required="true" requiredMessage="#{bundle.CreateDetailUserCustomerRequiredMessage_customerId}"/>
+                    <h:outputLabel value="#{bundle.CreateDetailUserCustomerLabel_birthDay}" for="birthDay" />
+                    <h:inputText id="birthDay" value="#{detailUserCustomerController.selected.birthDay}" title="#{bundle.CreateDetailUserCustomerTitle_birthDay}" >
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundle.CreateDetailUserCustomerLabel_userId}" for="userId" />
+                    <h:selectOneMenu id="userId" value="#{detailUserCustomerController.selected.userId}" title="#{bundle.CreateDetailUserCustomerTitle_userId}" required="true" requiredMessage="#{bundle.CreateDetailUserCustomerRequiredMessage_userId}">
+                        <f:selectItems value="#{masterUserController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{detailUserCustomerController.create}" value="#{bundle.CreateDetailUserCustomerSaveLink}" />
+                <br />
+                <br />
+                <h:commandLink action="#{detailUserCustomerController.prepareList}" value="#{bundle.CreateDetailUserCustomerShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.CreateDetailUserCustomerIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

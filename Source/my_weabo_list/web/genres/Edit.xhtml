@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditGenresTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.EditGenresLabel_genreId}" for="genreId" />
+                    <h:inputText id="genreId" value="#{genresController.selected.genreId}" title="#{bundle.EditGenresTitle_genreId}" required="true" requiredMessage="#{bundle.EditGenresRequiredMessage_genreId}"/>
+                    <h:outputLabel value="#{bundle.EditGenresLabel_name}" for="name" />
+                    <h:inputText id="name" value="#{genresController.selected.name}" title="#{bundle.EditGenresTitle_name}" required="true" requiredMessage="#{bundle.EditGenresRequiredMessage_name}"/>
+                    <h:outputLabel value="#{bundle.EditGenresLabel_createdDate}" for="createdDate" />
+                    <h:inputText id="createdDate" value="#{genresController.selected.createdDate}" title="#{bundle.EditGenresTitle_createdDate}" required="true" requiredMessage="#{bundle.EditGenresRequiredMessage_createdDate}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundle.EditGenresLabel_modifiedDate}" for="modifiedDate" />
+                    <h:inputText id="modifiedDate" value="#{genresController.selected.modifiedDate}" title="#{bundle.EditGenresTitle_modifiedDate}" required="true" requiredMessage="#{bundle.EditGenresRequiredMessage_modifiedDate}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundle.EditGenresLabel_isActive}" for="isActive" />
+                    <h:inputText id="isActive" value="#{genresController.selected.isActive}" title="#{bundle.EditGenresTitle_isActive}" required="true" requiredMessage="#{bundle.EditGenresRequiredMessage_isActive}"/>
+                    <h:outputLabel value="#{bundle.EditGenresLabel_createdBy}" for="createdBy" />
+                    <h:selectOneMenu id="createdBy" value="#{genresController.selected.createdBy}" title="#{bundle.EditGenresTitle_createdBy}" >
+                        <f:selectItems value="#{masterUserController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.EditGenresLabel_modifiedBy}" for="modifiedBy" />
+                    <h:selectOneMenu id="modifiedBy" value="#{genresController.selected.modifiedBy}" title="#{bundle.EditGenresTitle_modifiedBy}" >
+                        <f:selectItems value="#{masterUserController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <h:commandLink action="#{genresController.update}" value="#{bundle.EditGenresSaveLink}"/>
+                <br />
+                <br />
+                <h:link outcome="View" value="#{bundle.EditGenresViewLink}"/>
+                <br />
+                <h:commandLink action="#{genresController.prepareList}" value="#{bundle.EditGenresShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.EditGenresIndexLink}" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

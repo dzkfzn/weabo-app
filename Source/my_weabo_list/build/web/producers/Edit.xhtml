@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditProducersTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.EditProducersLabel_licensorId}" for="licensorId" />
+                    <h:inputText id="licensorId" value="#{producersController.selected.licensorId}" title="#{bundle.EditProducersTitle_licensorId}" required="true" requiredMessage="#{bundle.EditProducersRequiredMessage_licensorId}"/>
+                    <h:outputLabel value="#{bundle.EditProducersLabel_name}" for="name" />
+                    <h:inputText id="name" value="#{producersController.selected.name}" title="#{bundle.EditProducersTitle_name}" required="true" requiredMessage="#{bundle.EditProducersRequiredMessage_name}"/>
+                    <h:outputLabel value="#{bundle.EditProducersLabel_createdDate}" for="createdDate" />
+                    <h:inputText id="createdDate" value="#{producersController.selected.createdDate}" title="#{bundle.EditProducersTitle_createdDate}" required="true" requiredMessage="#{bundle.EditProducersRequiredMessage_createdDate}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundle.EditProducersLabel_modifiedDate}" for="modifiedDate" />
+                    <h:inputText id="modifiedDate" value="#{producersController.selected.modifiedDate}" title="#{bundle.EditProducersTitle_modifiedDate}" required="true" requiredMessage="#{bundle.EditProducersRequiredMessage_modifiedDate}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundle.EditProducersLabel_isActive}" for="isActive" />
+                    <h:inputText id="isActive" value="#{producersController.selected.isActive}" title="#{bundle.EditProducersTitle_isActive}" required="true" requiredMessage="#{bundle.EditProducersRequiredMessage_isActive}"/>
+                    <h:outputLabel value="#{bundle.EditProducersLabel_createdBy}" for="createdBy" />
+                    <h:selectOneMenu id="createdBy" value="#{producersController.selected.createdBy}" title="#{bundle.EditProducersTitle_createdBy}" >
+                        <f:selectItems value="#{masterUserController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.EditProducersLabel_modifiedBy}" for="modifiedBy" />
+                    <h:selectOneMenu id="modifiedBy" value="#{producersController.selected.modifiedBy}" title="#{bundle.EditProducersTitle_modifiedBy}" >
+                        <f:selectItems value="#{masterUserController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <h:commandLink action="#{producersController.update}" value="#{bundle.EditProducersSaveLink}"/>
+                <br />
+                <br />
+                <h:link outcome="View" value="#{bundle.EditProducersViewLink}"/>
+                <br />
+                <h:commandLink action="#{producersController.prepareList}" value="#{bundle.EditProducersShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.EditProducersIndexLink}" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

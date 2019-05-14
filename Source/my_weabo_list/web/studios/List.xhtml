@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListStudiosTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:form styleClass="jsfcrud_list_form">
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+                <h:outputText escape="false" value="#{bundle.ListStudiosEmpty}" rendered="#{studiosController.items.rowCount == 0}"/>
+                <h:panelGroup rendered="#{studiosController.items.rowCount > 0}">
+                    <h:outputText value="#{studiosController.pagination.pageFirstItem + 1}..#{studiosController.pagination.pageLastItem + 1}/#{studiosController.pagination.itemsCount}"/>&nbsp;
+                    <h:commandLink action="#{studiosController.previous}" value="#{bundle.Previous} #{studiosController.pagination.pageSize}" rendered="#{studiosController.pagination.hasPreviousPage}"/>&nbsp;
+                    <h:commandLink action="#{studiosController.next}" value="#{bundle.Next} #{studiosController.pagination.pageSize}" rendered="#{studiosController.pagination.hasNextPage}"/>&nbsp;
+                    <h:dataTable value="#{studiosController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListStudiosTitle_studioId}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.studioId}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListStudiosTitle_name}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.name}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListStudiosTitle_createdDate}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.createdDate}">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListStudiosTitle_modifiedDate}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.modifiedDate}">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListStudiosTitle_isActive}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.isActive}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListStudiosTitle_createdBy}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.createdBy}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListStudiosTitle_modifiedBy}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.modifiedBy}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="&nbsp;"/>
+                            </f:facet>
+                            <h:commandLink action="#{studiosController.prepareView}" value="#{bundle.ListStudiosViewLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{studiosController.prepareEdit}" value="#{bundle.ListStudiosEditLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{studiosController.destroy}" value="#{bundle.ListStudiosDestroyLink}"/>
+                        </h:column>
+                    </h:dataTable>
+                </h:panelGroup>
+                <br />
+                <h:commandLink action="#{studiosController.prepareCreate}" value="#{bundle.ListStudiosCreateLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ListStudiosIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

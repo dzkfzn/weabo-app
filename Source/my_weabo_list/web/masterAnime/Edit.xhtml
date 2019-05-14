@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditMasterAnimeTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.EditMasterAnimeLabel_animeId}" for="animeId" />
+                    <h:inputText id="animeId" value="#{masterAnimeController.selected.animeId}" title="#{bundle.EditMasterAnimeTitle_animeId}" required="true" requiredMessage="#{bundle.EditMasterAnimeRequiredMessage_animeId}"/>
+                    <h:outputLabel value="#{bundle.EditMasterAnimeLabel_lastModifiedDate}" for="lastModifiedDate" />
+                    <h:inputText id="lastModifiedDate" value="#{masterAnimeController.selected.lastModifiedDate}" title="#{bundle.EditMasterAnimeTitle_lastModifiedDate}" >
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundle.EditMasterAnimeLabel_createdDate}" for="createdDate" />
+                    <h:inputText id="createdDate" value="#{masterAnimeController.selected.createdDate}" title="#{bundle.EditMasterAnimeTitle_createdDate}" >
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundle.EditMasterAnimeLabel_statusDelete}" for="statusDelete" />
+                    <h:inputText id="statusDelete" value="#{masterAnimeController.selected.statusDelete}" title="#{bundle.EditMasterAnimeTitle_statusDelete}" />
+                    <h:outputLabel value="#{bundle.EditMasterAnimeLabel_lastModifiedBy}" for="lastModifiedBy" />
+                    <h:selectOneMenu id="lastModifiedBy" value="#{masterAnimeController.selected.lastModifiedBy}" title="#{bundle.EditMasterAnimeTitle_lastModifiedBy}" >
+                        <f:selectItems value="#{masterUserController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.EditMasterAnimeLabel_createdBy}" for="createdBy" />
+                    <h:selectOneMenu id="createdBy" value="#{masterAnimeController.selected.createdBy}" title="#{bundle.EditMasterAnimeTitle_createdBy}" >
+                        <f:selectItems value="#{masterUserController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <h:commandLink action="#{masterAnimeController.update}" value="#{bundle.EditMasterAnimeSaveLink}"/>
+                <br />
+                <br />
+                <h:link outcome="View" value="#{bundle.EditMasterAnimeViewLink}"/>
+                <br />
+                <h:commandLink action="#{masterAnimeController.prepareList}" value="#{bundle.EditMasterAnimeShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.EditMasterAnimeIndexLink}" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

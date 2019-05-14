@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewDetailPeopleTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewDetailPeopleLabel_detailPeopleId}"/>
+                    <h:outputText value="#{detailPeopleController.selected.detailPeopleId}" title="#{bundle.ViewDetailPeopleTitle_detailPeopleId}"/>
+                    <h:outputText value="#{bundle.ViewDetailPeopleLabel_firstName}"/>
+                    <h:outputText value="#{detailPeopleController.selected.firstName}" title="#{bundle.ViewDetailPeopleTitle_firstName}"/>
+                    <h:outputText value="#{bundle.ViewDetailPeopleLabel_lastName}"/>
+                    <h:outputText value="#{detailPeopleController.selected.lastName}" title="#{bundle.ViewDetailPeopleTitle_lastName}"/>
+                    <h:outputText value="#{bundle.ViewDetailPeopleLabel_birthDay}"/>
+                    <h:outputText value="#{detailPeopleController.selected.birthDay}" title="#{bundle.ViewDetailPeopleTitle_birthDay}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText>
+                    <h:outputText value="#{bundle.ViewDetailPeopleLabel_thumbnail}"/>
+                    <h:outputText value="#{detailPeopleController.selected.thumbnail}" title="#{bundle.ViewDetailPeopleTitle_thumbnail}"/>
+                    <h:outputText value="#{bundle.ViewDetailPeopleLabel_favorited}"/>
+                    <h:outputText value="#{detailPeopleController.selected.favorited}" title="#{bundle.ViewDetailPeopleTitle_favorited}"/>
+                    <h:outputText value="#{bundle.ViewDetailPeopleLabel_about}"/>
+                    <h:outputText value="#{detailPeopleController.selected.about}" title="#{bundle.ViewDetailPeopleTitle_about}"/>
+                    <h:outputText value="#{bundle.ViewDetailPeopleLabel_createdDate}"/>
+                    <h:outputText value="#{detailPeopleController.selected.createdDate}" title="#{bundle.ViewDetailPeopleTitle_createdDate}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:outputText>
+                    <h:outputText value="#{bundle.ViewDetailPeopleLabel_statusActive}"/>
+                    <h:outputText value="#{detailPeopleController.selected.statusActive}" title="#{bundle.ViewDetailPeopleTitle_statusActive}"/>
+                    <h:outputText value="#{bundle.ViewDetailPeopleLabel_statusConfirm}"/>
+                    <h:outputText value="#{detailPeopleController.selected.statusConfirm}" title="#{bundle.ViewDetailPeopleTitle_statusConfirm}"/>
+                    <h:outputText value="#{bundle.ViewDetailPeopleLabel_peopleId}"/>
+                    <h:outputText value="#{detailPeopleController.selected.peopleId}" title="#{bundle.ViewDetailPeopleTitle_peopleId}"/>
+                    <h:outputText value="#{bundle.ViewDetailPeopleLabel_createdBy}"/>
+                    <h:outputText value="#{detailPeopleController.selected.createdBy}" title="#{bundle.ViewDetailPeopleTitle_createdBy}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{detailPeopleController.destroyAndView}" value="#{bundle.ViewDetailPeopleDestroyLink}"/>
+                <br />
+                <br />
+                <h:link outcome="Edit" value="#{bundle.ViewDetailPeopleEditLink}"/>
+                <br />
+                <h:commandLink action="#{detailPeopleController.prepareCreate}" value="#{bundle.ViewDetailPeopleCreateLink}" />
+                <br />
+                <h:commandLink action="#{detailPeopleController.prepareList}" value="#{bundle.ViewDetailPeopleShowAllLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ViewDetailPeopleIndexLink}"/>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

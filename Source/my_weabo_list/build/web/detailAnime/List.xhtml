@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListDetailAnimeTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:form styleClass="jsfcrud_list_form">
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+                <h:outputText escape="false" value="#{bundle.ListDetailAnimeEmpty}" rendered="#{detailAnimeController.items.rowCount == 0}"/>
+                <h:panelGroup rendered="#{detailAnimeController.items.rowCount > 0}">
+                    <h:outputText value="#{detailAnimeController.pagination.pageFirstItem + 1}..#{detailAnimeController.pagination.pageLastItem + 1}/#{detailAnimeController.pagination.itemsCount}"/>&nbsp;
+                    <h:commandLink action="#{detailAnimeController.previous}" value="#{bundle.Previous} #{detailAnimeController.pagination.pageSize}" rendered="#{detailAnimeController.pagination.hasPreviousPage}"/>&nbsp;
+                    <h:commandLink action="#{detailAnimeController.next}" value="#{bundle.Next} #{detailAnimeController.pagination.pageSize}" rendered="#{detailAnimeController.pagination.hasNextPage}"/>&nbsp;
+                    <h:dataTable value="#{detailAnimeController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListDetailAnimeTitle_detailAnimeId}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.detailAnimeId}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListDetailAnimeTitle_nameJapan}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.nameJapan}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListDetailAnimeTitle_nameEnglish}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.nameEnglish}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListDetailAnimeTitle_seriesType}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.seriesType}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListDetailAnimeTitle_totalEpisode}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.totalEpisode}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListDetailAnimeTitle_airingStatus}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.airingStatus}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListDetailAnimeTitle_airingStartDate}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.airingStartDate}">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListDetailAnimeTitle_airingEndDate}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.airingEndDate}">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListDetailAnimeTitle_airingDay}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.airingDay}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListDetailAnimeTitle_airingTime}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.airingTime}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListDetailAnimeTitle_sysnopsis}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.sysnopsis}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListDetailAnimeTitle_background}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.background}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListDetailAnimeTitle_duration}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.duration}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListDetailAnimeTitle_sourceType}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.sourceType}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListDetailAnimeTitle_thumbnail}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.thumbnail}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListDetailAnimeTitle_genreId}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.genreId}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListDetailAnimeTitle_favorited}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.favorited}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListDetailAnimeTitle_createdDate}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.createdDate}">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListDetailAnimeTitle_statusActive}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.statusActive}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListDetailAnimeTitle_statusConfirm}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.statusConfirm}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListDetailAnimeTitle_animeId}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.animeId}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListDetailAnimeTitle_createdBy}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.createdBy}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListDetailAnimeTitle_studioId}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.studioId}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="&nbsp;"/>
+                            </f:facet>
+                            <h:commandLink action="#{detailAnimeController.prepareView}" value="#{bundle.ListDetailAnimeViewLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{detailAnimeController.prepareEdit}" value="#{bundle.ListDetailAnimeEditLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{detailAnimeController.destroy}" value="#{bundle.ListDetailAnimeDestroyLink}"/>
+                        </h:column>
+                    </h:dataTable>
+                </h:panelGroup>
+                <br />
+                <h:commandLink action="#{detailAnimeController.prepareCreate}" value="#{bundle.ListDetailAnimeCreateLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ListDetailAnimeIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

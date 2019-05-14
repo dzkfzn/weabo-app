@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditMasterUserTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.EditMasterUserLabel_userId}" for="userId" />
+                    <h:inputText id="userId" value="#{masterUserController.selected.userId}" title="#{bundle.EditMasterUserTitle_userId}" required="true" requiredMessage="#{bundle.EditMasterUserRequiredMessage_userId}"/>
+                    <h:outputLabel value="#{bundle.EditMasterUserLabel_name}" for="name" />
+                    <h:inputText id="name" value="#{masterUserController.selected.name}" title="#{bundle.EditMasterUserTitle_name}" />
+                    <h:outputLabel value="#{bundle.EditMasterUserLabel_email}" for="email" />
+                    <h:inputText id="email" value="#{masterUserController.selected.email}" title="#{bundle.EditMasterUserTitle_email}" required="true" requiredMessage="#{bundle.EditMasterUserRequiredMessage_email}"/>
+                    <h:outputLabel value="#{bundle.EditMasterUserLabel_username}" for="username" />
+                    <h:inputText id="username" value="#{masterUserController.selected.username}" title="#{bundle.EditMasterUserTitle_username}" required="true" requiredMessage="#{bundle.EditMasterUserRequiredMessage_username}"/>
+                    <h:outputLabel value="#{bundle.EditMasterUserLabel_password}" for="password" />
+                    <h:inputText id="password" value="#{masterUserController.selected.password}" title="#{bundle.EditMasterUserTitle_password}" required="true" requiredMessage="#{bundle.EditMasterUserRequiredMessage_password}"/>
+                    <h:outputLabel value="#{bundle.EditMasterUserLabel_thumbnail}" for="thumbnail" />
+                    <h:inputText id="thumbnail" value="#{masterUserController.selected.thumbnail}" title="#{bundle.EditMasterUserTitle_thumbnail}" />
+                    <h:outputLabel value="#{bundle.EditMasterUserLabel_roleUser}" for="roleUser" />
+                    <h:inputText id="roleUser" value="#{masterUserController.selected.roleUser}" title="#{bundle.EditMasterUserTitle_roleUser}" required="true" requiredMessage="#{bundle.EditMasterUserRequiredMessage_roleUser}"/>
+                    <h:outputLabel value="#{bundle.EditMasterUserLabel_createdDate}" for="createdDate" />
+                    <h:inputText id="createdDate" value="#{masterUserController.selected.createdDate}" title="#{bundle.EditMasterUserTitle_createdDate}" required="true" requiredMessage="#{bundle.EditMasterUserRequiredMessage_createdDate}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundle.EditMasterUserLabel_lastOnlineDate}" for="lastOnlineDate" />
+                    <h:inputText id="lastOnlineDate" value="#{masterUserController.selected.lastOnlineDate}" title="#{bundle.EditMasterUserTitle_lastOnlineDate}" >
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:inputText>
+                </h:panelGrid>
+                <h:commandLink action="#{masterUserController.update}" value="#{bundle.EditMasterUserSaveLink}"/>
+                <br />
+                <br />
+                <h:link outcome="View" value="#{bundle.EditMasterUserViewLink}"/>
+                <br />
+                <h:commandLink action="#{masterUserController.prepareList}" value="#{bundle.EditMasterUserShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.EditMasterUserIndexLink}" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

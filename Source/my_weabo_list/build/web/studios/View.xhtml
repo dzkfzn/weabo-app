@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewStudiosTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewStudiosLabel_studioId}"/>
+                    <h:outputText value="#{studiosController.selected.studioId}" title="#{bundle.ViewStudiosTitle_studioId}"/>
+                    <h:outputText value="#{bundle.ViewStudiosLabel_name}"/>
+                    <h:outputText value="#{studiosController.selected.name}" title="#{bundle.ViewStudiosTitle_name}"/>
+                    <h:outputText value="#{bundle.ViewStudiosLabel_createdDate}"/>
+                    <h:outputText value="#{studiosController.selected.createdDate}" title="#{bundle.ViewStudiosTitle_createdDate}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText>
+                    <h:outputText value="#{bundle.ViewStudiosLabel_modifiedDate}"/>
+                    <h:outputText value="#{studiosController.selected.modifiedDate}" title="#{bundle.ViewStudiosTitle_modifiedDate}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText>
+                    <h:outputText value="#{bundle.ViewStudiosLabel_isActive}"/>
+                    <h:outputText value="#{studiosController.selected.isActive}" title="#{bundle.ViewStudiosTitle_isActive}"/>
+                    <h:outputText value="#{bundle.ViewStudiosLabel_createdBy}"/>
+                    <h:outputText value="#{studiosController.selected.createdBy}" title="#{bundle.ViewStudiosTitle_createdBy}"/>
+                    <h:outputText value="#{bundle.ViewStudiosLabel_modifiedBy}"/>
+                    <h:outputText value="#{studiosController.selected.modifiedBy}" title="#{bundle.ViewStudiosTitle_modifiedBy}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{studiosController.destroyAndView}" value="#{bundle.ViewStudiosDestroyLink}"/>
+                <br />
+                <br />
+                <h:link outcome="Edit" value="#{bundle.ViewStudiosEditLink}"/>
+                <br />
+                <h:commandLink action="#{studiosController.prepareCreate}" value="#{bundle.ViewStudiosCreateLink}" />
+                <br />
+                <h:commandLink action="#{studiosController.prepareList}" value="#{bundle.ViewStudiosShowAllLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ViewStudiosIndexLink}"/>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>
