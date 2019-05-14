@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListDetailUserCustomerTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:form styleClass="jsfcrud_list_form">
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+                <h:outputText escape="false" value="#{bundle.ListDetailUserCustomerEmpty}" rendered="#{detailUserCustomerController.items.rowCount == 0}"/>
+                <h:panelGroup rendered="#{detailUserCustomerController.items.rowCount > 0}">
+                    <h:outputText value="#{detailUserCustomerController.pagination.pageFirstItem + 1}..#{detailUserCustomerController.pagination.pageLastItem + 1}/#{detailUserCustomerController.pagination.itemsCount}"/>&nbsp;
+                    <h:commandLink action="#{detailUserCustomerController.previous}" value="#{bundle.Previous} #{detailUserCustomerController.pagination.pageSize}" rendered="#{detailUserCustomerController.pagination.hasPreviousPage}"/>&nbsp;
+                    <h:commandLink action="#{detailUserCustomerController.next}" value="#{bundle.Next} #{detailUserCustomerController.pagination.pageSize}" rendered="#{detailUserCustomerController.pagination.hasNextPage}"/>&nbsp;
+                    <h:dataTable value="#{detailUserCustomerController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListDetailUserCustomerTitle_customerId}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.customerId}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListDetailUserCustomerTitle_birthDay}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.birthDay}">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListDetailUserCustomerTitle_userId}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.userId}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="&nbsp;"/>
+                            </f:facet>
+                            <h:commandLink action="#{detailUserCustomerController.prepareView}" value="#{bundle.ListDetailUserCustomerViewLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{detailUserCustomerController.prepareEdit}" value="#{bundle.ListDetailUserCustomerEditLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{detailUserCustomerController.destroy}" value="#{bundle.ListDetailUserCustomerDestroyLink}"/>
+                        </h:column>
+                    </h:dataTable>
+                </h:panelGroup>
+                <br />
+                <h:commandLink action="#{detailUserCustomerController.prepareCreate}" value="#{bundle.ListDetailUserCustomerCreateLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ListDetailUserCustomerIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

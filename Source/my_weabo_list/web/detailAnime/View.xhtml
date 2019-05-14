@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewDetailAnimeTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewDetailAnimeLabel_detailAnimeId}"/>
+                    <h:outputText value="#{detailAnimeController.selected.detailAnimeId}" title="#{bundle.ViewDetailAnimeTitle_detailAnimeId}"/>
+                    <h:outputText value="#{bundle.ViewDetailAnimeLabel_nameJapan}"/>
+                    <h:outputText value="#{detailAnimeController.selected.nameJapan}" title="#{bundle.ViewDetailAnimeTitle_nameJapan}"/>
+                    <h:outputText value="#{bundle.ViewDetailAnimeLabel_nameEnglish}"/>
+                    <h:outputText value="#{detailAnimeController.selected.nameEnglish}" title="#{bundle.ViewDetailAnimeTitle_nameEnglish}"/>
+                    <h:outputText value="#{bundle.ViewDetailAnimeLabel_seriesType}"/>
+                    <h:outputText value="#{detailAnimeController.selected.seriesType}" title="#{bundle.ViewDetailAnimeTitle_seriesType}"/>
+                    <h:outputText value="#{bundle.ViewDetailAnimeLabel_totalEpisode}"/>
+                    <h:outputText value="#{detailAnimeController.selected.totalEpisode}" title="#{bundle.ViewDetailAnimeTitle_totalEpisode}"/>
+                    <h:outputText value="#{bundle.ViewDetailAnimeLabel_airingStatus}"/>
+                    <h:outputText value="#{detailAnimeController.selected.airingStatus}" title="#{bundle.ViewDetailAnimeTitle_airingStatus}"/>
+                    <h:outputText value="#{bundle.ViewDetailAnimeLabel_airingStartDate}"/>
+                    <h:outputText value="#{detailAnimeController.selected.airingStartDate}" title="#{bundle.ViewDetailAnimeTitle_airingStartDate}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText>
+                    <h:outputText value="#{bundle.ViewDetailAnimeLabel_airingEndDate}"/>
+                    <h:outputText value="#{detailAnimeController.selected.airingEndDate}" title="#{bundle.ViewDetailAnimeTitle_airingEndDate}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText>
+                    <h:outputText value="#{bundle.ViewDetailAnimeLabel_airingDay}"/>
+                    <h:outputText value="#{detailAnimeController.selected.airingDay}" title="#{bundle.ViewDetailAnimeTitle_airingDay}"/>
+                    <h:outputText value="#{bundle.ViewDetailAnimeLabel_airingTime}"/>
+                    <h:outputText value="#{detailAnimeController.selected.airingTime}" title="#{bundle.ViewDetailAnimeTitle_airingTime}"/>
+                    <h:outputText value="#{bundle.ViewDetailAnimeLabel_sysnopsis}"/>
+                    <h:outputText value="#{detailAnimeController.selected.sysnopsis}" title="#{bundle.ViewDetailAnimeTitle_sysnopsis}"/>
+                    <h:outputText value="#{bundle.ViewDetailAnimeLabel_background}"/>
+                    <h:outputText value="#{detailAnimeController.selected.background}" title="#{bundle.ViewDetailAnimeTitle_background}"/>
+                    <h:outputText value="#{bundle.ViewDetailAnimeLabel_duration}"/>
+                    <h:outputText value="#{detailAnimeController.selected.duration}" title="#{bundle.ViewDetailAnimeTitle_duration}"/>
+                    <h:outputText value="#{bundle.ViewDetailAnimeLabel_sourceType}"/>
+                    <h:outputText value="#{detailAnimeController.selected.sourceType}" title="#{bundle.ViewDetailAnimeTitle_sourceType}"/>
+                    <h:outputText value="#{bundle.ViewDetailAnimeLabel_thumbnail}"/>
+                    <h:outputText value="#{detailAnimeController.selected.thumbnail}" title="#{bundle.ViewDetailAnimeTitle_thumbnail}"/>
+                    <h:outputText value="#{bundle.ViewDetailAnimeLabel_genreId}"/>
+                    <h:outputText value="#{detailAnimeController.selected.genreId}" title="#{bundle.ViewDetailAnimeTitle_genreId}"/>
+                    <h:outputText value="#{bundle.ViewDetailAnimeLabel_favorited}"/>
+                    <h:outputText value="#{detailAnimeController.selected.favorited}" title="#{bundle.ViewDetailAnimeTitle_favorited}"/>
+                    <h:outputText value="#{bundle.ViewDetailAnimeLabel_createdDate}"/>
+                    <h:outputText value="#{detailAnimeController.selected.createdDate}" title="#{bundle.ViewDetailAnimeTitle_createdDate}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText>
+                    <h:outputText value="#{bundle.ViewDetailAnimeLabel_statusActive}"/>
+                    <h:outputText value="#{detailAnimeController.selected.statusActive}" title="#{bundle.ViewDetailAnimeTitle_statusActive}"/>
+                    <h:outputText value="#{bundle.ViewDetailAnimeLabel_statusConfirm}"/>
+                    <h:outputText value="#{detailAnimeController.selected.statusConfirm}" title="#{bundle.ViewDetailAnimeTitle_statusConfirm}"/>
+                    <h:outputText value="#{bundle.ViewDetailAnimeLabel_animeId}"/>
+                    <h:outputText value="#{detailAnimeController.selected.animeId}" title="#{bundle.ViewDetailAnimeTitle_animeId}"/>
+                    <h:outputText value="#{bundle.ViewDetailAnimeLabel_createdBy}"/>
+                    <h:outputText value="#{detailAnimeController.selected.createdBy}" title="#{bundle.ViewDetailAnimeTitle_createdBy}"/>
+                    <h:outputText value="#{bundle.ViewDetailAnimeLabel_studioId}"/>
+                    <h:outputText value="#{detailAnimeController.selected.studioId}" title="#{bundle.ViewDetailAnimeTitle_studioId}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{detailAnimeController.destroyAndView}" value="#{bundle.ViewDetailAnimeDestroyLink}"/>
+                <br />
+                <br />
+                <h:link outcome="Edit" value="#{bundle.ViewDetailAnimeEditLink}"/>
+                <br />
+                <h:commandLink action="#{detailAnimeController.prepareCreate}" value="#{bundle.ViewDetailAnimeCreateLink}" />
+                <br />
+                <h:commandLink action="#{detailAnimeController.prepareList}" value="#{bundle.ViewDetailAnimeShowAllLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ViewDetailAnimeIndexLink}"/>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

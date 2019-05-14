@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreateDetailPeopleTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.CreateDetailPeopleLabel_detailPeopleId}" for="detailPeopleId" />
+                    <h:inputText id="detailPeopleId" value="#{detailPeopleController.selected.detailPeopleId}" title="#{bundle.CreateDetailPeopleTitle_detailPeopleId}" required="true" requiredMessage="#{bundle.CreateDetailPeopleRequiredMessage_detailPeopleId}"/>
+                    <h:outputLabel value="#{bundle.CreateDetailPeopleLabel_firstName}" for="firstName" />
+                    <h:inputText id="firstName" value="#{detailPeopleController.selected.firstName}" title="#{bundle.CreateDetailPeopleTitle_firstName}" required="true" requiredMessage="#{bundle.CreateDetailPeopleRequiredMessage_firstName}"/>
+                    <h:outputLabel value="#{bundle.CreateDetailPeopleLabel_lastName}" for="lastName" />
+                    <h:inputText id="lastName" value="#{detailPeopleController.selected.lastName}" title="#{bundle.CreateDetailPeopleTitle_lastName}" required="true" requiredMessage="#{bundle.CreateDetailPeopleRequiredMessage_lastName}"/>
+                    <h:outputLabel value="#{bundle.CreateDetailPeopleLabel_birthDay}" for="birthDay" />
+                    <h:inputText id="birthDay" value="#{detailPeopleController.selected.birthDay}" title="#{bundle.CreateDetailPeopleTitle_birthDay}" required="true" requiredMessage="#{bundle.CreateDetailPeopleRequiredMessage_birthDay}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundle.CreateDetailPeopleLabel_thumbnail}" for="thumbnail" />
+                    <h:inputText id="thumbnail" value="#{detailPeopleController.selected.thumbnail}" title="#{bundle.CreateDetailPeopleTitle_thumbnail}" />
+                    <h:outputLabel value="#{bundle.CreateDetailPeopleLabel_favorited}" for="favorited" />
+                    <h:inputText id="favorited" value="#{detailPeopleController.selected.favorited}" title="#{bundle.CreateDetailPeopleTitle_favorited}" />
+                    <h:outputLabel value="#{bundle.CreateDetailPeopleLabel_about}" for="about" />
+                    <h:inputText id="about" value="#{detailPeopleController.selected.about}" title="#{bundle.CreateDetailPeopleTitle_about}" />
+                    <h:outputLabel value="#{bundle.CreateDetailPeopleLabel_createdDate}" for="createdDate" />
+                    <h:inputText id="createdDate" value="#{detailPeopleController.selected.createdDate}" title="#{bundle.CreateDetailPeopleTitle_createdDate}" >
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundle.CreateDetailPeopleLabel_statusActive}" for="statusActive" />
+                    <h:inputText id="statusActive" value="#{detailPeopleController.selected.statusActive}" title="#{bundle.CreateDetailPeopleTitle_statusActive}" />
+                    <h:outputLabel value="#{bundle.CreateDetailPeopleLabel_statusConfirm}" for="statusConfirm" />
+                    <h:inputText id="statusConfirm" value="#{detailPeopleController.selected.statusConfirm}" title="#{bundle.CreateDetailPeopleTitle_statusConfirm}" />
+                    <h:outputLabel value="#{bundle.CreateDetailPeopleLabel_peopleId}" for="peopleId" />
+                    <h:selectOneMenu id="peopleId" value="#{detailPeopleController.selected.peopleId}" title="#{bundle.CreateDetailPeopleTitle_peopleId}" required="true" requiredMessage="#{bundle.CreateDetailPeopleRequiredMessage_peopleId}">
+                        <f:selectItems value="#{masterPeopleController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.CreateDetailPeopleLabel_createdBy}" for="createdBy" />
+                    <h:selectOneMenu id="createdBy" value="#{detailPeopleController.selected.createdBy}" title="#{bundle.CreateDetailPeopleTitle_createdBy}" >
+                        <f:selectItems value="#{masterUserController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{detailPeopleController.create}" value="#{bundle.CreateDetailPeopleSaveLink}" />
+                <br />
+                <br />
+                <h:commandLink action="#{detailPeopleController.prepareList}" value="#{bundle.CreateDetailPeopleShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.CreateDetailPeopleIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

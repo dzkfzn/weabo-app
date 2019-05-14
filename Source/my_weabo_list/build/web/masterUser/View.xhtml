@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewMasterUserTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewMasterUserLabel_userId}"/>
+                    <h:outputText value="#{masterUserController.selected.userId}" title="#{bundle.ViewMasterUserTitle_userId}"/>
+                    <h:outputText value="#{bundle.ViewMasterUserLabel_name}"/>
+                    <h:outputText value="#{masterUserController.selected.name}" title="#{bundle.ViewMasterUserTitle_name}"/>
+                    <h:outputText value="#{bundle.ViewMasterUserLabel_email}"/>
+                    <h:outputText value="#{masterUserController.selected.email}" title="#{bundle.ViewMasterUserTitle_email}"/>
+                    <h:outputText value="#{bundle.ViewMasterUserLabel_username}"/>
+                    <h:outputText value="#{masterUserController.selected.username}" title="#{bundle.ViewMasterUserTitle_username}"/>
+                    <h:outputText value="#{bundle.ViewMasterUserLabel_password}"/>
+                    <h:outputText value="#{masterUserController.selected.password}" title="#{bundle.ViewMasterUserTitle_password}"/>
+                    <h:outputText value="#{bundle.ViewMasterUserLabel_thumbnail}"/>
+                    <h:outputText value="#{masterUserController.selected.thumbnail}" title="#{bundle.ViewMasterUserTitle_thumbnail}"/>
+                    <h:outputText value="#{bundle.ViewMasterUserLabel_roleUser}"/>
+                    <h:outputText value="#{masterUserController.selected.roleUser}" title="#{bundle.ViewMasterUserTitle_roleUser}"/>
+                    <h:outputText value="#{bundle.ViewMasterUserLabel_createdDate}"/>
+                    <h:outputText value="#{masterUserController.selected.createdDate}" title="#{bundle.ViewMasterUserTitle_createdDate}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:outputText>
+                    <h:outputText value="#{bundle.ViewMasterUserLabel_lastOnlineDate}"/>
+                    <h:outputText value="#{masterUserController.selected.lastOnlineDate}" title="#{bundle.ViewMasterUserTitle_lastOnlineDate}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:outputText>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{masterUserController.destroyAndView}" value="#{bundle.ViewMasterUserDestroyLink}"/>
+                <br />
+                <br />
+                <h:link outcome="Edit" value="#{bundle.ViewMasterUserEditLink}"/>
+                <br />
+                <h:commandLink action="#{masterUserController.prepareCreate}" value="#{bundle.ViewMasterUserCreateLink}" />
+                <br />
+                <h:commandLink action="#{masterUserController.prepareList}" value="#{bundle.ViewMasterUserShowAllLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ViewMasterUserIndexLink}"/>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

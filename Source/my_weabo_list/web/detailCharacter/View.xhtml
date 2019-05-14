@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewDetailCharacterTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewDetailCharacterLabel_detailCharacterId}"/>
+                    <h:outputText value="#{detailCharacterController.selected.detailCharacterId}" title="#{bundle.ViewDetailCharacterTitle_detailCharacterId}"/>
+                    <h:outputText value="#{bundle.ViewDetailCharacterLabel_name}"/>
+                    <h:outputText value="#{detailCharacterController.selected.name}" title="#{bundle.ViewDetailCharacterTitle_name}"/>
+                    <h:outputText value="#{bundle.ViewDetailCharacterLabel_thumbnail}"/>
+                    <h:outputText value="#{detailCharacterController.selected.thumbnail}" title="#{bundle.ViewDetailCharacterTitle_thumbnail}"/>
+                    <h:outputText value="#{bundle.ViewDetailCharacterLabel_favorited}"/>
+                    <h:outputText value="#{detailCharacterController.selected.favorited}" title="#{bundle.ViewDetailCharacterTitle_favorited}"/>
+                    <h:outputText value="#{bundle.ViewDetailCharacterLabel_about}"/>
+                    <h:outputText value="#{detailCharacterController.selected.about}" title="#{bundle.ViewDetailCharacterTitle_about}"/>
+                    <h:outputText value="#{bundle.ViewDetailCharacterLabel_createdDate}"/>
+                    <h:outputText value="#{detailCharacterController.selected.createdDate}" title="#{bundle.ViewDetailCharacterTitle_createdDate}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:outputText>
+                    <h:outputText value="#{bundle.ViewDetailCharacterLabel_statusActive}"/>
+                    <h:outputText value="#{detailCharacterController.selected.statusActive}" title="#{bundle.ViewDetailCharacterTitle_statusActive}"/>
+                    <h:outputText value="#{bundle.ViewDetailCharacterLabel_statusConfirm}"/>
+                    <h:outputText value="#{detailCharacterController.selected.statusConfirm}" title="#{bundle.ViewDetailCharacterTitle_statusConfirm}"/>
+                    <h:outputText value="#{bundle.ViewDetailCharacterLabel_characterId}"/>
+                    <h:outputText value="#{detailCharacterController.selected.characterId}" title="#{bundle.ViewDetailCharacterTitle_characterId}"/>
+                    <h:outputText value="#{bundle.ViewDetailCharacterLabel_createdBy}"/>
+                    <h:outputText value="#{detailCharacterController.selected.createdBy}" title="#{bundle.ViewDetailCharacterTitle_createdBy}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{detailCharacterController.destroyAndView}" value="#{bundle.ViewDetailCharacterDestroyLink}"/>
+                <br />
+                <br />
+                <h:link outcome="Edit" value="#{bundle.ViewDetailCharacterEditLink}"/>
+                <br />
+                <h:commandLink action="#{detailCharacterController.prepareCreate}" value="#{bundle.ViewDetailCharacterCreateLink}" />
+                <br />
+                <h:commandLink action="#{detailCharacterController.prepareList}" value="#{bundle.ViewDetailCharacterShowAllLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ViewDetailCharacterIndexLink}"/>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

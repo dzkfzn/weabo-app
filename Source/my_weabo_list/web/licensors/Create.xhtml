@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreateLicensorsTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.CreateLicensorsLabel_licensorId}" for="licensorId" />
+                    <h:inputText id="licensorId" value="#{licensorsController.selected.licensorId}" title="#{bundle.CreateLicensorsTitle_licensorId}" required="true" requiredMessage="#{bundle.CreateLicensorsRequiredMessage_licensorId}"/>
+                    <h:outputLabel value="#{bundle.CreateLicensorsLabel_name}" for="name" />
+                    <h:inputText id="name" value="#{licensorsController.selected.name}" title="#{bundle.CreateLicensorsTitle_name}" required="true" requiredMessage="#{bundle.CreateLicensorsRequiredMessage_name}"/>
+                    <h:outputLabel value="#{bundle.CreateLicensorsLabel_createdDate}" for="createdDate" />
+                    <h:inputText id="createdDate" value="#{licensorsController.selected.createdDate}" title="#{bundle.CreateLicensorsTitle_createdDate}" required="true" requiredMessage="#{bundle.CreateLicensorsRequiredMessage_createdDate}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundle.CreateLicensorsLabel_modifiedDate}" for="modifiedDate" />
+                    <h:inputText id="modifiedDate" value="#{licensorsController.selected.modifiedDate}" title="#{bundle.CreateLicensorsTitle_modifiedDate}" required="true" requiredMessage="#{bundle.CreateLicensorsRequiredMessage_modifiedDate}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundle.CreateLicensorsLabel_isActive}" for="isActive" />
+                    <h:inputText id="isActive" value="#{licensorsController.selected.isActive}" title="#{bundle.CreateLicensorsTitle_isActive}" required="true" requiredMessage="#{bundle.CreateLicensorsRequiredMessage_isActive}"/>
+                    <h:outputLabel value="#{bundle.CreateLicensorsLabel_createdBy}" for="createdBy" />
+                    <h:selectOneMenu id="createdBy" value="#{licensorsController.selected.createdBy}" title="#{bundle.CreateLicensorsTitle_createdBy}" >
+                        <f:selectItems value="#{masterUserController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.CreateLicensorsLabel_modifiedBy}" for="modifiedBy" />
+                    <h:selectOneMenu id="modifiedBy" value="#{licensorsController.selected.modifiedBy}" title="#{bundle.CreateLicensorsTitle_modifiedBy}" >
+                        <f:selectItems value="#{masterUserController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{licensorsController.create}" value="#{bundle.CreateLicensorsSaveLink}" />
+                <br />
+                <br />
+                <h:commandLink action="#{licensorsController.prepareList}" value="#{bundle.CreateLicensorsShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.CreateLicensorsIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

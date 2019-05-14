@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreateStudiosTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.CreateStudiosLabel_studioId}" for="studioId" />
+                    <h:inputText id="studioId" value="#{studiosController.selected.studioId}" title="#{bundle.CreateStudiosTitle_studioId}" required="true" requiredMessage="#{bundle.CreateStudiosRequiredMessage_studioId}"/>
+                    <h:outputLabel value="#{bundle.CreateStudiosLabel_name}" for="name" />
+                    <h:inputText id="name" value="#{studiosController.selected.name}" title="#{bundle.CreateStudiosTitle_name}" required="true" requiredMessage="#{bundle.CreateStudiosRequiredMessage_name}"/>
+                    <h:outputLabel value="#{bundle.CreateStudiosLabel_createdDate}" for="createdDate" />
+                    <h:inputText id="createdDate" value="#{studiosController.selected.createdDate}" title="#{bundle.CreateStudiosTitle_createdDate}" required="true" requiredMessage="#{bundle.CreateStudiosRequiredMessage_createdDate}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundle.CreateStudiosLabel_modifiedDate}" for="modifiedDate" />
+                    <h:inputText id="modifiedDate" value="#{studiosController.selected.modifiedDate}" title="#{bundle.CreateStudiosTitle_modifiedDate}" required="true" requiredMessage="#{bundle.CreateStudiosRequiredMessage_modifiedDate}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundle.CreateStudiosLabel_isActive}" for="isActive" />
+                    <h:inputText id="isActive" value="#{studiosController.selected.isActive}" title="#{bundle.CreateStudiosTitle_isActive}" required="true" requiredMessage="#{bundle.CreateStudiosRequiredMessage_isActive}"/>
+                    <h:outputLabel value="#{bundle.CreateStudiosLabel_createdBy}" for="createdBy" />
+                    <h:selectOneMenu id="createdBy" value="#{studiosController.selected.createdBy}" title="#{bundle.CreateStudiosTitle_createdBy}" >
+                        <f:selectItems value="#{masterUserController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.CreateStudiosLabel_modifiedBy}" for="modifiedBy" />
+                    <h:selectOneMenu id="modifiedBy" value="#{studiosController.selected.modifiedBy}" title="#{bundle.CreateStudiosTitle_modifiedBy}" >
+                        <f:selectItems value="#{masterUserController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{studiosController.create}" value="#{bundle.CreateStudiosSaveLink}" />
+                <br />
+                <br />
+                <h:commandLink action="#{studiosController.prepareList}" value="#{bundle.CreateStudiosShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.CreateStudiosIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>
