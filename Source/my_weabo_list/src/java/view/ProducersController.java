@@ -6,6 +6,8 @@ import view.util.PaginationHelper;
 import controller.ProducersFacade;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.inject.Named;
@@ -81,9 +83,18 @@ public class ProducersController implements Serializable {
 
     public String create() {
         try {
+            //inisialisasi createddated dan modified date
+            Date createdDate = new Date();
+            current.setCreatedDate(createdDate);
+            current.setModifiedDate(createdDate);
+
+            //inisialisasi is Active
+            current.setIsActive(1);
+
             getFacade().create(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("ProducersCreated"));
-            return prepareCreate();
+            JsfUtil.addSuccessMessage("Data berhasil Ditambahkan");
+            recreateModel();
+            return "List";
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
             return null;
@@ -96,11 +107,12 @@ public class ProducersController implements Serializable {
         return "Edit";
     }
 
-    public String update() {
+  public String update() {
         try {
             getFacade().edit(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("ProducersUpdated"));
-            return "View";
+            JsfUtil.addSuccessMessage("Data berhasil di update");
+            recreateModel();
+            return "List";
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
             return null;
@@ -230,6 +242,39 @@ public class ProducersController implements Serializable {
             }
         }
 
+    }
+
+    public String toAktif() {
+
+        current = (Producers) getItems().getRowData();
+        selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
+
+        try {
+            current.setIsActive(1);
+            getFacade().edit(current);
+            JsfUtil.addSuccessMessage("Data Di ubah menjadi Aktif");
+
+            return "List";
+        } catch (Exception e) {
+            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
+            return null;
+        }
+    }
+
+    public String toTidakAktif() {
+        try {
+
+            current = (Producers) getItems().getRowData();
+            selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
+
+            current.setIsActive(0);
+            getFacade().edit(current);
+            JsfUtil.addSuccessMessage("Data Di ubah menjadi Tidak Aktif");
+            return "List";
+        } catch (Exception e) {
+            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
+            return null;
+        }
     }
 
 }

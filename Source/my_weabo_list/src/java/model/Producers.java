@@ -11,6 +11,8 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
@@ -42,9 +44,9 @@ import javax.xml.bind.annotation.XmlTransient;
 public class Producers implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Basic(optional = false)
-    @NotNull
     @Column(name = "licensor_id")
     private Integer licensorId;
     @Basic(optional = false)
@@ -53,17 +55,14 @@ public class Producers implements Serializable {
     @Column(name = "name")
     private String name;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "created_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "modified_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date modifiedDate;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "is_active")
     private int isActive;
     @ManyToMany(mappedBy = "producersCollection")
@@ -179,5 +178,5 @@ public class Producers implements Serializable {
     public String toString() {
         return "model.Producers[ licensorId=" + licensorId + " ]";
     }
-    
+
 }
