@@ -23,6 +23,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -30,8 +32,14 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "studios")
+@XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Studios.findAll", query = "SELECT s FROM Studios s")})
+    @NamedQuery(name = "Studios.findAll", query = "SELECT s FROM Studios s")
+    , @NamedQuery(name = "Studios.findByStudioId", query = "SELECT s FROM Studios s WHERE s.studioId = :studioId")
+    , @NamedQuery(name = "Studios.findByName", query = "SELECT s FROM Studios s WHERE s.name = :name")
+    , @NamedQuery(name = "Studios.findByCreatedDate", query = "SELECT s FROM Studios s WHERE s.createdDate = :createdDate")
+    , @NamedQuery(name = "Studios.findByModifiedDate", query = "SELECT s FROM Studios s WHERE s.modifiedDate = :modifiedDate")
+    , @NamedQuery(name = "Studios.findByIsActive", query = "SELECT s FROM Studios s WHERE s.isActive = :isActive")})
 public class Studios implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -48,12 +56,12 @@ public class Studios implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "created_date")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
     @Basic(optional = false)
     @NotNull
     @Column(name = "modified_date")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date modifiedDate;
     @Basic(optional = false)
     @NotNull
@@ -139,6 +147,7 @@ public class Studios implements Serializable {
         this.modifiedBy = modifiedBy;
     }
 
+    @XmlTransient
     public Collection<DetailAnime> getDetailAnimeCollection() {
         return detailAnimeCollection;
     }

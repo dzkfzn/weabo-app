@@ -22,6 +22,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -29,8 +31,13 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 @Table(name = "master_characters")
+@XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "MasterCharacters.findAll", query = "SELECT m FROM MasterCharacters m")})
+    @NamedQuery(name = "MasterCharacters.findAll", query = "SELECT m FROM MasterCharacters m")
+    , @NamedQuery(name = "MasterCharacters.findByCharacterId", query = "SELECT m FROM MasterCharacters m WHERE m.characterId = :characterId")
+    , @NamedQuery(name = "MasterCharacters.findByCreatedDate", query = "SELECT m FROM MasterCharacters m WHERE m.createdDate = :createdDate")
+    , @NamedQuery(name = "MasterCharacters.findByLastModifiedDate", query = "SELECT m FROM MasterCharacters m WHERE m.lastModifiedDate = :lastModifiedDate")
+    , @NamedQuery(name = "MasterCharacters.findByStatusDelete", query = "SELECT m FROM MasterCharacters m WHERE m.statusDelete = :statusDelete")})
 public class MasterCharacters implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -120,6 +127,7 @@ public class MasterCharacters implements Serializable {
         this.lastModifiedBy = lastModifiedBy;
     }
 
+    @XmlTransient
     public Collection<CharactersDetailAnime> getCharactersDetailAnimeCollection() {
         return charactersDetailAnimeCollection;
     }
@@ -128,6 +136,7 @@ public class MasterCharacters implements Serializable {
         this.charactersDetailAnimeCollection = charactersDetailAnimeCollection;
     }
 
+    @XmlTransient
     public Collection<DetailCharacter> getDetailCharacterCollection() {
         return detailCharacterCollection;
     }

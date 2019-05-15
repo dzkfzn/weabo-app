@@ -21,6 +21,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -28,8 +30,18 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "master_user")
+@XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "MasterUser.findAll", query = "SELECT m FROM MasterUser m")})
+    @NamedQuery(name = "MasterUser.findAll", query = "SELECT m FROM MasterUser m")
+    , @NamedQuery(name = "MasterUser.findByUserId", query = "SELECT m FROM MasterUser m WHERE m.userId = :userId")
+    , @NamedQuery(name = "MasterUser.findByName", query = "SELECT m FROM MasterUser m WHERE m.name = :name")
+    , @NamedQuery(name = "MasterUser.findByEmail", query = "SELECT m FROM MasterUser m WHERE m.email = :email")
+    , @NamedQuery(name = "MasterUser.findByUsername", query = "SELECT m FROM MasterUser m WHERE m.username = :username")
+    , @NamedQuery(name = "MasterUser.findByPassword", query = "SELECT m FROM MasterUser m WHERE m.password = :password")
+    , @NamedQuery(name = "MasterUser.findByThumbnail", query = "SELECT m FROM MasterUser m WHERE m.thumbnail = :thumbnail")
+    , @NamedQuery(name = "MasterUser.findByRoleUser", query = "SELECT m FROM MasterUser m WHERE m.roleUser = :roleUser")
+    , @NamedQuery(name = "MasterUser.findByCreatedDate", query = "SELECT m FROM MasterUser m WHERE m.createdDate = :createdDate")
+    , @NamedQuery(name = "MasterUser.findByLastOnlineDate", query = "SELECT m FROM MasterUser m WHERE m.lastOnlineDate = :lastOnlineDate")})
 public class MasterUser implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -197,6 +209,7 @@ public class MasterUser implements Serializable {
         this.lastOnlineDate = lastOnlineDate;
     }
 
+    @XmlTransient
     public Collection<DetailPeople> getDetailPeopleCollection() {
         return detailPeopleCollection;
     }
@@ -205,6 +218,7 @@ public class MasterUser implements Serializable {
         this.detailPeopleCollection = detailPeopleCollection;
     }
 
+    @XmlTransient
     public Collection<Studios> getStudiosCollection() {
         return studiosCollection;
     }
@@ -213,6 +227,7 @@ public class MasterUser implements Serializable {
         this.studiosCollection = studiosCollection;
     }
 
+    @XmlTransient
     public Collection<Studios> getStudiosCollection1() {
         return studiosCollection1;
     }
@@ -221,6 +236,7 @@ public class MasterUser implements Serializable {
         this.studiosCollection1 = studiosCollection1;
     }
 
+    @XmlTransient
     public Collection<DetailUserStaff> getDetailUserStaffCollection() {
         return detailUserStaffCollection;
     }
@@ -229,6 +245,7 @@ public class MasterUser implements Serializable {
         this.detailUserStaffCollection = detailUserStaffCollection;
     }
 
+    @XmlTransient
     public Collection<MasterCharacters> getMasterCharactersCollection() {
         return masterCharactersCollection;
     }
@@ -237,6 +254,7 @@ public class MasterUser implements Serializable {
         this.masterCharactersCollection = masterCharactersCollection;
     }
 
+    @XmlTransient
     public Collection<MasterCharacters> getMasterCharactersCollection1() {
         return masterCharactersCollection1;
     }
@@ -245,6 +263,7 @@ public class MasterUser implements Serializable {
         this.masterCharactersCollection1 = masterCharactersCollection1;
     }
 
+    @XmlTransient
     public Collection<Licensors> getLicensorsCollection() {
         return licensorsCollection;
     }
@@ -253,6 +272,7 @@ public class MasterUser implements Serializable {
         this.licensorsCollection = licensorsCollection;
     }
 
+    @XmlTransient
     public Collection<Licensors> getLicensorsCollection1() {
         return licensorsCollection1;
     }
@@ -261,6 +281,7 @@ public class MasterUser implements Serializable {
         this.licensorsCollection1 = licensorsCollection1;
     }
 
+    @XmlTransient
     public Collection<Producers> getProducersCollection() {
         return producersCollection;
     }
@@ -269,6 +290,7 @@ public class MasterUser implements Serializable {
         this.producersCollection = producersCollection;
     }
 
+    @XmlTransient
     public Collection<Producers> getProducersCollection1() {
         return producersCollection1;
     }
@@ -277,6 +299,7 @@ public class MasterUser implements Serializable {
         this.producersCollection1 = producersCollection1;
     }
 
+    @XmlTransient
     public Collection<DetailAnime> getDetailAnimeCollection() {
         return detailAnimeCollection;
     }
@@ -285,6 +308,7 @@ public class MasterUser implements Serializable {
         this.detailAnimeCollection = detailAnimeCollection;
     }
 
+    @XmlTransient
     public Collection<Genres> getGenresCollection() {
         return genresCollection;
     }
@@ -293,6 +317,7 @@ public class MasterUser implements Serializable {
         this.genresCollection = genresCollection;
     }
 
+    @XmlTransient
     public Collection<Genres> getGenresCollection1() {
         return genresCollection1;
     }
@@ -301,6 +326,7 @@ public class MasterUser implements Serializable {
         this.genresCollection1 = genresCollection1;
     }
 
+    @XmlTransient
     public Collection<MasterAnime> getMasterAnimeCollection() {
         return masterAnimeCollection;
     }
@@ -309,6 +335,7 @@ public class MasterUser implements Serializable {
         this.masterAnimeCollection = masterAnimeCollection;
     }
 
+    @XmlTransient
     public Collection<MasterAnime> getMasterAnimeCollection1() {
         return masterAnimeCollection1;
     }
@@ -317,6 +344,7 @@ public class MasterUser implements Serializable {
         this.masterAnimeCollection1 = masterAnimeCollection1;
     }
 
+    @XmlTransient
     public Collection<MasterPeople> getMasterPeopleCollection() {
         return masterPeopleCollection;
     }
@@ -325,6 +353,7 @@ public class MasterUser implements Serializable {
         this.masterPeopleCollection = masterPeopleCollection;
     }
 
+    @XmlTransient
     public Collection<MasterPeople> getMasterPeopleCollection1() {
         return masterPeopleCollection1;
     }
@@ -333,6 +362,7 @@ public class MasterUser implements Serializable {
         this.masterPeopleCollection1 = masterPeopleCollection1;
     }
 
+    @XmlTransient
     public Collection<DetailUserCustomer> getDetailUserCustomerCollection() {
         return detailUserCustomerCollection;
     }
@@ -341,6 +371,7 @@ public class MasterUser implements Serializable {
         this.detailUserCustomerCollection = detailUserCustomerCollection;
     }
 
+    @XmlTransient
     public Collection<DetailCharacter> getDetailCharacterCollection() {
         return detailCharacterCollection;
     }

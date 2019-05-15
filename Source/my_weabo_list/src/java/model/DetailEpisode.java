@@ -20,6 +20,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
@@ -27,8 +28,14 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "detail_episode")
+@XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "DetailEpisode.findAll", query = "SELECT d FROM DetailEpisode d")})
+    @NamedQuery(name = "DetailEpisode.findAll", query = "SELECT d FROM DetailEpisode d")
+    , @NamedQuery(name = "DetailEpisode.findByEpisodeId", query = "SELECT d FROM DetailEpisode d WHERE d.episodeId = :episodeId")
+    , @NamedQuery(name = "DetailEpisode.findByEpisodeNo", query = "SELECT d FROM DetailEpisode d WHERE d.episodeNo = :episodeNo")
+    , @NamedQuery(name = "DetailEpisode.findByTitle", query = "SELECT d FROM DetailEpisode d WHERE d.title = :title")
+    , @NamedQuery(name = "DetailEpisode.findByAiringDate", query = "SELECT d FROM DetailEpisode d WHERE d.airingDate = :airingDate")
+    , @NamedQuery(name = "DetailEpisode.findBySynopsis", query = "SELECT d FROM DetailEpisode d WHERE d.synopsis = :synopsis")})
 public class DetailEpisode implements Serializable {
 
     private static final long serialVersionUID = 1L;

@@ -22,6 +22,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -29,8 +31,13 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 @Table(name = "master_people")
+@XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "MasterPeople.findAll", query = "SELECT m FROM MasterPeople m")})
+    @NamedQuery(name = "MasterPeople.findAll", query = "SELECT m FROM MasterPeople m")
+    , @NamedQuery(name = "MasterPeople.findByPeopleId", query = "SELECT m FROM MasterPeople m WHERE m.peopleId = :peopleId")
+    , @NamedQuery(name = "MasterPeople.findByCreatedDate", query = "SELECT m FROM MasterPeople m WHERE m.createdDate = :createdDate")
+    , @NamedQuery(name = "MasterPeople.findByLastModifiedDate", query = "SELECT m FROM MasterPeople m WHERE m.lastModifiedDate = :lastModifiedDate")
+    , @NamedQuery(name = "MasterPeople.findByStatusDelete", query = "SELECT m FROM MasterPeople m WHERE m.statusDelete = :statusDelete")})
 public class MasterPeople implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -95,6 +102,7 @@ public class MasterPeople implements Serializable {
         this.statusDelete = statusDelete;
     }
 
+    @XmlTransient
     public Collection<DetailPeople> getDetailPeopleCollection() {
         return detailPeopleCollection;
     }

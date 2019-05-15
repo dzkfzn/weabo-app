@@ -20,6 +20,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
@@ -27,8 +28,17 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "detail_character")
+@XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "DetailCharacter.findAll", query = "SELECT d FROM DetailCharacter d")})
+    @NamedQuery(name = "DetailCharacter.findAll", query = "SELECT d FROM DetailCharacter d")
+    , @NamedQuery(name = "DetailCharacter.findByDetailCharacterId", query = "SELECT d FROM DetailCharacter d WHERE d.detailCharacterId = :detailCharacterId")
+    , @NamedQuery(name = "DetailCharacter.findByName", query = "SELECT d FROM DetailCharacter d WHERE d.name = :name")
+    , @NamedQuery(name = "DetailCharacter.findByThumbnail", query = "SELECT d FROM DetailCharacter d WHERE d.thumbnail = :thumbnail")
+    , @NamedQuery(name = "DetailCharacter.findByFavorited", query = "SELECT d FROM DetailCharacter d WHERE d.favorited = :favorited")
+    , @NamedQuery(name = "DetailCharacter.findByAbout", query = "SELECT d FROM DetailCharacter d WHERE d.about = :about")
+    , @NamedQuery(name = "DetailCharacter.findByCreatedDate", query = "SELECT d FROM DetailCharacter d WHERE d.createdDate = :createdDate")
+    , @NamedQuery(name = "DetailCharacter.findByStatusActive", query = "SELECT d FROM DetailCharacter d WHERE d.statusActive = :statusActive")
+    , @NamedQuery(name = "DetailCharacter.findByStatusConfirm", query = "SELECT d FROM DetailCharacter d WHERE d.statusConfirm = :statusConfirm")})
 public class DetailCharacter implements Serializable {
 
     private static final long serialVersionUID = 1L;

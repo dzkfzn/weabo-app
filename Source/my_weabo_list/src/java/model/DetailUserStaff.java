@@ -20,6 +20,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
@@ -27,8 +28,14 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "detail_user_staff")
+@XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "DetailUserStaff.findAll", query = "SELECT d FROM DetailUserStaff d")})
+    @NamedQuery(name = "DetailUserStaff.findAll", query = "SELECT d FROM DetailUserStaff d")
+    , @NamedQuery(name = "DetailUserStaff.findByStaffId", query = "SELECT d FROM DetailUserStaff d WHERE d.staffId = :staffId")
+    , @NamedQuery(name = "DetailUserStaff.findByBirthDay", query = "SELECT d FROM DetailUserStaff d WHERE d.birthDay = :birthDay")
+    , @NamedQuery(name = "DetailUserStaff.findByPhoneNumber", query = "SELECT d FROM DetailUserStaff d WHERE d.phoneNumber = :phoneNumber")
+    , @NamedQuery(name = "DetailUserStaff.findByAddress", query = "SELECT d FROM DetailUserStaff d WHERE d.address = :address")
+    , @NamedQuery(name = "DetailUserStaff.findByRoleStaff", query = "SELECT d FROM DetailUserStaff d WHERE d.roleStaff = :roleStaff")})
 public class DetailUserStaff implements Serializable {
 
     private static final long serialVersionUID = 1L;

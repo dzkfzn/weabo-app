@@ -23,6 +23,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -30,8 +32,19 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "detail_people")
+@XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "DetailPeople.findAll", query = "SELECT d FROM DetailPeople d")})
+    @NamedQuery(name = "DetailPeople.findAll", query = "SELECT d FROM DetailPeople d")
+    , @NamedQuery(name = "DetailPeople.findByDetailPeopleId", query = "SELECT d FROM DetailPeople d WHERE d.detailPeopleId = :detailPeopleId")
+    , @NamedQuery(name = "DetailPeople.findByFirstName", query = "SELECT d FROM DetailPeople d WHERE d.firstName = :firstName")
+    , @NamedQuery(name = "DetailPeople.findByLastName", query = "SELECT d FROM DetailPeople d WHERE d.lastName = :lastName")
+    , @NamedQuery(name = "DetailPeople.findByBirthDay", query = "SELECT d FROM DetailPeople d WHERE d.birthDay = :birthDay")
+    , @NamedQuery(name = "DetailPeople.findByThumbnail", query = "SELECT d FROM DetailPeople d WHERE d.thumbnail = :thumbnail")
+    , @NamedQuery(name = "DetailPeople.findByFavorited", query = "SELECT d FROM DetailPeople d WHERE d.favorited = :favorited")
+    , @NamedQuery(name = "DetailPeople.findByAbout", query = "SELECT d FROM DetailPeople d WHERE d.about = :about")
+    , @NamedQuery(name = "DetailPeople.findByCreatedDate", query = "SELECT d FROM DetailPeople d WHERE d.createdDate = :createdDate")
+    , @NamedQuery(name = "DetailPeople.findByStatusActive", query = "SELECT d FROM DetailPeople d WHERE d.statusActive = :statusActive")
+    , @NamedQuery(name = "DetailPeople.findByStatusConfirm", query = "SELECT d FROM DetailPeople d WHERE d.statusConfirm = :statusConfirm")})
 public class DetailPeople implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -176,6 +189,7 @@ public class DetailPeople implements Serializable {
         this.statusConfirm = statusConfirm;
     }
 
+    @XmlTransient
     public Collection<DetailAnime> getDetailAnimeCollection() {
         return detailAnimeCollection;
     }

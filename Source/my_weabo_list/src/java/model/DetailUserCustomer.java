@@ -19,6 +19,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
@@ -26,8 +27,11 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 @Table(name = "detail_user_customer")
+@XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "DetailUserCustomer.findAll", query = "SELECT d FROM DetailUserCustomer d")})
+    @NamedQuery(name = "DetailUserCustomer.findAll", query = "SELECT d FROM DetailUserCustomer d")
+    , @NamedQuery(name = "DetailUserCustomer.findByCustomerId", query = "SELECT d FROM DetailUserCustomer d WHERE d.customerId = :customerId")
+    , @NamedQuery(name = "DetailUserCustomer.findByBirthDay", query = "SELECT d FROM DetailUserCustomer d WHERE d.birthDay = :birthDay")})
 public class DetailUserCustomer implements Serializable {
 
     private static final long serialVersionUID = 1L;

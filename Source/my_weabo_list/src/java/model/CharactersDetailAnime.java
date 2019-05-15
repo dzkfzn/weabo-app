@@ -14,6 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
@@ -21,8 +22,12 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "characters_detail_anime")
+@XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "CharactersDetailAnime.findAll", query = "SELECT c FROM CharactersDetailAnime c")})
+    @NamedQuery(name = "CharactersDetailAnime.findAll", query = "SELECT c FROM CharactersDetailAnime c")
+    , @NamedQuery(name = "CharactersDetailAnime.findByCharacterId", query = "SELECT c FROM CharactersDetailAnime c WHERE c.charactersDetailAnimePK.characterId = :characterId")
+    , @NamedQuery(name = "CharactersDetailAnime.findByDetailAnimeId", query = "SELECT c FROM CharactersDetailAnime c WHERE c.charactersDetailAnimePK.detailAnimeId = :detailAnimeId")
+    , @NamedQuery(name = "CharactersDetailAnime.findByRole", query = "SELECT c FROM CharactersDetailAnime c WHERE c.role = :role")})
 public class CharactersDetailAnime implements Serializable {
 
     private static final long serialVersionUID = 1L;

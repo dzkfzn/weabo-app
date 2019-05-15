@@ -25,6 +25,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -32,8 +34,29 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "detail_anime")
+@XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "DetailAnime.findAll", query = "SELECT d FROM DetailAnime d")})
+    @NamedQuery(name = "DetailAnime.findAll", query = "SELECT d FROM DetailAnime d")
+    , @NamedQuery(name = "DetailAnime.findByDetailAnimeId", query = "SELECT d FROM DetailAnime d WHERE d.detailAnimeId = :detailAnimeId")
+    , @NamedQuery(name = "DetailAnime.findByNameJapan", query = "SELECT d FROM DetailAnime d WHERE d.nameJapan = :nameJapan")
+    , @NamedQuery(name = "DetailAnime.findByNameEnglish", query = "SELECT d FROM DetailAnime d WHERE d.nameEnglish = :nameEnglish")
+    , @NamedQuery(name = "DetailAnime.findBySeriesType", query = "SELECT d FROM DetailAnime d WHERE d.seriesType = :seriesType")
+    , @NamedQuery(name = "DetailAnime.findByTotalEpisode", query = "SELECT d FROM DetailAnime d WHERE d.totalEpisode = :totalEpisode")
+    , @NamedQuery(name = "DetailAnime.findByAiringStatus", query = "SELECT d FROM DetailAnime d WHERE d.airingStatus = :airingStatus")
+    , @NamedQuery(name = "DetailAnime.findByAiringStartDate", query = "SELECT d FROM DetailAnime d WHERE d.airingStartDate = :airingStartDate")
+    , @NamedQuery(name = "DetailAnime.findByAiringEndDate", query = "SELECT d FROM DetailAnime d WHERE d.airingEndDate = :airingEndDate")
+    , @NamedQuery(name = "DetailAnime.findByAiringDay", query = "SELECT d FROM DetailAnime d WHERE d.airingDay = :airingDay")
+    , @NamedQuery(name = "DetailAnime.findByAiringTime", query = "SELECT d FROM DetailAnime d WHERE d.airingTime = :airingTime")
+    , @NamedQuery(name = "DetailAnime.findBySysnopsis", query = "SELECT d FROM DetailAnime d WHERE d.sysnopsis = :sysnopsis")
+    , @NamedQuery(name = "DetailAnime.findByBackground", query = "SELECT d FROM DetailAnime d WHERE d.background = :background")
+    , @NamedQuery(name = "DetailAnime.findByDuration", query = "SELECT d FROM DetailAnime d WHERE d.duration = :duration")
+    , @NamedQuery(name = "DetailAnime.findBySourceType", query = "SELECT d FROM DetailAnime d WHERE d.sourceType = :sourceType")
+    , @NamedQuery(name = "DetailAnime.findByThumbnail", query = "SELECT d FROM DetailAnime d WHERE d.thumbnail = :thumbnail")
+    , @NamedQuery(name = "DetailAnime.findByGenreId", query = "SELECT d FROM DetailAnime d WHERE d.genreId = :genreId")
+    , @NamedQuery(name = "DetailAnime.findByFavorited", query = "SELECT d FROM DetailAnime d WHERE d.favorited = :favorited")
+    , @NamedQuery(name = "DetailAnime.findByCreatedDate", query = "SELECT d FROM DetailAnime d WHERE d.createdDate = :createdDate")
+    , @NamedQuery(name = "DetailAnime.findByStatusActive", query = "SELECT d FROM DetailAnime d WHERE d.statusActive = :statusActive")
+    , @NamedQuery(name = "DetailAnime.findByStatusConfirm", query = "SELECT d FROM DetailAnime d WHERE d.statusConfirm = :statusConfirm")})
 public class DetailAnime implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -92,7 +115,7 @@ public class DetailAnime implements Serializable {
     @Column(name = "favorited")
     private Integer favorited;
     @Column(name = "created_date")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
     @Column(name = "status_active")
     private Integer statusActive;
@@ -298,6 +321,7 @@ public class DetailAnime implements Serializable {
         this.statusConfirm = statusConfirm;
     }
 
+    @XmlTransient
     public Collection<Genres> getGenresCollection() {
         return genresCollection;
     }
@@ -306,6 +330,7 @@ public class DetailAnime implements Serializable {
         this.genresCollection = genresCollection;
     }
 
+    @XmlTransient
     public Collection<DetailPeople> getDetailPeopleCollection() {
         return detailPeopleCollection;
     }
@@ -314,6 +339,7 @@ public class DetailAnime implements Serializable {
         this.detailPeopleCollection = detailPeopleCollection;
     }
 
+    @XmlTransient
     public Collection<Producers> getProducersCollection() {
         return producersCollection;
     }
@@ -322,6 +348,7 @@ public class DetailAnime implements Serializable {
         this.producersCollection = producersCollection;
     }
 
+    @XmlTransient
     public Collection<Licensors> getLicensorsCollection() {
         return licensorsCollection;
     }
@@ -330,6 +357,7 @@ public class DetailAnime implements Serializable {
         this.licensorsCollection = licensorsCollection;
     }
 
+    @XmlTransient
     public Collection<CharactersDetailAnime> getCharactersDetailAnimeCollection() {
         return charactersDetailAnimeCollection;
     }
@@ -362,6 +390,7 @@ public class DetailAnime implements Serializable {
         this.studioId = studioId;
     }
 
+    @XmlTransient
     public Collection<DetailEpisode> getDetailEpisodeCollection() {
         return detailEpisodeCollection;
     }

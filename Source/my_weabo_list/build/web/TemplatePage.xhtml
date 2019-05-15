@@ -1,0 +1,205 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"/>
+        <!-- Bootstrap 3.3.7 -->
+        <!-- Favicon -->
+        <title>
+            <ui:insert name="role">
+
+            </ui:insert>
+            -
+            <ui:insert name="title">
+
+            </ui:insert>
+        </title>
+
+        <link rel="shortcut icon" href="../assets/images/favicon.ico"/>
+        <!-- Switchery css -->
+        <link href="../assets/plugins/switchery/switchery.min.css" rel="stylesheet" />
+
+        <!-- Bootstrap CSS -->
+        <link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+
+        <!-- Font Awesome CSS -->
+        <link href="../assets/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+        <!-- Custom CSS -->
+        <link href="../assets/css/style.css" rel="stylesheet" type="text/css" />	
+
+        <script src="../assets/js/modernizr.min.js"></script>
+        <script src="../assets/js/jquery.min.js"></script>
+        <script src="../assets/js/moment.min.js"></script>
+
+        <!-- BEGIN CSS for this page -->
+        <ui:insert name="begin_css"></ui:insert>
+
+        <!-- END CSS for this page -->
+    </h:head>
+
+    <body class="adminbody">
+
+        <div id="main">
+
+            <!-- top bar navigation -->
+            <div class="headerbar">
+
+                <!-- LOGO -->
+                <div class="headerbar-left">
+                    <a href="index.html" class="logo"><img alt="logo" src="../assets/images/logo.png" /> <span>Admin</span></a>
+                </div>
+
+                <nav class="navbar-custom">
+
+
+
+                    <ul class="list-inline menu-left mb-0">
+                        <li class="float-left">
+                            <button class="button-menu-mobile open-left">
+                                <i class="fa fa-fw fa-bars"></i>
+                            </button>
+                        </li>                        
+                    </ul>
+
+                </nav>
+
+            </div>
+            <!-- End Navigation -->
+
+
+            <!-- Left Sidebar -->
+            <div class="left main-sidebar">
+
+                <div class="sidebar-inner leftscroll">
+
+                    <div id="sidebar-menu">
+
+                        <ul>
+
+                            <ui:insert name="sidebar_menu"></ui:insert>
+                            <li class="submenu">
+                                <a href="#" ><i class="fa fa-fw fa-bars"></i><span> Dashboard </span> </a>
+                            </li>
+
+                            <li class="submenu">
+                                <a href="#"><i class="fa fa-fw fa-database"></i> <span> Kelola Master </span> <span class="menu-arrow"></span></a>
+                                <ul class="list-unstyled" style="display: block">
+                                    <li><a href="../studios/List.xhtml">Studio</a></li>
+                                    <li><a href="../genres/List.xhtml">Genre</a></li>
+                                    <li><a href="../licensors/List.xhtml">Lecensor</a></li>
+                                    <li><a href="../producers/List.xhtml">Producer</a></li>
+                                </ul>
+                            </li>
+                            <li class="submenu">
+                                <a href="#" ><i class="fa fa-fw fa-database"></i> <span> Kelola Master-Detail </span> <span class="menu-arrow"></span></a>
+                                <ul class="list-unstyled" style="display: block">
+                                    <li><a href="../masterPeople/List.xhtml">People</a></li>
+                                    <li><a href="../masterCharacters/List.xhtml">Character</a></li>
+                                    <li><a href="../masterAnime/List.xhtml">Anime</a></li>
+                                </ul>
+                            </li>
+
+                            <li class="submenu">
+                                <a href="../index.xhtml" ><i class="fa fa-fw fa-sign-out"></i><span> Log Out </span> </a>
+                            </li>
+
+                        </ul>
+
+                        <div class="clearfix"></div>
+
+                    </div>
+
+                    <div class="clearfix"></div>
+
+                </div>
+
+            </div>
+            <!-- End Sidebar -->
+
+
+            <div class="content-page">
+
+                <!-- Start content -->
+                <div class="content">
+
+                    <div class="container-fluid">
+
+
+                        <div class="row">
+                            <div class="col-xl-12">
+                                <div class="breadcrumb-holder">
+                                    <h1 class="main-title float-left">
+                                        <ui:insert name="header_top"></ui:insert>
+
+                                    </h1>
+                                    <ol class="breadcrumb float-right">
+                                        <li class="breadcrumb-item">Admin</li>
+                                        <ui:insert name="breadcrumb"></ui:insert>
+
+                                    </ol>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!-- end row -->
+
+
+
+                        <ui:insert name="content"></ui:insert>
+
+
+
+                    </div>
+                    <!-- END container-fluid -->
+
+                </div>
+                <!-- END content -->
+
+            </div>
+            <!-- END content-page -->
+
+            <footer class="footer">
+                <span class="text-right">
+                    Copyright <a target="_blank" href="#">Your Website</a>
+                </span>
+                <span class="float-right">
+                    Powered by <a target="_blank" href="https://www.pikeadmin.com"><b>Pike Admin</b></a>
+                </span>
+            </footer>
+
+        </div>
+        <!-- END main -->
+
+        <script src="../assets/js/modernizr.min.js"></script>
+        <script src="../assets/js/jquery.min.js"></script>
+        <script src="../assets/js/moment.min.js"></script>
+
+        <script src="../assets/js/popper.min.js"></script>
+        <script src="../assets/js/bootstrap.min.js"></script>
+
+        <script src="../assets/js/detect.js"></script>
+        <script src="../assets/js/fastclick.js"></script>
+        <script src="../assets/js/jquery.blockUI.js"></script>
+        <script src="../assets/js/jquery.nicescroll.js"></script>
+        <script src="../assets/js/jquery.scrollTo.min.js"></script>
+        <script src="../assets/plugins/switchery/switchery.min.js"></script>
+
+        <!-- App js -->
+        <script src="../assets/js/pikeadmin.js"></script>
+
+        <!-- BEGIN Java Script for this page -->
+        <ui:insert name="end_of_body"></ui:insert>
+
+        <!-- END Java Script for this page -->
+
+    </body>
+
+
+</html>
+

@@ -22,6 +22,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -29,8 +31,13 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 @Table(name = "master_anime")
+@XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "MasterAnime.findAll", query = "SELECT m FROM MasterAnime m")})
+    @NamedQuery(name = "MasterAnime.findAll", query = "SELECT m FROM MasterAnime m")
+    , @NamedQuery(name = "MasterAnime.findByAnimeId", query = "SELECT m FROM MasterAnime m WHERE m.animeId = :animeId")
+    , @NamedQuery(name = "MasterAnime.findByLastModifiedDate", query = "SELECT m FROM MasterAnime m WHERE m.lastModifiedDate = :lastModifiedDate")
+    , @NamedQuery(name = "MasterAnime.findByCreatedDate", query = "SELECT m FROM MasterAnime m WHERE m.createdDate = :createdDate")
+    , @NamedQuery(name = "MasterAnime.findByStatusDelete", query = "SELECT m FROM MasterAnime m WHERE m.statusDelete = :statusDelete")})
 public class MasterAnime implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -40,10 +47,10 @@ public class MasterAnime implements Serializable {
     @Column(name = "anime_id")
     private Integer animeId;
     @Column(name = "last_modified_date")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date lastModifiedDate;
     @Column(name = "created_date")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
     @Column(name = "status_delete")
     private Integer statusDelete;
@@ -95,6 +102,7 @@ public class MasterAnime implements Serializable {
         this.statusDelete = statusDelete;
     }
 
+    @XmlTransient
     public Collection<DetailAnime> getDetailAnimeCollection() {
         return detailAnimeCollection;
     }

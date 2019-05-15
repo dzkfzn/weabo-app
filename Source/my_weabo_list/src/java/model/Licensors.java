@@ -11,6 +11,8 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -23,6 +25,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -30,14 +34,20 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "licensors")
+@XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Licensors.findAll", query = "SELECT l FROM Licensors l")})
+    @NamedQuery(name = "Licensors.findAll", query = "SELECT l FROM Licensors l")
+    , @NamedQuery(name = "Licensors.findByLicensorId", query = "SELECT l FROM Licensors l WHERE l.licensorId = :licensorId")
+    , @NamedQuery(name = "Licensors.findByName", query = "SELECT l FROM Licensors l WHERE l.name = :name")
+    , @NamedQuery(name = "Licensors.findByCreatedDate", query = "SELECT l FROM Licensors l WHERE l.createdDate = :createdDate")
+    , @NamedQuery(name = "Licensors.findByModifiedDate", query = "SELECT l FROM Licensors l WHERE l.modifiedDate = :modifiedDate")
+    , @NamedQuery(name = "Licensors.findByIsActive", query = "SELECT l FROM Licensors l WHERE l.isActive = :isActive")})
 public class Licensors implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Basic(optional = false)
-    @NotNull
     @Column(name = "licensor_id")
     private Integer licensorId;
     @Basic(optional = false)
@@ -45,15 +55,11 @@ public class Licensors implements Serializable {
     @Size(min = 1, max = 30)
     @Column(name = "name")
     private String name;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "created_date")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "modified_date")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date modifiedDate;
     @Basic(optional = false)
     @NotNull
@@ -78,11 +84,9 @@ public class Licensors implements Serializable {
         this.licensorId = licensorId;
     }
 
-    public Licensors(Integer licensorId, String name, Date createdDate, Date modifiedDate, int isActive) {
+    public Licensors(Integer licensorId, String name, int isActive) {
         this.licensorId = licensorId;
         this.name = name;
-        this.createdDate = createdDate;
-        this.modifiedDate = modifiedDate;
         this.isActive = isActive;
     }
 
@@ -126,6 +130,7 @@ public class Licensors implements Serializable {
         this.isActive = isActive;
     }
 
+    @XmlTransient
     public Collection<DetailAnime> getDetailAnimeCollection() {
         return detailAnimeCollection;
     }
@@ -174,5 +179,5 @@ public class Licensors implements Serializable {
     public String toString() {
         return "model.Licensors[ licensorId=" + licensorId + " ]";
     }
-    
+
 }

@@ -23,6 +23,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -30,8 +32,14 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "genres")
+@XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Genres.findAll", query = "SELECT g FROM Genres g")})
+    @NamedQuery(name = "Genres.findAll", query = "SELECT g FROM Genres g")
+    , @NamedQuery(name = "Genres.findByGenreId", query = "SELECT g FROM Genres g WHERE g.genreId = :genreId")
+    , @NamedQuery(name = "Genres.findByName", query = "SELECT g FROM Genres g WHERE g.name = :name")
+    , @NamedQuery(name = "Genres.findByCreatedDate", query = "SELECT g FROM Genres g WHERE g.createdDate = :createdDate")
+    , @NamedQuery(name = "Genres.findByModifiedDate", query = "SELECT g FROM Genres g WHERE g.modifiedDate = :modifiedDate")
+    , @NamedQuery(name = "Genres.findByIsActive", query = "SELECT g FROM Genres g WHERE g.isActive = :isActive")})
 public class Genres implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -126,6 +134,7 @@ public class Genres implements Serializable {
         this.isActive = isActive;
     }
 
+    @XmlTransient
     public Collection<DetailAnime> getDetailAnimeCollection() {
         return detailAnimeCollection;
     }
