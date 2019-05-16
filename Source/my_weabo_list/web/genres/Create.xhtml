@@ -1,53 +1,131 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:jsf="http://xmlns.jcp.org/jsf">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="../TemplatePage.xhtml">
 
-    <ui:composition template="/template.xhtml">
-        <ui:define name="title">
-            <h:outputText value="#{bundle.CreateGenresTitle}"></h:outputText>
-        </ui:define>
-        <ui:define name="body">
-            <h:panelGroup id="messagePanel" layout="block">
-                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
-            </h:panelGroup>
-            <h:form>
-                <h:panelGrid columns="2">
-                    <h:outputLabel value="#{bundle.CreateGenresLabel_genreId}" for="genreId" />
-                    <h:inputText id="genreId" value="#{genresController.selected.genreId}" title="#{bundle.CreateGenresTitle_genreId}" required="true" requiredMessage="#{bundle.CreateGenresRequiredMessage_genreId}"/>
-                    <h:outputLabel value="#{bundle.CreateGenresLabel_name}" for="name" />
-                    <h:inputText id="name" value="#{genresController.selected.name}" title="#{bundle.CreateGenresTitle_name}" required="true" requiredMessage="#{bundle.CreateGenresRequiredMessage_name}"/>
-                    <h:outputLabel value="#{bundle.CreateGenresLabel_createdDate}" for="createdDate" />
-                    <h:inputText id="createdDate" value="#{genresController.selected.createdDate}" title="#{bundle.CreateGenresTitle_createdDate}" required="true" requiredMessage="#{bundle.CreateGenresRequiredMessage_createdDate}">
-                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                    </h:inputText>
-                    <h:outputLabel value="#{bundle.CreateGenresLabel_modifiedDate}" for="modifiedDate" />
-                    <h:inputText id="modifiedDate" value="#{genresController.selected.modifiedDate}" title="#{bundle.CreateGenresTitle_modifiedDate}" required="true" requiredMessage="#{bundle.CreateGenresRequiredMessage_modifiedDate}">
-                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                    </h:inputText>
-                    <h:outputLabel value="#{bundle.CreateGenresLabel_isActive}" for="isActive" />
-                    <h:inputText id="isActive" value="#{genresController.selected.isActive}" title="#{bundle.CreateGenresTitle_isActive}" required="true" requiredMessage="#{bundle.CreateGenresRequiredMessage_isActive}"/>
-                    <h:outputLabel value="#{bundle.CreateGenresLabel_createdBy}" for="createdBy" />
-                    <h:selectOneMenu id="createdBy" value="#{genresController.selected.createdBy}" title="#{bundle.CreateGenresTitle_createdBy}" >
-                        <f:selectItems value="#{masterUserController.itemsAvailableSelectOne}"/>
-                    </h:selectOneMenu>
-                    <h:outputLabel value="#{bundle.CreateGenresLabel_modifiedBy}" for="modifiedBy" />
-                    <h:selectOneMenu id="modifiedBy" value="#{genresController.selected.modifiedBy}" title="#{bundle.CreateGenresTitle_modifiedBy}" >
-                        <f:selectItems value="#{masterUserController.itemsAvailableSelectOne}"/>
-                    </h:selectOneMenu>
-                </h:panelGrid>
-                <br />
-                <h:commandLink action="#{genresController.create}" value="#{bundle.CreateGenresSaveLink}" />
-                <br />
-                <br />
-                <h:commandLink action="#{genresController.prepareList}" value="#{bundle.CreateGenresShowAllLink}" immediate="true"/>
-                <br />
-                <br />
-                <h:link outcome="/index" value="#{bundle.CreateGenresIndexLink}"/>
-            </h:form>
-        </ui:define>
-    </ui:composition>
+            <!--START OF TITLE-->
+            <ui:define name="role">
+                Admin
+            </ui:define>
+            <ui:define name="title">
+                Kelola Genre
+            </ui:define>
+            <!--END OF TITLE-->
 
+
+            <ui:define name="header_top">
+                Kelola Genre
+            </ui:define>
+            <ui:define name="breadcrumb">
+
+                <li class="breadcrumb-item"> Kelola Master</li>
+                <li class="breadcrumb-item"> Kelola Genres</li>    
+                <li class="breadcrumb-item"> Tambah Genres</li>
+
+
+            </ui:define>
+
+            <!--START OF CSS-->
+            <ui:define name="begin_css">
+
+                <script src="../assets/js/modernizr.min.js"></script>
+                <script src="../assets/js/moment.min.js"></script>	
+                <link href="../assets/plugins/datetimepicker/css/daterangepicker.css" rel="stylesheet" /> 
+                <style>
+                    .parsley-error {
+                        border-color: #ff5d48 !important;
+                    }
+                    .parsley-errors-list.filled {
+                        display: block;
+                    }
+                    .parsley-errors-list {
+                        display: none;
+                        margin: 0;
+                        padding: 0;
+                    }
+                    .parsley-errors-list > li {
+                        font-size: 12px;
+                        list-style: none;
+                        color: #ff5d48;
+                        margin-top: 5px;
+                    }
+                    .form-section {
+                        padding-left: 15px;
+                        border-left: 2px solid #FF851B;
+                        display: none;
+                    }
+                    .form-section.current {
+                        display: inherit;
+                    }
+                </style>		
+            </ui:define>
+            <!--END OF CSS-->
+            <ui:define name="content">
+                <b:form>
+                    <div class="row">
+                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">						
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">						
+                            <div class="card mb-3">
+                                <div class="card-header">
+                                    <span class="pull-right">
+                                        <!--<button class="" >Add new user</button>-->
+                                    </span>
+                                    <h3><i class="fa fa-certificate"></i> Tambah Genre</h3>								
+                                </div>
+                                <div class="card-body">
+                                    <h:panelGroup id="messagePanel" layout="block">
+                                        <b:messages />
+                                    </h:panelGroup>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-12">
+                                            <label>Nama Genre<span class="text-danger">*</span></label>
+                                            <b:inputText styleClass="form-control" 
+                                                         id="name" 
+                                                         value="#{genresController.selected.name}" 
+                                                         required="true" 
+                                                         mask="{regex:'^[a-zA-Z0-9_]*$'}"
+                                                         placeholder="Nama Genre"
+                                                         requiredMessage="Nama Harus Diisi">
+                                            </b:inputText>
+                                        </div>
+
+                                    </div>
+
+                                    <center>
+                                        <div class="button-list">
+                                            <h:commandLink styleClass="btn btn-primary" action="#{genresController.create}" value="Simpan" />
+                                            <h:commandLink action="#{genresController.prepareList()}" styleClass="btn btn-danger" immediate="true" value="Batal dan Kembali ke List"/>
+
+                                        </div>
+                                    </center>
+                                </div>							
+                            </div><!-- end card-->					
+                        </div>
+                    </div>			
+                </b:form>
+            </ui:define>
+            <ui:define name="end_of_body">
+                <script src="../assets/plugins/parsleyjs/parsley.min.js"></script>
+                <script>
+                    $('#form').parsley();
+                </script>
+                <script src="../assets/plugins/datetimepicker/js/moment.min.js"></script>
+                <script src="../assets/plugins/datetimepicker/js/daterangepicker.js"></script>
+
+            </ui:define>
+
+        </ui:composition>
+    </h:body>
 </html>
+

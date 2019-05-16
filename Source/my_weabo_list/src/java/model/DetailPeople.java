@@ -109,6 +109,10 @@ public class DetailPeople implements Serializable {
         this.birthDay = birthDay;
     }
 
+    public void setIdPeople(MasterPeople people_id) {
+        this.peopleId = people_id;
+    }
+    
     public Integer getDetailPeopleId() {
         return detailPeopleId;
     }

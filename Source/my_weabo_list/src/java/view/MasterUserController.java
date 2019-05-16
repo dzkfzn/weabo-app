@@ -362,33 +362,34 @@ public class MasterUserController implements Serializable {
     }
 
     public String upload() {
-        try {
-            InputStream in = mfotoStaff.getInputStream();
-            setFoto(mfotoStaff);
-            File f = new File("D://ONEDRIVE EDUCATION//OneDrive - polman.astra.ac.id//SEMESTER 4//PRG 7 JAVA WEB//TUGAS FROM ME//UTS//UTS016//web//resources//images//" + mfotoStaff.getSubmittedFileName());
-
-            f.createNewFile();
-//            url = f.toString();
-            mPhotoUrlStaff = mfotoStaff.getSubmittedFileName();
-            FileOutputStream out = new FileOutputStream(f);
-            try (InputStream input = mfotoStaff.getInputStream()) {
-                Files.copy(input, new File("D://ONEDRIVE EDUCATION//OneDrive - polman.astra.ac.id//SEMESTER 4//PRG 7 JAVA WEB//TUGAS FROM ME//UTS//UTS016//web//resources//images//" + mfotoStaff.getSubmittedFileName()).toPath());
-            } catch (IOException e) {
-                // Show faces message?
-            }
-            byte[] buffer = new byte[1024];
-            int length;
-
-            while ((length = in.read(buffer)) > 0) {
-                out.write(buffer);
-            }
-            out.close();
-            in.close();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return url;
+//        try {
+//            InputStream in = mfotoStaff.getInputStream();
+//            setFoto(mfotoStaff);
+//            File f = new File("D://ONEDRIVE EDUCATION//OneDrive - polman.astra.ac.id//SEMESTER 4//PRG 7 JAVA WEB//TUGAS FROM ME//UTS//UTS016//web//resources//images//" + mfotoStaff.getSubmittedFileName());
+//
+//            f.createNewFile();
+////            url = f.toString();
+//            mPhotoUrlStaff = mfotoStaff.getSubmittedFileName();
+//            FileOutputStream out = new FileOutputStream(f);
+//            try (InputStream input = mfotoStaff.getInputStream()) {
+//                Files.copy(input, new File("D://ONEDRIVE EDUCATION//OneDrive - polman.astra.ac.id//SEMESTER 4//PRG 7 JAVA WEB//TUGAS FROM ME//UTS//UTS016//web//resources//images//" + mfotoStaff.getSubmittedFileName()).toPath());
+//            } catch (IOException e) {
+//                // Show faces message?
+//            }
+//            byte[] buffer = new byte[1024];
+//            int length;
+//
+//            while ((length = in.read(buffer)) > 0) {
+//                out.write(buffer);
+//            }
+//            out.close();
+//            in.close();
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return url;
+return null;
     }
 
 }

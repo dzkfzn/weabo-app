@@ -6,6 +6,7 @@ import view.util.PaginationHelper;
 import controller.GenresFacade;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.inject.Named;
@@ -30,6 +31,7 @@ public class GenresController implements Serializable {
     private int selectedItemIndex;
 
     public GenresController() {
+        recreateModel();
     }
 
     public Genres getSelected() {
@@ -81,9 +83,18 @@ public class GenresController implements Serializable {
 
     public String create() {
         try {
+            Date createdDate = new Date();
+            current.setCreatedDate(createdDate);
+            current.setModifiedDate(createdDate);
+
+            //inisialisasi is Active
+            current.setIsActive(1);
+            
+            recreateModel();
+            
             getFacade().create(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("GenresCreated"));
-            return prepareCreate();
+            JsfUtil.addSuccessMessage("Data berhasil Ditambahkan");
+            return "List";
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
             return null;
@@ -99,8 +110,42 @@ public class GenresController implements Serializable {
     public String update() {
         try {
             getFacade().edit(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("GenresUpdated"));
-            return "View";
+            JsfUtil.addSuccessMessage("Data berhasil di update");
+            recreateModel();
+            return "List";
+        } catch (Exception e) {
+            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
+            return null;
+        }
+    }
+    
+    public String toAktif() {
+
+        current = (Genres) getItems().getRowData();
+        selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
+
+        try {
+            current.setIsActive(1);
+            getFacade().edit(current);
+            JsfUtil.addSuccessMessage("Data Di ubah menjadi Aktif");
+
+            return "List";
+        } catch (Exception e) {
+            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
+            return null;
+        }
+    }
+
+    public String toTidakAktif() {
+        try {
+
+            current = (Genres) getItems().getRowData();
+            selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
+
+            current.setIsActive(0);
+            getFacade().edit(current);
+            JsfUtil.addSuccessMessage("Data Di ubah menjadi Tidak Aktif");
+            return "List";
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
             return null;
