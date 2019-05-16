@@ -47,7 +47,7 @@ public class MasterPeopleController implements Serializable {
     public MasterPeopleController() {
         recreateModel();
     }
-
+//masterUser
     public MasterPeople getSelected() {
         if (current == null) {
             current = new MasterPeople();

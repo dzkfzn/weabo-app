@@ -64,6 +64,7 @@ public class MasterPeople implements Serializable {
     private MasterUser lastModifiedBy;
 
     public MasterPeople() {
+        
     }
 
     public MasterPeople(Integer peopleId) {

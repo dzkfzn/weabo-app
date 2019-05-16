@@ -29,11 +29,11 @@
                     <h:inputText id="statusDelete" value="#{masterPeopleController.selected.statusDelete}" title="#{bundle.CreateMasterPeopleTitle_statusDelete}" />
                     <h:outputLabel value="#{bundle.CreateMasterPeopleLabel_createdBy}" for="createdBy" />
                     <h:selectOneMenu id="createdBy" value="#{masterPeopleController.selected.createdBy}" title="#{bundle.CreateMasterPeopleTitle_createdBy}" >
-                        <f:selectItems value="#{masterUserController.itemsAvailableSelectOne}"/>
+                        <f:selectItems value="#{masterPeopleController.itemsAvailableSelectOne}"/>
                     </h:selectOneMenu>
                     <h:outputLabel value="#{bundle.CreateMasterPeopleLabel_lastModifiedBy}" for="lastModifiedBy" />
                     <h:selectOneMenu id="lastModifiedBy" value="#{masterPeopleController.selected.lastModifiedBy}" title="#{bundle.CreateMasterPeopleTitle_lastModifiedBy}" required="true" requiredMessage="#{bundle.CreateMasterPeopleRequiredMessage_lastModifiedBy}">
-                        <f:selectItems value="#{masterUserController.itemsAvailableSelectOne}"/>
+                        <f:selectItems value="#{masterPeopleController.itemsAvailableSelectOne}"/>
                     </h:selectOneMenu>
                 </h:panelGrid>
                 <br />
