@@ -41,25 +41,29 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "MasterUser.findByThumbnail", query = "SELECT m FROM MasterUser m WHERE m.thumbnail = :thumbnail")
     , @NamedQuery(name = "MasterUser.findByRoleUser", query = "SELECT m FROM MasterUser m WHERE m.roleUser = :roleUser")
     , @NamedQuery(name = "MasterUser.findByCreatedDate", query = "SELECT m FROM MasterUser m WHERE m.createdDate = :createdDate")
-    , @NamedQuery(name = "MasterUser.findByLastOnlineDate", query = "SELECT m FROM MasterUser m WHERE m.lastOnlineDate = :lastOnlineDate")})
+    , @NamedQuery(name = "MasterUser.findByLastOnlineDate", query = "SELECT m FROM MasterUser m WHERE m.lastOnlineDate = :lastOnlineDate")
+    , @NamedQuery(name = "MasterUser.findByIsActive", query = "SELECT m FROM MasterUser m WHERE m.isActive = :isActive")})
 public class MasterUser implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @NotNull
+    @Size(min = 1, max = 50)
     @Column(name = "user_id")
-    private Integer userId;
+    private String userId;
     @Size(max = 50)
     @Column(name = "name")
     private String name;
+    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Basic(optional = false)
     @NotNull
+    @Size(min = 1, max = 50)
     @Column(name = "email")
-    private int email;
+    private String email;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 255)
+    @Size(min = 1, max = 50)
     @Column(name = "username")
     private String username;
     @Basic(optional = false)
@@ -74,14 +78,16 @@ public class MasterUser implements Serializable {
     @NotNull
     @Column(name = "role_user")
     private int roleUser;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "created_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
     @Column(name = "last_online_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastOnlineDate;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "is_active")
+    private int isActive;
     @OneToMany(mappedBy = "createdBy")
     private Collection<DetailPeople> detailPeopleCollection;
     @OneToMany(mappedBy = "createdBy")
@@ -124,24 +130,24 @@ public class MasterUser implements Serializable {
     public MasterUser() {
     }
 
-    public MasterUser(Integer userId) {
+    public MasterUser(String userId) {
         this.userId = userId;
     }
 
-    public MasterUser(Integer userId, int email, String username, String password, int roleUser, Date createdDate) {
+    public MasterUser(String userId, String email, String username, String password, int roleUser, int isActive) {
         this.userId = userId;
         this.email = email;
         this.username = username;
         this.password = password;
         this.roleUser = roleUser;
-        this.createdDate = createdDate;
+        this.isActive = isActive;
     }
 
-    public Integer getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 
@@ -153,11 +159,11 @@ public class MasterUser implements Serializable {
         this.name = name;
     }
 
-    public int getEmail() {
+    public String getEmail() {
         return email;
     }
 
-    public void setEmail(int email) {
+    public void setEmail(String email) {
         this.email = email;
     }
 
@@ -207,6 +213,14 @@ public class MasterUser implements Serializable {
 
     public void setLastOnlineDate(Date lastOnlineDate) {
         this.lastOnlineDate = lastOnlineDate;
+    }
+
+    public int getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(int isActive) {
+        this.isActive = isActive;
     }
 
     @XmlTransient

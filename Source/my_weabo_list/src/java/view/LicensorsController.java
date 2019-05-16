@@ -86,7 +86,6 @@ public class LicensorsController implements Serializable {
     public String create() {
         try {
             //inisialisasi createddated dan modified date
-            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
             Date createdDate = new Date();
             current.setCreatedDate(createdDate);
             current.setModifiedDate(createdDate);
