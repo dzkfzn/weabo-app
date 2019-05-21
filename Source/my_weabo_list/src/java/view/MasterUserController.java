@@ -36,8 +36,10 @@ import javax.servlet.http.Part;
 @SessionScoped
 public class MasterUserController implements Serializable {
 
-    private Part mfotoStaff;
-    private Part fotoCustomer;
+    private static final String URL_PROJECT = "D://GitHub//MyWeBooList//Source//my_weabo_list//web//resources//images//";
+
+    private Part mFotoStaff;
+    private Part mFotoCustomer;
     private String mPhotoUrlStaff;
     private String mPhotoUrlCustomer;
 
@@ -57,6 +59,25 @@ public class MasterUserController implements Serializable {
     private PaginationHelper pagination;
     private int selectedItemIndex;
 
+    //getset foto
+    public Part getFotoStaff() {
+        return mFotoStaff;
+    }
+
+    public void setFotoStaff(Part mFotoStaff) {
+        this.mFotoStaff = mFotoStaff;
+    }
+
+    public Part getFotoCustomer() {
+        return mFotoCustomer;
+    }
+
+    public void setFotoCustomer(Part fotoCustomer) {
+        this.mFotoCustomer = fotoCustomer;
+    }
+    //end of getset
+
+    //constructor
     public MasterUserController() {
         recreateModel();
     }
@@ -123,37 +144,23 @@ public class MasterUserController implements Serializable {
 
     public String prepareList() {
         recreateModel();
-        return "List";
+        return "List?faces-redirect=true";
     }
 
     public String prepareView() {
         current = (MasterUser) getItems().getRowData();
+        currentStaff = ejbFacade.getStaffByUserId(current.getUserId());
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
-        return "View";
+        return "View?faces-redirect=true";
     }
 
     public String prepareCreate() {
         current = new MasterUser();
         selectedItemIndex = -1;
-        return "Create";
+        return "Create?faces-redirect=true";
     }
 
     private String mUserID;
-
-    public String create() {
-        try {
-
-            mUserID = UUID.randomUUID().toString();
-            current.setUserId(mUserID);
-            current.setIsActive(1);
-            getFacade().create(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("MasterUserCreated"));
-            return prepareCreate();
-        } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
-            return null;
-        }
-    }
 
     public String createKaryawan() {
         try {
@@ -174,29 +181,62 @@ public class MasterUserController implements Serializable {
             current.setUserId(mUserID);
             currentStaff.setUserId(current);
 
+            //upload Foto
+            current.setThumbnail(upload());
+
             //create ke 2 tabel sekaligus
             getFacade().create(current);
             getFacadeStaff().create(currentStaff);
 
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("MasterUserCreated"));
-            return prepareCreate();
+            JsfUtil.addSuccessMessage("Data Berhasil Di tambahkan");
+            recreateModel();
+            clearVariable();
+            return "List?faces-redirect=true";
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
             return null;
         }
     }
 
-    public String prepareEdit() {
-        current = (MasterUser) getItems().getRowData();
-        selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
-        return "Edit";
+    private void clearVariable() {
+        mFotoStaff = null;
+        mFotoCustomer = null;
+        mPhotoUrlStaff = null;
+        mPhotoUrlCustomer = null;
+
     }
 
-    public String update() {
+    public String prepareEdit() {
+        current = (MasterUser) getItems().getRowData();
+        currentStaff = ejbFacade.getStaffByUserId(current.getUserId());
+        selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
+        return "Edit?faces-redirect=true";
+    }
+
+    public String updateStaff() {
+        try {
+
+            if (mFotoStaff != null) {
+                current.setThumbnail(upload());
+            }
+
+            getFacade().edit(current);
+            getFacadeStaff().edit(currentStaff);
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("MasterUserUpdated"));
+            clearVariable();
+            return "List?faces-redirect=true";
+        } catch (Exception e) {
+            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
+            return null;
+        }
+    }
+
+    public String updateCustomer() {
         try {
             getFacade().edit(current);
+            getFacadeStaff().edit(currentStaff);
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("MasterUserUpdated"));
-            return "View";
+            return "View?faces-redirect=true";
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
             return null;
@@ -209,7 +249,7 @@ public class MasterUserController implements Serializable {
         performDestroy();
         recreatePagination();
         recreateModel();
-        return "List";
+        return "List?faces-redirect=true";
     }
 
     public String destroyAndView() {
@@ -217,11 +257,11 @@ public class MasterUserController implements Serializable {
         recreateModel();
         updateCurrentItem();
         if (selectedItemIndex >= 0) {
-            return "View";
+            return "View?faces-redirect=true";
         } else {
             // all items were removed - go back to list
             recreateModel();
-            return "List";
+            return "List?faces-redirect=true";
         }
     }
 
@@ -267,13 +307,13 @@ public class MasterUserController implements Serializable {
     public String next() {
         getPagination().nextPage();
         recreateModel();
-        return "List";
+        return "List?faces-redirect=true";
     }
 
     public String previous() {
         getPagination().previousPage();
         recreateModel();
-        return "List";
+        return "List?faces-redirect=true";
     }
 
     public SelectItem[] getItemsAvailableSelectMany() {
@@ -338,7 +378,7 @@ public class MasterUserController implements Serializable {
             getFacade().edit(current);
             JsfUtil.addSuccessMessage("Data Di ubah menjadi Aktif");
 
-            return "List";
+            return "List?faces-redirect=true";
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
             return null;
@@ -354,7 +394,7 @@ public class MasterUserController implements Serializable {
             current.setIsActive(0);
             getFacade().edit(current);
             JsfUtil.addSuccessMessage("Data Di ubah menjadi Tidak Aktif");
-            return "List";
+            return "List?faces-redirect=true";
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
             return null;
@@ -362,34 +402,35 @@ public class MasterUserController implements Serializable {
     }
 
     public String upload() {
-//        try {
-//            InputStream in = mfotoStaff.getInputStream();
-//            setFoto(mfotoStaff);
-//            File f = new File("D://ONEDRIVE EDUCATION//OneDrive - polman.astra.ac.id//SEMESTER 4//PRG 7 JAVA WEB//TUGAS FROM ME//UTS//UTS016//web//resources//images//" + mfotoStaff.getSubmittedFileName());
-//
-//            f.createNewFile();
-////            url = f.toString();
-//            mPhotoUrlStaff = mfotoStaff.getSubmittedFileName();
-//            FileOutputStream out = new FileOutputStream(f);
-//            try (InputStream input = mfotoStaff.getInputStream()) {
-//                Files.copy(input, new File("D://ONEDRIVE EDUCATION//OneDrive - polman.astra.ac.id//SEMESTER 4//PRG 7 JAVA WEB//TUGAS FROM ME//UTS//UTS016//web//resources//images//" + mfotoStaff.getSubmittedFileName()).toPath());
-//            } catch (IOException e) {
-//                // Show faces message?
-//            }
-//            byte[] buffer = new byte[1024];
-//            int length;
-//
-//            while ((length = in.read(buffer)) > 0) {
-//                out.write(buffer);
-//            }
-//            out.close();
-//            in.close();
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        return url;
-return null;
+        try {
+            InputStream in = mFotoStaff.getInputStream();
+            setFotoStaff(mFotoStaff);
+            File f = new File(URL_PROJECT
+                    //D:\GitHub\MyWeBooList\Source\my_weabo_list\web\resources\images
+                    + mFotoStaff.getSubmittedFileName());
+
+            f.createNewFile();
+//            url = f.toString();
+            mPhotoUrlStaff = mFotoStaff.getSubmittedFileName();
+            FileOutputStream out = new FileOutputStream(f);
+            try (InputStream input = mFotoStaff.getInputStream()) {
+                Files.copy(input, new File(URL_PROJECT + mFotoStaff.getSubmittedFileName()).toPath());
+            } catch (IOException e) {
+                // Show faces message?
+            }
+            byte[] buffer = new byte[1024];
+            int length;
+
+            while ((length = in.read(buffer)) > 0) {
+                out.write(buffer);
+            }
+            out.close();
+            in.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return mPhotoUrlStaff;
     }
 
 }

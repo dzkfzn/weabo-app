@@ -29,8 +29,8 @@
             <ui:define name="breadcrumb">
 
                 <li class="breadcrumb-item"> Kelola Master</li>
-                <li class="breadcrumb-item"> Kelola Users</li>    
-                <li class="breadcrumb-item"> Tambah Users</li>
+                <li class="breadcrumb-item"> Kelola Staff</li>    
+                <li class="breadcrumb-item"> Tambah Staff</li>
 
 
             </ui:define>
@@ -71,7 +71,7 @@
             </ui:define>
             <!--END OF CSS-->
             <ui:define name="content">
-                <b:form>
+                <b:form enctype="multipart/form-data">
                     <div class="row">
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">						
                             <div class="card mb-3">
@@ -79,7 +79,7 @@
                                     <span class="pull-right">
                                         <!--<button class="" >Add new user</button>-->
                                     </span>
-                                    <h3><i class="fa fa-certificate"></i> Tambah User</h3>								
+                                    <h3><i class="fa fa-plus"></i> Tambah Staff</h3>								
                                 </div>
                                 <div class="card-body">
                                     <div class="form-row">
@@ -106,7 +106,12 @@
                                                          required="true" 
                                                          mask="email"
                                                          placeholder="Email Address"
-                                                         requiredMessage="Email Harus Diisi">
+                                                         requiredMessage="Email Harus Diisi"
+                                                         validatorMessage="Format Email Invalid"
+                                                         >
+
+                                                <f:validateRegex
+                                                    pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
                                             </b:inputText>
                                         </div>
                                     </div>
@@ -127,14 +132,21 @@
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label>Password<span class="text-danger">*</span>
-                                                <h:message for="password" errorStyle="color:red" />
+                                                <h:message 
+                                                    for="password" 
+                                                    errorStyle="color:red" />
                                             </label>
                                             <b:inputSecret  styleClass="form-control" 
                                                             id="password" 
                                                             value="#{masterUserController.selected.password}" 
                                                             required="true" 
                                                             placeholder="Password User"
+                                                            validatorMessage="Email Invalid (Mengandung spesial karakter atau spasi)"
+
                                                             requiredMessage="Password Harus Diisi">
+                                                <f:validateRegex
+                                                    pattern="^[a-zA-Z0-9]*$" />
+
                                             </b:inputSecret >
                                         </div>
                                     </div>
@@ -197,7 +209,7 @@
                                                          required="true" 
                                                          requiredMessage="Gambar tidak boleh kosong" 
                                                          id="thumbnail" 
-                                                         value="#{masterUserController.selected.thumbnail}" title="Gambar" />
+                                                         value="#{masterUserController.fotoStaff}" title="Gambar" />
                                         </div>
                                     </div>
                                     <div class="form-row">
