@@ -6,6 +6,8 @@ import view.util.PaginationHelper;
 import controller.StudiosFacade;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.inject.Named;
@@ -81,9 +83,18 @@ public class StudiosController implements Serializable {
 
     public String create() {
         try {
+            //inisialisasi createddated dan modified date
+            //SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+            Date createdDate = new Date();
+            current.setCreatedDate(createdDate);
+            current.setModifiedDate(createdDate);
+            
+            //inisialisasi is Active
+            current.setIsActive(1);
+            
             getFacade().create(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("StudiosCreated"));
-            return prepareCreate();
+            JsfUtil.addSuccessMessage("Data berhasil Ditambahkan");
+           return "List";
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
             return null;
@@ -95,12 +106,45 @@ public class StudiosController implements Serializable {
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "Edit";
     }
+    
+    public String toAktif() {
+
+        current = (Studios) getItems().getRowData();
+        selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
+
+        try {
+            current.setIsActive(1);
+            getFacade().edit(current);
+            JsfUtil.addSuccessMessage("Data Di ubah menjadi Aktif");
+
+            return "List";
+        } catch (Exception e) {
+            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
+            return null;
+        }
+    }
+    
+    public String toTidakAktif() {
+        try {
+
+            current = (Studios) getItems().getRowData();
+            selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
+
+            current.setIsActive(0);
+            getFacade().edit(current);
+            JsfUtil.addSuccessMessage("Data Di ubah menjadi Tidak Aktif");
+            return "List";
+        } catch (Exception e) {
+            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
+            return null;
+        }
+    }
 
     public String update() {
         try {
             getFacade().edit(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("StudiosUpdated"));
-            return "View";
+            JsfUtil.addSuccessMessage("Data berhasil di update");
+            return "List";
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
             return null;
