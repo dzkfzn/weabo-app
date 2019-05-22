@@ -36,7 +36,7 @@ import javax.servlet.http.Part;
 @SessionScoped
 public class MasterUserController implements Serializable {
 
-    private static final String URL_PROJECT = "D://GitHub//MyWeBooList//Source//my_weabo_list//web//resources//images//";
+    private static final String URL_PROJECT = "C://Users//Administrator//Documents//GitHub//new//MyWeBooList//Source//my_weabo_list//web//resources//images//";
 
     private Part mFotoStaff;
     private Part mFotoCustomer;

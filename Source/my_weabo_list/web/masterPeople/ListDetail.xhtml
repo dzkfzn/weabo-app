@@ -19,24 +19,22 @@
                 Admin
             </ui:define>
             <ui:define name="title">
-                Kelola Staff
+                Kelola People
             </ui:define>
             <!--END OF TITLE-->
             <ui:define name="header_top">
-                Kelola Staff
+                Kelola People
             </ui:define>
             <ui:define name="breadcrumb">
 
                 <li class="breadcrumb-item"> Kelola Master</li>
-                <li class="breadcrumb-item"> Kelola Staff</li>
-                <li class="breadcrumb-item"> List Staff</li>
+                <li class="breadcrumb-item"> Kelola Peoples</li>
+                <li class="breadcrumb-item"> List Peoples</li>
 
             </ui:define>
 
             <!--START OF CSS-->
             <ui:define name="begin_css">
-                <link href="../assets/plugins/lightbox/ekko-lightbox.css" rel="stylesheet" /> 
-
                 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css"/>	
                 <style>	
                     td.details-control {
@@ -45,22 +43,6 @@
                     }
                     tr.shown td.details-control {
                         background: url('assets/plugins/datatables/img/details_close.png') no-repeat center center;
-                    }
-                    .image-cropper {
-                        width: 50px;
-                        height: 50px;
-                        position: relative;
-                        overflow: hidden;
-                        border-radius: 50%;
-                    }
-                    .profile-pic {
-                        display: inline;
-                        margin: 0 auto;
-                        height: 100%;
-                        width: auto;
-
-                        max-width: 50px;
-                        max-height: 50px;
                     }
                 </style>		
             </ui:define>
@@ -75,11 +57,11 @@
                                 <div class="card-header">
                                     <span class="pull-right">
                                         <!--<button class="" >Add new user</button>-->
-                                        <h:commandLink class="btn btn-primary btn-sm" action="#{masterUserController.prepareCreate}" > <i class="fa fa-plus" aria-hidden="true"></i> Tambah User Baru </h:commandLink>
+                                        <h:commandLink class="btn btn-primary btn-sm" action="#{masterPeopleController.prepareCreate}" > <i class="fa fa-certificate" aria-hidden="true"></i> Tambah People Baru </h:commandLink>
 
 
                                     </span>
-                                    <h3><i class="fa fa-users"></i> Semua Staff (#{masterUserController.items.rowCount} Staff)</h3>								
+                                    <h3><i class="fa fa-certificate"></i> Semua People (#{masterPeopleController.items.rowCount} Peoples)</h3>								
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
@@ -88,35 +70,24 @@
                                         </h:panelGroup>
                                         <row>
                                             <center>
-                                                <b:image  value="../resources/datatableempty.png" rendered="#{masterUserController.items.rowCount == 0}" tooltip="Data Pemilih Kosong!" tooltipPosition="top"/>
+                                                <b:image  value="../resources/datatableempty.png" rendered="#{masterPeopleController.items.rowCount == 0}" tooltip="Data People Kosong!" tooltipPosition="top"/>
                                             </center>
                                         </row>
-                                        <h:panelGroup rendered="#{masterUserController.items.rowCount > 0}">
-                                            <b:dataTable value="#{masterUserController.items}" var="item"  styleClass="table table-bordered table-hover display" id="example4" >
-                                                <b:dataTableColumn label="Nama" >
+                                        <h:panelGroup rendered="#{masterPeopleController.items.rowCount > 0}">
+                                            <b:dataTable value="#{masterPeopleController.items}" var="item"  styleClass="table table-bordered table-hover display" id="example4" >
+                                                <b:dataTableColumn label="Thumbnail" >
                                                     <span style="float: left; margin-right:10px;">
-                                                        <div class="image-cropper">
-                                                            <a href="../resources/images/#{item.thumbnail}" data-toggle="lightbox" data-gallery="example-gallery" class="col-sm-2">
-                                                                <img alt="image" src="../resources/images/#{item.thumbnail}" class="img-fluid"/>
-                                                            </a>
-                                                <!--<h:graphicImage url="../resources/images/#{item.thumbnail}" class="profile-pic" alt=" image"/>-->
-
-                                                        </div>
+                                                        <h:graphicImage url="../resources/images/people/#{item.thumbnail}" style="max-width:40px; height:auto;" height="150px" width="100px" alt=" image"/>
                                                     </span>
                                                     <strong>#{item.name}</strong>							
                                                     <br />
                                                     <small>#{item.email}</small>
                                                 </b:dataTableColumn>
-                                                <b:dataTableColumn style="width:60px" label="Role" >
-                                                    <h:outputText rendered="#{item.roleUser == 1 }"  value="Admin User"/>
-                                                    <h:outputText rendered="#{item.roleUser == 2 }"  value="Admin"/>
-                                                    <h:outputText rendered="#{item.roleUser == 3 }"  value="Verifier"/>
-                                                    <h:outputText rendered="#{item.roleUser == 4 }"  value="Manager"/>
-                                                </b:dataTableColumn>
-                                                <b:dataTableColumn style="width:90px" label="Status" >
+                                                <b:dataTableColumn style="width:60px" value="#{item.statusDelete}" label="Role" />
+                                                <b:dataTableColumn style="width:60px" label="Status" >
                                                     <center>
-                                                        <h:outputText rendered="#{item.isActive == 0 }"  styleClass="btn btn-warning btn-sm" value="Tidak Aktif"/>
-                                                        <h:outputText rendered="#{item.isActive == 1 }" styleClass="btn btn-success btn-sm" value="Aktif"/>
+                                                        <h:outputText rendered="#{item.statusDelete == 0 }" styleClass="btn btn-warning btn-sm" value="Tidak Aktif"/>
+                                                        <h:outputText rendered="#{item.statusDelete == 1 }" styleClass="btn btn-success btn-sm" value="Aktif"/>
                                                     </center>
 
                                                 </b:dataTableColumn>
@@ -125,16 +96,14 @@
                                                     <center>
                                                         <div class="button-list">
 
-                                                            <b:commandLink styleClass="btn btn-primary btn-sm" tooltip="Detail Data" tooltipPosition="top" action="#{masterUserController.prepareView}"  >
-                                                                <i class="fa fa-eye" aria-hidden="true" ></i>
-                                                            </b:commandLink>
-                                                            <b:commandLink styleClass="btn btn-warning btn-sm" tooltip="Edit Data" tooltipPosition="top" action="#{masterUserController.prepareEdit}"  >
+                                                            <b:commandLink styleClass="btn btn-warning btn-sm" tooltip="Edit Data" tooltipPosition="top" action="#{masterPeopleController.prepareEdit}"  >
+
                                                                 <i class="fa fa-pencil" aria-hidden="true" ></i>
                                                             </b:commandLink>
-                                                            <b:commandLink rendered="#{item.isActive == 0}" styleClass="btn btn-success btn-sm" tooltip="Jadikan Aktif" tooltipPosition="top" action="#{masterUserController.toAktif}"  >
+                                                            <b:commandLink rendered="#{item.isActive == 0}" styleClass="btn btn-success btn-sm" tooltip="Jadikan Aktif" tooltipPosition="top" action="#{masterPeopleController.toAktif()}"  >
                                                                 <i class="fa fa-check" aria-hidden="true" ></i>
                                                             </b:commandLink>
-                                                            <b:commandLink rendered="#{item.isActive == 1}" styleClass="btn btn-danger btn-sm" tooltip="Jadikan Tidak Aktif" tooltipPosition="top" action="#{masterUserController.toTidakAktif}"  >
+                                                            <b:commandLink rendered="#{item.isActive == 1}" styleClass="btn btn-danger btn-sm" tooltip="Jadikan Tidak Aktif" tooltipPosition="top" action="#{masterPeopleController.toTidakAktif()}"  >
                                                                 <i class="fa fa-trash-o" aria-hidden="true" ></i>
                                                             </b:commandLink>
 
@@ -160,13 +129,6 @@
 
             </ui:define>
             <ui:define name="end_of_body">
-                <script src="../assets/plugins/lightbox/ekko-lightbox.min.js"></script>
-                <script>
-                    $(document).on('click', '[data-toggle="lightbox"]', function (event) {
-                        event.preventDefault();
-                        $(this).ekkoLightbox();
-                    });
-                </script>
                 <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
                 <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
 
