@@ -1,0 +1,251 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:jsf="http://xmlns.jcp.org/jsf">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="../TemplatePage.xhtml">
+
+            <!--START OF TITLE-->
+            <ui:define name="role">
+                Admin
+            </ui:define>
+            <ui:define name="title">
+                Kelola User
+            </ui:define>
+            <!--END OF TITLE-->
+
+
+            <ui:define name="header_top">
+                Kelola User
+            </ui:define>
+            <ui:define name="breadcrumb">
+
+                <li class="breadcrumb-item"> Kelola Master</li>
+                <li class="breadcrumb-item"> Kelola Staff</li>    
+                <li class="breadcrumb-item"> Tambah Staff</li>
+
+
+            </ui:define>
+
+            <!--START OF CSS-->
+            <ui:define name="begin_css">
+
+                <script src="../assets/js/modernizr.min.js"></script>
+                <script src="../assets/js/moment.min.js"></script>	
+                <link href="../assets/plugins/datetimepicker/css/daterangepicker.css" rel="stylesheet" /> 
+                <style>
+                    .parsley-error {
+                        border-color: #ff5d48 !important;
+                    }
+                    .parsley-errors-list.filled {
+                        display: block;
+                    }
+                    .parsley-errors-list {
+                        display: none;
+                        margin: 0;
+                        padding: 0;
+                    }
+                    .parsley-errors-list > li {
+                        font-size: 12px;
+                        list-style: none;
+                        color: #ff5d48;
+                        margin-top: 5px;
+                    }
+                    .form-section {
+                        padding-left: 15px;
+                        border-left: 2px solid #FF851B;
+                        display: none;
+                    }
+                    .form-section.current {
+                        display: inherit;
+                    }
+                </style>		
+            </ui:define>
+            <!--END OF CSS-->
+            <ui:define name="content">
+                <b:form enctype="multipart/form-data">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">						
+                            <div class="card mb-3">
+                                <div class="card-header">
+                                    <span class="pull-right">
+                                        <!--<button class="" >Add new user</button>-->
+                                    </span>
+                                    <h3><i class="fa fa-plus"></i> Tambah Staff</h3>								
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label>Nama<span class="text-danger">*</span>
+                                                <h:message for="name" errorStyle="color:red" />
+                                            </label>
+                                            <b:inputText styleClass="form-control" 
+                                                         id="name" 
+                                                         value="#{masterUserController.selected.name}" 
+                                                         required="true" 
+                                                         mask="{regex:'^[a-zA-Z0-9_]*$'}"
+                                                         placeholder="Nama User"
+                                                         requiredMessage="Nama Harus Diisi">
+                                            </b:inputText>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label>Email<span class="text-danger">*</span>
+                                                <h:message for="email" errorStyle="color:red" />
+                                            </label>
+                                            <b:inputText styleClass="form-control" 
+                                                         id="email" 
+                                                         value="#{masterUserController.selected.email}" 
+                                                         required="true" 
+                                                         mask="email"
+                                                         placeholder="Email Address"
+                                                         requiredMessage="Email Harus Diisi"
+                                                         validatorMessage="Format Email Invalid"
+                                                         >
+
+                                                <f:validateRegex
+                                                    pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                                            </b:inputText>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label>Username<span class="text-danger">*</span>
+                                                <h:message for="username" errorStyle="color:red" />
+                                            </label>
+                                            <b:inputText styleClass="form-control" 
+                                                         id="username" 
+                                                         value="#{masterUserController.selected.username}" 
+                                                         required="true" 
+                                                         mask="{regex:'^[a-zA-Z0-9_]*$'}"
+                                                         placeholder="Nama User"
+                                                         requiredMessage="Nama Harus Diisi">
+                                            </b:inputText>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label>Password<span class="text-danger">*</span>
+                                                <h:message 
+                                                    for="password" 
+                                                    errorStyle="color:red" />
+                                            </label>
+                                            <b:inputSecret  styleClass="form-control" 
+                                                            id="password" 
+                                                            value="#{masterUserController.selected.password}" 
+                                                            required="true" 
+                                                            placeholder="Password User"
+                                                            validatorMessage="Email Invalid (Mengandung spesial karakter atau spasi)"
+
+                                                            requiredMessage="Password Harus Diisi">
+                                                <f:validateRegex
+                                                    pattern="^[a-zA-Z0-9]*$" />
+
+                                            </b:inputSecret >
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label>Role<span class="text-danger">* </span> 
+                                                <h:message for="roleUser" errorStyle="color:red" />
+                                            </label>
+                                            <b:selectOneMenu 
+                                                id="roleUser"
+                                                value="#{masterUserController.selectedStaff.roleStaff}" 
+                                                required="true" 
+                                                requiredMessage="Role Harus Diisi"
+                                                >
+                                                <f:selectItem itemLabel="(Please select)" itemValue="" />
+                                                <f:selectItem itemLabel="Super Admin" itemValue="1" />
+                                                <f:selectItem itemLabel="Admin" itemValue="2" />
+                                                <f:selectItem itemLabel="Verifier" itemValue="3" />
+                                                <f:selectItem itemLabel="Manager" itemValue="4" />
+                                            </b:selectOneMenu>
+                                        </div>
+                                        <div class="form-group col-md-6">
+
+                                            <label>Tanggal Lahir<span class="text-danger">* 
+                                                    <h:message for="birthDay" errorStyle="color:red" />
+                                                </span></label>
+                                            <b:inputText 
+                                                id="birthDay"    
+                                                value="#{masterUserController.selectedStaff.birthDay}"
+                                                mask="dd/mm/yyyy"
+                                                required="true"
+                                                requiredMessage="Tanggal Lahir Harus Diisi"
+                                                validatorMessage="Tanggal Tidak Valid"
+                                                converterMessage="Tanggal Tidak Valid"
+                                                >
+                                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                                            </b:inputText>
+
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label>Phone Number<span class="text-danger">* 
+                                                    <h:message for="phoneNumber" errorStyle="color:red" />
+
+                                                </span></label>
+                                            <b:inputText value="#{masterUserController.selectedStaff.phoneNumber}"
+                                                         id="phoneNumber"
+                                                         mask="{regex:'^[0-9]{1,13}$'}"
+                                                         placeholder="Nomor Handphone"
+                                                         required="true" requiredMessage="Nomor Handphone Harus Diisi"
+                                                         />
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label>Foto Ketua Paslon<span class="text-danger">* 
+                                                    <h:message for="thumbnail" errorStyle="color:red" />
+                                                </span>
+                                            </label>
+                                            <h:inputFile class="form-control" 
+                                                         required="true" 
+                                                         requiredMessage="Gambar tidak boleh kosong" 
+                                                         id="thumbnail" 
+                                                         value="#{masterUserController.fotoStaff}" title="Gambar" />
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-12">
+                                            <label>Alamat<span class="text-danger">* 
+                                                    <h:message for="address" errorStyle="color:red" /></span></label>
+                                            <b:inputTextarea placeholder="Alamat" 
+                                                             id="address"
+                                                             value="#{masterUserController.selectedStaff.address}">
+                                            </b:inputTextarea>
+                                        </div>
+                                    </div>
+                                    <center>
+                                        <div class="button-list">
+                                            <h:commandLink styleClass="btn btn-primary" action="#{masterUserController.createKaryawan}" value="Simpan" />
+                                            <h:commandLink action="#{masterUserController.prepareList()}" styleClass="btn btn-danger" immediate="true" value="Batal dan Kembali ke List"/>
+
+                                        </div>
+                                    </center>
+                                </div>							
+                            </div><!-- end card-->					
+                        </div>
+                    </div>			
+                </b:form>
+            </ui:define>
+            <ui:define name="end_of_body">
+                <script src="../assets/plugins/parsleyjs/parsley.min.js"></script>
+                <script>
+                    $('#form').parsley();
+                </script>
+                <script src="../assets/plugins/datetimepicker/js/moment.min.js"></script>
+                <script src="../assets/plugins/datetimepicker/js/daterangepicker.js"></script>
+
+            </ui:define>
+
+        </ui:composition>
+    </h:body>
+</html>
+

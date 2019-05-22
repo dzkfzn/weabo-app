@@ -66,7 +66,7 @@ public class StudiosController implements Serializable {
 
     public String prepareList() {
         recreateModel();
-        return "List";
+        return "List?faces-redirect=true";
     }
 
     public String prepareView() {
@@ -78,7 +78,7 @@ public class StudiosController implements Serializable {
     public String prepareCreate() {
         current = new Studios();
         selectedItemIndex = -1;
-        return "Create";
+        return "Create?faces-redirect=true";
     }
 
     public String create() {
@@ -88,13 +88,14 @@ public class StudiosController implements Serializable {
             Date createdDate = new Date();
             current.setCreatedDate(createdDate);
             current.setModifiedDate(createdDate);
-            
+
             //inisialisasi is Active
             current.setIsActive(1);
-            
+
             getFacade().create(current);
             JsfUtil.addSuccessMessage("Data berhasil Ditambahkan");
-           return "List";
+            recreateModel();
+            return "List?faces-redirect=true";
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
             return null;
@@ -104,9 +105,9 @@ public class StudiosController implements Serializable {
     public String prepareEdit() {
         current = (Studios) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
-        return "Edit";
+        return "Edit?faces-redirect=true";
     }
-    
+
     public String toAktif() {
 
         current = (Studios) getItems().getRowData();
@@ -117,13 +118,13 @@ public class StudiosController implements Serializable {
             getFacade().edit(current);
             JsfUtil.addSuccessMessage("Data Di ubah menjadi Aktif");
 
-            return "List";
+            return "List?faces-redirect=true";
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
             return null;
         }
     }
-    
+
     public String toTidakAktif() {
         try {
 
@@ -133,7 +134,7 @@ public class StudiosController implements Serializable {
             current.setIsActive(0);
             getFacade().edit(current);
             JsfUtil.addSuccessMessage("Data Di ubah menjadi Tidak Aktif");
-            return "List";
+            return "List?faces-redirect=true";
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
             return null;
@@ -144,7 +145,7 @@ public class StudiosController implements Serializable {
         try {
             getFacade().edit(current);
             JsfUtil.addSuccessMessage("Data berhasil di update");
-            return "List";
+            return "List?faces-redirect=true";
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
             return null;
@@ -157,7 +158,7 @@ public class StudiosController implements Serializable {
         performDestroy();
         recreatePagination();
         recreateModel();
-        return "List";
+        return "List?faces-redirect=true";
     }
 
     public String destroyAndView() {
@@ -169,7 +170,7 @@ public class StudiosController implements Serializable {
         } else {
             // all items were removed - go back to list
             recreateModel();
-            return "List";
+            return "List?faces-redirect=true";
         }
     }
 
@@ -215,13 +216,13 @@ public class StudiosController implements Serializable {
     public String next() {
         getPagination().nextPage();
         recreateModel();
-        return "List";
+        return "List?faces-redirect=true";
     }
 
     public String previous() {
         getPagination().previousPage();
         recreateModel();
-        return "List";
+        return "List?faces-redirect=true";
     }
 
     public SelectItem[] getItemsAvailableSelectMany() {

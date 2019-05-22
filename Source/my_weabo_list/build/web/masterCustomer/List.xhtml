@@ -19,22 +19,24 @@
                 Admin
             </ui:define>
             <ui:define name="title">
-                Kelola Studio
+                Kelola Member
             </ui:define>
             <!--END OF TITLE-->
             <ui:define name="header_top">
-                Kelola Studio
+                Kelola Member
             </ui:define>
             <ui:define name="breadcrumb">
 
                 <li class="breadcrumb-item"> Kelola Master</li>
-                <li class="breadcrumb-item"> Kelola Studios</li>
-                <li class="breadcrumb-item"> List Studios</li>
+                <li class="breadcrumb-item"> Kelola Member</li>
+                <li class="breadcrumb-item"> List Member</li>
 
             </ui:define>
 
             <!--START OF CSS-->
             <ui:define name="begin_css">
+                <link href="../assets/plugins/lightbox/ekko-lightbox.css" rel="stylesheet" /> 
+
                 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css"/>	
                 <style>	
                     td.details-control {
@@ -43,6 +45,22 @@
                     }
                     tr.shown td.details-control {
                         background: url('assets/plugins/datatables/img/details_close.png') no-repeat center center;
+                    }
+                    .image-cropper {
+                        width: 50px;
+                        height: 50px;
+                        position: relative;
+                        overflow: hidden;
+                        border-radius: 50%;
+                    }
+                    .profile-pic {
+                        display: inline;
+                        margin: 0 auto;
+                        height: 100%;
+                        width: auto;
+
+                        max-width: 50px;
+                        max-height: 50px;
                     }
                 </style>		
             </ui:define>
@@ -57,11 +75,11 @@
                                 <div class="card-header">
                                     <span class="pull-right">
                                         <!--<button class="" >Add new user</button>-->
-                                        <h:commandLink class="btn btn-primary btn-sm" action="#{studiosController.prepareCreate}" > <i class="fa fa-certificate" aria-hidden="true"></i> Tambah Studio Baru </h:commandLink>
+                                        <h:commandLink class="btn btn-primary btn-sm" action="#{masterUserController.prepareCreate}" > <i class="fa fa-plus" aria-hidden="true"></i> Tambah User Baru </h:commandLink>
 
 
                                     </span>
-                                    <h3><i class="fa fa-certificate"></i> Semua Studio (#{studiosController.items.rowCount} Studios)</h3>								
+                                    <h3><i class="fa fa-users"></i> Semua Member (#{masterUserController.items.rowCount} Member)</h3>								
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
@@ -70,56 +88,53 @@
                                         </h:panelGroup>
                                         <row>
                                             <center>
-                                                <b:image  value="../resources/datatableempty.png" rendered="#{studiosController.items.rowCount == 0}" tooltip="Data Pemilih Kosong!" tooltipPosition="top"/>
+                                                <b:image  value="../resources/datatableempty.png" rendered="#{masterUserController.items.rowCount == 0}" tooltip="Data Pemilih Kosong!" tooltipPosition="top"/>
                                             </center>
                                         </row>
-                                        <h:panelGroup rendered="#{studiosController.items.rowCount > 0}">
-                                            <b:dataTable value="#{studiosController.items}" var="item"  styleClass="table table-bordered table-hover display" id="example4" >
-                                                <b:dataTableColumn value="#{item.studioId}" label="ID" />
-                                                <b:dataTableColumn value="#{item.name}" label="Nama" />
-                                                <b:dataTableColumn label="Dibuat Oleh" >
-                                                    <h:outputText rendered="#{item.createdBy == null }" value="Belum Tersedia"/>
-                                                </b:dataTableColumn>
-                                                <b:dataTableColumn value="#{item.modifiedBy}"  label="Dimodif Oleh" >
-                                                    <h:outputText rendered="#{item.modifiedBy == null }" value="Belum Tersedia"/>
-                                                </b:dataTableColumn>
-                                                <b:dataTableColumn>
-                                                    <f:facet name="header">
-                                                        <h:outputText value="Tanggal Dibuat"/>
-                                                    </f:facet>
-                                                    <h:outputText value="#{item.createdDate}" > 
-                                                        <f:convertDateTime locale="id" timeStyle="short" type="both" dateStyle="full"></f:convertDateTime>
-                                                    </h:outputText>
-                                                </b:dataTableColumn>
-                                                <b:dataTableColumn>
-                                                    <f:facet name="header">
-                                                        <h:outputText value="Tanggal Dimodif"/>
-                                                    </f:facet>
-                                                    <h:outputText value="#{item.modifiedDate}" > 
-                                                        <f:convertDateTime locale="en" timeStyle="short" type="both" dateStyle="full"></f:convertDateTime>
-                                                    </h:outputText>
-                                                </b:dataTableColumn>
-                                                <b:dataTableColumn label="Status" >
-                                                    <center>
+                                        <h:panelGroup rendered="#{masterUserController.items.rowCount > 0}">
+                                            <b:dataTable value="#{masterUserController.items}" var="item"  styleClass="table table-bordered table-hover display" id="example4" >
+                                                <b:dataTableColumn label="Nama" >
+                                                    <span style="float: left; margin-right:10px;">
+                                                        <div class="image-cropper">
+                                                            <a href="../resources/images/#{item.thumbnail}" data-toggle="lightbox" data-gallery="example-gallery" class="col-sm-2">
+                                                                <img alt="image" src="../resources/images/#{item.thumbnail}" class="img-fluid"/>
+                                                            </a>
+                                                <!--<h:graphicImage url="../resources/images/#{item.thumbnail}" class="profile-pic" alt=" image"/>-->
 
-                                                        <h:outputText rendered="#{item.isActive == 0 }" styleClass="btn btn-warning btn-sm" value="Tidak Aktif"/>
+                                                        </div>
+                                                    </span>
+                                                    <strong>#{item.name}</strong>							
+                                                    <br />
+                                                    <small>#{item.email}</small>
+                                                </b:dataTableColumn>
+                                                <b:dataTableColumn style="width:60px" label="Role" >
+                                                    <h:outputText rendered="#{item.roleUser == 1 }"  value="Admin User"/>
+                                                    <h:outputText rendered="#{item.roleUser == 2 }"  value="Admin"/>
+                                                    <h:outputText rendered="#{item.roleUser == 3 }"  value="Verifier"/>
+                                                    <h:outputText rendered="#{item.roleUser == 4 }"  value="Manager"/>
+                                                </b:dataTableColumn>
+                                                <b:dataTableColumn style="width:90px" label="Status" >
+                                                    <center>
+                                                        <h:outputText rendered="#{item.isActive == 0 }"  styleClass="btn btn-warning btn-sm" value="Tidak Aktif"/>
                                                         <h:outputText rendered="#{item.isActive == 1 }" styleClass="btn btn-success btn-sm" value="Aktif"/>
                                                     </center>
 
                                                 </b:dataTableColumn>
 
-                                                <b:dataTableColumn headerStyleClass="" label="Aksi">
+                                                <b:dataTableColumn style="width:150px" headerStyleClass="" label="Aksi">
                                                     <center>
                                                         <div class="button-list">
 
-                                                            <b:commandLink styleClass="btn btn-warning btn-sm" tooltip="Edit Data" tooltipPosition="top" action="#{studiosController.prepareEdit}"  >
-
+                                                            <b:commandLink styleClass="btn btn-primary btn-sm" tooltip="Detail Data" tooltipPosition="top" action="#{masterUserController.prepareView}"  >
+                                                                <i class="fa fa-eye" aria-hidden="true" ></i>
+                                                            </b:commandLink>
+                                                            <b:commandLink styleClass="btn btn-warning btn-sm" tooltip="Edit Data" tooltipPosition="top" action="#{masterUserController.prepareEdit}"  >
                                                                 <i class="fa fa-pencil" aria-hidden="true" ></i>
                                                             </b:commandLink>
-                                                            <b:commandLink rendered="#{item.isActive == 0}" styleClass="btn btn-success btn-sm" tooltip="Jadikan Aktif" tooltipPosition="top" action="#{studiosController.toAktif()}"  >
+                                                            <b:commandLink rendered="#{item.isActive == 0}" styleClass="btn btn-success btn-sm" tooltip="Jadikan Aktif" tooltipPosition="top" action="#{masterUserController.toAktif}"  >
                                                                 <i class="fa fa-check" aria-hidden="true" ></i>
                                                             </b:commandLink>
-                                                            <b:commandLink rendered="#{item.isActive == 1}" styleClass="btn btn-danger btn-sm" tooltip="Jadikan Tidak Aktif" tooltipPosition="top" action="#{studiosController.toTidakAktif()}"  >
+                                                            <b:commandLink rendered="#{item.isActive == 1}" styleClass="btn btn-danger btn-sm" tooltip="Jadikan Tidak Aktif" tooltipPosition="top" action="#{masterUserController.toTidakAktif}"  >
                                                                 <i class="fa fa-trash-o" aria-hidden="true" ></i>
                                                             </b:commandLink>
 
@@ -127,6 +142,7 @@
                                                     </center>
 
                                                 </b:dataTableColumn>
+
                                             </b:dataTable>
                                         </h:panelGroup>
                                         <br />
@@ -144,6 +160,13 @@
 
             </ui:define>
             <ui:define name="end_of_body">
+                <script src="../assets/plugins/lightbox/ekko-lightbox.min.js"></script>
+                <script>
+                    $(document).on('click', '[data-toggle="lightbox"]', function (event) {
+                        event.preventDefault();
+                        $(this).ekkoLightbox();
+                    });
+                </script>
                 <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
                 <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
 
