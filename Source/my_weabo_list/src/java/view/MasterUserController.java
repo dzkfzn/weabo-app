@@ -42,7 +42,12 @@ public class MasterUserController implements Serializable {
     private Part mFotoCustomer;
     private String mPhotoUrlStaff;
     private String mPhotoUrlCustomer;
-
+    //Registrasi
+    private String mUsername;
+    private String mEmail;
+    private String mPassword;
+    private String mRepassword;
+//end regis
     private MasterUser current;
     private DetailUserStaff currentStaff;
     private DetailUserCustomer currentCustomer;
@@ -58,6 +63,41 @@ public class MasterUserController implements Serializable {
 
     private PaginationHelper pagination;
     private int selectedItemIndex;
+
+    //getset repassword
+    public String getRepassword() {
+        return mRepassword;
+    }
+
+    public void setRepassword(String mRepassword) {
+        this.mRepassword = mRepassword;
+    }
+
+    public String getUsername() {
+        return mUsername;
+    }
+
+    public void setUsername(String mUsername) {
+        this.mUsername = mUsername;
+    }
+
+    public String getEmail() {
+        return mEmail;
+    }
+
+    public void setEmail(String mEmail) {
+        this.mEmail = mEmail;
+    }
+
+    public String getPassword() {
+        return mPassword;
+    }
+
+    public void setPassword(String mPassword) {
+        this.mPassword = mPassword;
+    }
+    
+    //asasdasd
 
     //getset foto
     public Part getFotoStaff() {
@@ -79,7 +119,7 @@ public class MasterUserController implements Serializable {
 
     //constructor
     public MasterUserController() {
-        recreateModel();
+//        recreateModel();
     }
 
     //Master User
@@ -160,6 +200,10 @@ public class MasterUserController implements Serializable {
         return "Create?faces-redirect=true";
     }
 
+    public String prepareCreateCustomer() {
+        return "sign_up?faces-redirect=true";
+    }
+
     private String mUserID;
 
     public String createKaryawan() {
@@ -192,6 +236,46 @@ public class MasterUserController implements Serializable {
             recreateModel();
             clearVariable();
             return "List?faces-redirect=true";
+        } catch (Exception e) {
+            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
+            return null;
+        }
+    }
+
+    public String createMember() {
+        try {
+
+                currentCustomer = new DetailUserCustomer();
+                current = new MasterUser();
+            
+            current.setEmail(mEmail);
+            current.setUsername(mUsername);
+            current.setPassword(mPassword);
+
+            //inisialisasi Date
+            Date createdDate = new Date();
+            current.setCreatedDate(createdDate);
+
+            //inisialisasi is Active
+            //0 = belum konfirmasi ~ 1 = aktif ~ 2 = non-aktif
+            current.setIsActive(0);
+
+            //Inisialisasi Tipe User
+            //2 = Karyawan ~ 1 = Customer
+            current.setRoleUser(1);
+
+            //inisialisasi ID
+            mUserID = UUID.randomUUID().toString();
+            current.setUserId(mUserID);
+            currentCustomer.setUserId(current);
+
+            //create ke 2 tabel sekaligus
+            getFacade().create(current);
+            getFacadeCustomer().create(currentCustomer);
+
+            JsfUtil.addSuccessMessage("Data Berhasil Di tambahkan");
+            clearVariable();
+            return "index.html?faces-redirect=true";
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
             return null;
