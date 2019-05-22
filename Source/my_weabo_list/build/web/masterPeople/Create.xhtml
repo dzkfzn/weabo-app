@@ -15,8 +15,6 @@
             </h:panelGroup>
             <h:form>
                 <h:panelGrid columns="2">
-                    <h:inputText id="statusDelete" value="#{masterPeopleController.selected.statusDelete}" title="#{bundle.CreateMasterPeopleTitle_statusDelete}" />
-                    <h:outputLabel value="#{bundle.CreateMasterPeopleLabel_createdBy}" for="createdBy" />
                     <h:selectOneMenu id="createdBy" value="#{masterPeopleController.selected.createdBy}" title="#{bundle.CreateMasterPeopleTitle_createdBy}" >
                         <f:selectItems value="#{masterPeopleController.itemsAvailableSelectOne}"/>
                     </h:selectOneMenu>
