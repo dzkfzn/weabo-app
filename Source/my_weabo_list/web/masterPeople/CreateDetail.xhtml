@@ -18,13 +18,13 @@
                 Admin
             </ui:define>
             <ui:define name="title">
-                Kelola User
+                Kelola People
             </ui:define>
             <!--END OF TITLE-->
 
 
             <ui:define name="header_top">
-                Kelola User
+                Kelola People
             </ui:define>
             <ui:define name="breadcrumb">
 
@@ -84,6 +84,7 @@
                                 <div class="card-body">
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
+                                            
                                             <label>First Name<span class="text-danger">*</span>
                                                 <h:message for="name" errorStyle="color:red" />
                                             </label>
@@ -137,25 +138,21 @@
                                                          required="true" 
                                                          requiredMessage="Gambar tidak boleh kosong" 
                                                          id="thumbnail" 
-                                                         value="#{masterPeopleController.selectedPeople.thumbnail}" title="Gambar" />
+                                                         value="#{masterPeopleController.fotoPeople}" title="Gambar" />
                                         </div>
                                         
                                         <div class="form-group col-md-6">
                                             <label>About<span class="text-danger">*</span>
                                                 <h:message for="about" errorStyle="color:red" />
                                             </label>
-                                            <b:inputText styleClass="form-control" 
-                                                         id="about" 
-                                                         value="#{masterPeopleController.selectedPeople.about}" 
-                                                         required="true" 
-                                                         mask="{regex:'^[a-zA-Z0-9_]*$'}"
-                                                         placeholder="About"
-                                                         requiredMessage="About Harus Diisi">
-                                            </b:inputText>
+                                            <b:inputTextarea placeholder="Avout" 
+                                                             id="about"
+                                                             value="#{masterPeopleController.selectedPeople.about}">
+                                            </b:inputTextarea>                                       
                                         </div>
                                         <center>
                                         <div class="button-list">
-                                            <h:commandLink styleClass="btn btn-primary" action="#{masterPeopleController.createKaryawan}" value="Simpan" />
+                                            <h:commandLink styleClass="btn btn-primary" action="#{masterPeopleController.CreatDeatailPeople}" value="Simpan" />
                                             <h:commandLink action="#{masterPeopleController.prepareList()}" styleClass="btn btn-danger" immediate="true" value="Batal dan Kembali ke List"/>
 
                                         </div>

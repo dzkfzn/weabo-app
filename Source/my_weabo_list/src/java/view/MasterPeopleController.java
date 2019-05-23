@@ -4,8 +4,13 @@ import model.MasterPeople;
 import view.util.JsfUtil;
 import view.util.PaginationHelper;
 import controller.MasterPeopleFacade;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 import java.io.Serializable;
+
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.inject.Named;
@@ -21,6 +26,7 @@ import javax.faces.model.SelectItem;
 @Named("masterPeopleController")
 @SessionScoped
 public class MasterPeopleController implements Serializable {
+
 
     private MasterPeople current;
     private DataModel items = null;
@@ -76,11 +82,12 @@ public class MasterPeopleController implements Serializable {
     public String prepareCreate() {
         current = new MasterPeople();
         selectedItemIndex = -1;
-        return "Create";
+        return "CreateDetail";
     }
 
     public String create() {
         try {
+
             getFacade().create(current);
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("MasterPeopleCreated"));
             return prepareCreate();
@@ -89,6 +96,7 @@ public class MasterPeopleController implements Serializable {
             return null;
         }
     }
+
 
     public String prepareEdit() {
         current = (MasterPeople) getItems().getRowData();

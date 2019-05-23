@@ -1,0 +1,251 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui"
+
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="../TemplatePage.xhtml">
+
+            <!--START OF TITLE-->
+            <ui:define name="role">
+                Admin
+            </ui:define>
+            <ui:define name="title">
+                Kelola People
+            </ui:define>
+            <!--END OF TITLE-->
+            <ui:define name="header_top">
+                Kelola People
+            </ui:define>
+            <ui:define name="breadcrumb">
+
+                <li class="breadcrumb-item"> Kelola Master</li>
+                <li class="breadcrumb-item"> Kelola Peoples</li>
+                <li class="breadcrumb-item"> List Peoples</li>
+
+            </ui:define>
+
+            <!--START OF CSS-->
+            <ui:define name="begin_css">
+                <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css"/>	
+                <style>	
+                    td.details-control {
+                        background: url('assets/plugins/datatables/img/details_open.png') no-repeat center center;
+                        cursor: pointer;
+                    }
+                    tr.shown td.details-control {
+                        background: url('assets/plugins/datatables/img/details_close.png') no-repeat center center;
+                    }
+                </style>		
+            </ui:define>
+            <!--END OF CSS-->
+
+
+            <ui:define name="content">
+                <h:form>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">						
+                            <div class="card mb-3">
+                                <div class="card-header">
+                                    <span class="pull-right">
+                                        <!--<button class="" >Add new user</button>-->
+                                        <h:commandLink class="btn btn-primary btn-sm" action="#{masterPeopleController.prepareCreate}" > <i class="fa fa-certificate" aria-hidden="true"></i> Tambah People Baru </h:commandLink>
+
+
+                                    </span>
+                                    <h3><i class="fa fa-certificate"></i> Semua People (#{masterPeopleController.items.rowCount} Peoples)</h3>								
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <h:panelGroup id="messagePanel" layout="block">
+                                            <b:messages />
+                                        </h:panelGroup>
+                                        <row>
+                                            <center>
+                                                <b:image  value="../resources/datatableempty.png" rendered="#{masterPeopleController.items.rowCount == 0}" tooltip="Data People Kosong!" tooltipPosition="top"/>
+                                            </center>
+                                        </row>
+                                        <h:panelGroup rendered="#{masterPeopleController.items.rowCount > 0}">
+                                            <b:dataTable value="#{masterPeopleController.items}" var="item"  styleClass="table table-bordered table-hover display" id="example4" >
+                                                <b:dataTableColumn label="Thumbnail" >
+                                                    <span style="float: left; margin-right:10px;">
+                                                        <h:graphicImage url="../resources/images/people/#{item.thumbnail}" style="max-width:40px; height:auto;" height="150px" width="100px" alt=" image"/>
+                                                    </span>
+                                                    <strong>#{item.name}</strong>							
+                                                    <br />
+                                                    <small>#{item.email}</small>
+                                                </b:dataTableColumn>
+                                                <b:dataTableColumn style="width:60px" value="#{item.statusDelete}" label="Role" />
+                                                <b:dataTableColumn style="width:60px" label="Status" >
+                                                    <center>
+                                                        <h:outputText rendered="#{item.statusDelete == 0 }" styleClass="btn btn-warning btn-sm" value="Tidak Aktif"/>
+                                                        <h:outputText rendered="#{item.statusDelete == 1 }" styleClass="btn btn-success btn-sm" value="Aktif"/>
+                                                    </center>
+
+                                                </b:dataTableColumn>
+
+                                                <b:dataTableColumn style="width:150px" headerStyleClass="" label="Aksi">
+                                                    <center>
+                                                        <div class="button-list">
+
+                                                            <b:commandLink styleClass="btn btn-warning btn-sm" tooltip="Edit Data" tooltipPosition="top" action="#{masterPeopleController.prepareEdit}"  >
+
+                                                                <i class="fa fa-pencil" aria-hidden="true" ></i>
+                                                            </b:commandLink>
+                                                            <b:commandLink rendered="#{item.isActive == 0}" styleClass="btn btn-success btn-sm" tooltip="Jadikan Aktif" tooltipPosition="top" action="#{masterPeopleController.toAktif()}"  >
+                                                                <i class="fa fa-check" aria-hidden="true" ></i>
+                                                            </b:commandLink>
+                                                            <b:commandLink rendered="#{item.isActive == 1}" styleClass="btn btn-danger btn-sm" tooltip="Jadikan Tidak Aktif" tooltipPosition="top" action="#{masterPeopleController.toTidakAktif()}"  >
+                                                                <i class="fa fa-trash-o" aria-hidden="true" ></i>
+                                                            </b:commandLink>
+
+                                                        </div>
+                                                    </center>
+
+                                                </b:dataTableColumn>
+
+                                            </b:dataTable>
+                                        </h:panelGroup>
+                                        <br />
+                                        <br />
+                                        <br />
+                                    </div>
+
+                                </div>							
+                            </div><!-- end card-->					
+                        </div>
+
+                    </div>			
+
+                </h:form>
+
+            </ui:define>
+            <ui:define name="end_of_body">
+                <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+                <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
+
+                <script>
+                    // START CODE FOR BASIC DATA TABLE 
+                    $(document).ready(function () {
+                        $('#example1').DataTable();
+                    });
+                    // END CODE FOR BASIC DATA TABLE 
+
+
+                    // START CODE FOR Child rows (show extra / detailed information) DATA TABLE 
+                    function format(d) {
+                        // `d` is the original data object for the row
+                        return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">' +
+                                '<tr>' +
+                                '<td>Full name:</td>' +
+                                '<td>' + d.name + '</td>' +
+                                '</tr>' +
+                                '<tr>' +
+                                '<td>Extension number:</td>' +
+                                '<td>' + d.extn + '</td>' +
+                                '</tr>' +
+                                '<tr>' +
+                                '<td>Extra info:</td>' +
+                                '<td>And any further details here (images etc)...</td>' +
+                                '</tr>' +
+                                '</table>';
+                    }
+
+                    $(document).ready(function () {
+                        var table = $('#example2').DataTable({
+                            "ajax": "assets/data/dataTablesObjects.txt",
+                            "columns": [
+                                {
+                                    "className": 'details-control',
+                                    "orderable": false,
+                                    "data": null,
+                                    "defaultContent": ''
+                                },
+                                {"data": "name"},
+                                {"data": "position"},
+                                {"data": "office"},
+                                {"data": "salary"}
+                            ],
+                            "order": [[1, 'asc']]
+                        });
+
+                        // Add event listener for opening and closing details
+                        $('#example2 tbody').on('click', 'td.details-control', function () {
+                            var tr = $(this).closest('tr');
+                            var row = table.row(tr);
+
+                            if (row.child.isShown()) {
+                                // This row is already open - close it
+                                row.child.hide();
+                                tr.removeClass('shown');
+                            } else {
+                                // Open this row
+                                row.child(format(row.data())).show();
+                                tr.addClass('shown');
+                            }
+                        });
+                    });
+                    // END CODE FOR Child rows (show extra / detailed information) DATA TABLE 		
+
+
+
+                    // START CODE Show / hide columns dynamically DATA TABLE 		
+                    $(document).ready(function () {
+                        var table = $('#example3').DataTable({
+                            "scrollY": "350px",
+                            "paging": false
+                        });
+
+                        $('a.toggle-vis').on('click', function (e) {
+                            e.preventDefault();
+
+                            // Get the column API object
+                            var column = table.column($(this).attr('data-column'));
+
+                            // Toggle the visibility
+                            column.visible(!column.visible());
+                        });
+                    });
+                    // END CODE Show / hide columns dynamically DATA TABLE 	
+
+
+                    // START CODE Individual column searching (text inputs) DATA TABLE 		
+                    $(document).ready(function () {
+                        // Setup - add a text input to each footer cell
+                        $('#example4 thead th').each(function () {
+                            var title = $(this).text();
+                            $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+                        });
+
+                        // DataTable
+                        var table = $('#example4').DataTable();
+
+                        // Apply the search
+                        table.columns().every(function () {
+                            var that = this;
+
+                            $('input', this.header()).on('keyup change', function () {
+                                if (that.search() !== this.value) {
+                                    that
+                                            .search(this.value)
+                                            .draw();
+                                }
+                            });
+                        });
+                    });
+                    // END CODE Individual column searching (text inputs) DATA TABLE 	 	
+                </script>	
+            </ui:define>
+
+        </ui:composition>
+    </h:body>
+</html>
+
