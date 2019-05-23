@@ -30,13 +30,15 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
+import java.util.List;
 import javax.servlet.http.Part;
 
 @Named("masterUserController")
 @SessionScoped
 public class MasterUserController implements Serializable {
 
-    private static final String URL_PROJECT = "C://Users//Administrator//Documents//GitHub//new//MyWeBooList//Source//my_weabo_list//web//resources//images//";
+//    private static final String URL_PROJECT = "C://Users//Administrator//Documents//GitHub//new//MyWeBooList//Source//my_weabo_list//web//resources//images//";
+    private static final String URL_PROJECT = "D://GitHub//new//MyWeBooList//Source//my_weabo_list//web//resources//images//";
 
     private Part mFotoStaff;
     private Part mFotoCustomer;
@@ -96,9 +98,8 @@ public class MasterUserController implements Serializable {
     public void setPassword(String mPassword) {
         this.mPassword = mPassword;
     }
-    
-    //asasdasd
 
+    //asasdasd
     //getset foto
     public Part getFotoStaff() {
         return mFotoStaff;
@@ -120,6 +121,11 @@ public class MasterUserController implements Serializable {
     //constructor
     public MasterUserController() {
 //        recreateModel();
+    }
+
+    //get all user who staff
+    public List<MasterUser> getListUserStaff() {
+        return ejbFacade.getListUserStaff();
     }
 
     //Master User
@@ -245,9 +251,9 @@ public class MasterUserController implements Serializable {
     public String createMember() {
         try {
 
-                currentCustomer = new DetailUserCustomer();
-                current = new MasterUser();
-            
+            currentCustomer = new DetailUserCustomer();
+            current = new MasterUser();
+
             current.setEmail(mEmail);
             current.setUsername(mUsername);
             current.setPassword(mPassword);

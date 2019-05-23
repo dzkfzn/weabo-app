@@ -39,4 +39,10 @@ public class MasterUserFacade extends AbstractFacade<MasterUser> {
         return detailUserStaff;
     }
 
+    public List<MasterUser> getListUserStaff() {
+        return em.createQuery("SELECT j FROM MasterUser j WHERE j.roleUser = :role ")
+                .setParameter("role", 2)
+                .getResultList();
+    }
+
 }

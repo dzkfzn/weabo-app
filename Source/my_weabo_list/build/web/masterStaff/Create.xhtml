@@ -68,6 +68,8 @@
                         display: inherit;
                     }
                 </style>		
+
+
             </ui:define>
             <!--END OF CSS-->
             <ui:define name="content">
@@ -81,7 +83,11 @@
                                     </span>
                                     <h3><i class="fa fa-plus"></i> Tambah Staff</h3>								
                                 </div>
+
                                 <div class="card-body">
+                                    <h:panelGroup id="messagePanel" layout="block">
+                                        <b:messages />
+                                    </h:panelGroup>
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <label>Nama<span class="text-danger">*</span>
@@ -173,18 +179,21 @@
                                             <label>Tanggal Lahir<span class="text-danger">* 
                                                     <h:message for="birthDay" errorStyle="color:red" />
                                                 </span></label>
-                                            <b:inputText 
-                                                id="birthDay"    
-                                                value="#{masterUserController.selectedStaff.birthDay}"
-                                                mask="dd/mm/yyyy"
-                                                required="true"
-                                                requiredMessage="Tanggal Lahir Harus Diisi"
-                                                validatorMessage="Tanggal Tidak Valid"
-                                                converterMessage="Tanggal Tidak Valid"
-                                                >
-                                                <f:convertDateTime pattern="dd/MM/yyyy" />
-                                            </b:inputText>
 
+                                            <b:dateTimePicker 
+                                                id="birthDay"    
+
+                                                value="#{masterUserController.selectedStaff.birthDay}"
+                                                allow-input-toggle="#{dateTimeBean.allowInputToggle}"
+                                                icon-position="#{dateTimeBean.iconPosition}"
+                                                mode="#{dateTimeBean.mode}"
+                                                side-by-side="#{dateTimeBean.sideBySide}"
+                                                show-date="#{dateTimeBean.showDate}"
+                                                show-time="#{dateTimeBean.showTime}"
+                                                show-icon="#{dateTimeBean.showIcon}"
+                                                use-current="#{dateTimeBean.useCurrent}"
+
+                                                />
                                         </div>
                                     </div>
                                     <div class="form-row">
@@ -242,6 +251,10 @@
                 </script>
                 <script src="../assets/plugins/datetimepicker/js/moment.min.js"></script>
                 <script src="../assets/plugins/datetimepicker/js/daterangepicker.js"></script>
+
+                <h:outputScript name="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js" /> 
+
+                <h:outputScript name="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js" />
 
             </ui:define>
 
