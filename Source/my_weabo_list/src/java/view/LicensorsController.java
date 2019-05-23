@@ -33,7 +33,6 @@ public class LicensorsController implements Serializable {
 
     public LicensorsController() {
         recreateModel();
-
     }
 
     public Licensors getSelected() {
@@ -95,6 +94,7 @@ public class LicensorsController implements Serializable {
 
             getFacade().create(current);
             JsfUtil.addSuccessMessage("Data berhasil Ditambahkan");
+            recreateModel();
             return "List";
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));

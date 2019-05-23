@@ -90,7 +90,7 @@
                                             </label>
                                             <b:inputText styleClass="form-control" 
                                                          id="name" 
-                                                         value="#{masterPeopleController.selectedPeople.firstName}" 
+                                                         value="#{masterPeopleController.selected.firstName}" 
                                                          required="true" 
                                                          mask="{regex:'^[a-zA-Z0-9_]*$'}"
                                                          placeholder="First Name"
@@ -104,7 +104,7 @@
                                             </label>
                                             <b:inputText styleClass="form-control" 
                                                          id="lastname" 
-                                                         value="#{masterPeopleController.selectedPeople.lastName}" 
+                                                         value="#{masterPeopleController.selected.lastName}" 
                                                          required="true" 
                                                          mask="{regex:'^[a-zA-Z0-9_]*$'}"
                                                          placeholder="Last Name"
@@ -118,7 +118,7 @@
                                                 </span></label>
                                             <b:inputText 
                                                 id="birthDay"    
-                                                value="#{masterPeopleController.selectedPeople.birthDay}"
+                                                value="#{masterPeopleController.selected.birthDay}"
                                                 mask="dd/mm/yyyy"
                                                 required="true"
                                                 requiredMessage="Tanggal Lahir Harus Diisi"
@@ -147,12 +147,12 @@
                                             </label>
                                             <b:inputTextarea placeholder="Avout" 
                                                              id="about"
-                                                             value="#{masterPeopleController.selectedPeople.about}">
+                                                             value="#{masterPeopleController.selected.about}">
                                             </b:inputTextarea>                                       
                                         </div>
                                         <center>
                                         <div class="button-list">
-                                            <h:commandLink styleClass="btn btn-primary" action="#{masterPeopleController.CreatDeatailPeople}" value="Simpan" />
+                                            <h:commandLink styleClass="btn btn-primary" action="#{masterPeopleController.create}" value="Simpan" />
                                             <h:commandLink action="#{masterPeopleController.prepareList()}" styleClass="btn btn-danger" immediate="true" value="Batal dan Kembali ke List"/>
 
                                         </div>

@@ -184,7 +184,7 @@ public class MasterUserController implements Serializable {
 
     public String prepareList() {
         recreateModel();
-        return "List?faces-redirect=true";
+        return "List?faces-redirect=true"; 
     }
 
     public String prepareView() {

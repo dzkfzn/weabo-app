@@ -1,5 +1,6 @@
 package view;
 
+import controller.DetailPeopleFacade;
 import model.MasterPeople;
 import view.util.JsfUtil;
 import view.util.PaginationHelper;
@@ -10,8 +11,11 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import java.io.Serializable;
+import java.nio.file.Files;
+import java.util.Date;
 
 import java.util.ResourceBundle;
+import java.util.UUID;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
@@ -22,22 +26,43 @@ import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
+import javax.servlet.http.Part;
+import model.DetailPeople;
 
 @Named("masterPeopleController")
 @SessionScoped
 public class MasterPeopleController implements Serializable {
 
-
+    private static final String URL_PROJECT = "C://Users//Administrator//Documents//GitHub//new//MyWeBooList//Source//my_weabo_list//web//resources//images//";
+    
+    
+    private Part mFotoPeople;
+    private String mPhotoUrlPeople;
+    
     private MasterPeople current;
+    private DetailPeople currentPeople;
     private DataModel items = null;
+    
     @EJB
     private controller.MasterPeopleFacade ejbFacade;
+    @EJB
+    private controller.DetailPeopleFacade ejbFacadePeople;
+    
     private PaginationHelper pagination;
     private int selectedItemIndex;
 
     public MasterPeopleController() {
     }
+    
+    //getset foto
+    public Part getFotoPeople() {
+        return mFotoPeople;
+    }
 
+    public void setFotoPeople(Part mFotoPeople) {
+        this.mFotoPeople = mFotoPeople;
+    }
+    
     public MasterPeople getSelected() {
         if (current == null) {
             current = new MasterPeople();
@@ -49,6 +74,21 @@ public class MasterPeopleController implements Serializable {
     private MasterPeopleFacade getFacade() {
         return ejbFacade;
     }
+    
+    //detail people
+    public DetailPeople getSelectedPeople(){
+        if(currentPeople == null){
+            currentPeople = new DetailPeople();
+            selectedItemIndex = -1;
+        }
+        return currentPeople;
+    }
+    
+    private DetailPeopleFacade getFacadePeople(){
+        return ejbFacadePeople;
+    }
+    
+    //end
 
     public PaginationHelper getPagination() {
         if (pagination == null) {
@@ -70,31 +110,90 @@ public class MasterPeopleController implements Serializable {
 
     public String prepareList() {
         recreateModel();
-        return "List";
+        return "List?faces-redirect=true"; 
     }
 
     public String prepareView() {
         current = (MasterPeople) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
-        return "View";
+        return "View?faces-redirect=true\"; ";
     }
 
     public String prepareCreate() {
         current = new MasterPeople();
         selectedItemIndex = -1;
-        return "CreateDetail";
+        return "CreateDetail?faces-redirect=true";
     }
+    private void clearVariable() {
+        mFotoPeople = null;
+        mPhotoUrlPeople = null;
 
+    }
+    String mPeopleId;
     public String create() {
         try {
+            //inisialisasi Date
+            Date createdDate = new Date();
+            current.setCreatedDate(createdDate);
 
+            //inisialisasi is Active
+            current.setStatusDelete(1);
+
+            //Inisialisasi Favorited
+            current.setFavorited(0);
+
+            //inisialisasi ID
+            mPeopleId = UUID.randomUUID().toString();
+            current.setPeopleId(mPeopleId);
+            currentPeople.setPeopleId(current);
+
+            //upload Foto
+            current.setThumbnail(upload());
+
+            //create ke 2 tabel sekaligus
             getFacade().create(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("MasterPeopleCreated"));
-            return prepareCreate();
+            getFacadePeople().create(currentPeople);
+
+            JsfUtil.addSuccessMessage("Data Berhasil Di tambahkan");
+            recreateModel();
+            clearVariable();
+            return "List?faces-redirect=true";
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
             return null;
         }
+    }
+    
+     public String upload() {
+        try {
+            InputStream in = mFotoPeople.getInputStream();
+            setFotoPeople(mFotoPeople);
+            File f = new File(URL_PROJECT
+                    //D:\GitHub\MyWeBooList\Source\my_weabo_list\web\resources\images
+                    + mFotoPeople.getSubmittedFileName());
+
+            f.createNewFile();
+//            url = f.toString();
+            mPhotoUrlPeople = mFotoPeople.getSubmittedFileName();
+            FileOutputStream out = new FileOutputStream(f);
+            try (InputStream input = mFotoPeople.getInputStream()) {
+                Files.copy(input, new File(URL_PROJECT + mFotoPeople.getSubmittedFileName()).toPath());
+            } catch (IOException e) {
+                // Show faces message?
+            }
+            byte[] buffer = new byte[1024];
+            int length;
+
+            while ((length = in.read(buffer)) > 0) {
+                out.write(buffer);
+            }
+            out.close();
+            in.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return mPhotoUrlPeople;
     }
 
 
