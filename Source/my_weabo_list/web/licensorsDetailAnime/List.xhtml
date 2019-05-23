@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListLicensorsDetailAnimeTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:form styleClass="jsfcrud_list_form">
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+                <h:outputText escape="false" value="#{bundle.ListLicensorsDetailAnimeEmpty}" rendered="#{licensorsDetailAnimeController.items.rowCount == 0}"/>
+                <h:panelGroup rendered="#{licensorsDetailAnimeController.items.rowCount > 0}">
+                    <h:outputText value="#{licensorsDetailAnimeController.pagination.pageFirstItem + 1}..#{licensorsDetailAnimeController.pagination.pageLastItem + 1}/#{licensorsDetailAnimeController.pagination.itemsCount}"/>&nbsp;
+                    <h:commandLink action="#{licensorsDetailAnimeController.previous}" value="#{bundle.Previous} #{licensorsDetailAnimeController.pagination.pageSize}" rendered="#{licensorsDetailAnimeController.pagination.hasPreviousPage}"/>&nbsp;
+                    <h:commandLink action="#{licensorsDetailAnimeController.next}" value="#{bundle.Next} #{licensorsDetailAnimeController.pagination.pageSize}" rendered="#{licensorsDetailAnimeController.pagination.hasNextPage}"/>&nbsp;
+                    <h:dataTable value="#{licensorsDetailAnimeController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListLicensorsDetailAnimeTitle_licensorsDetailAnimePK_id}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.licensorsDetailAnimePK.id}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListLicensorsDetailAnimeTitle_isActive}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.isActive}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListLicensorsDetailAnimeTitle_detailAnime}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.detailAnime}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListLicensorsDetailAnimeTitle_licensors}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.licensors}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="&nbsp;"/>
+                            </f:facet>
+                            <h:commandLink action="#{licensorsDetailAnimeController.prepareView}" value="#{bundle.ListLicensorsDetailAnimeViewLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{licensorsDetailAnimeController.prepareEdit}" value="#{bundle.ListLicensorsDetailAnimeEditLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{licensorsDetailAnimeController.destroy}" value="#{bundle.ListLicensorsDetailAnimeDestroyLink}"/>
+                        </h:column>
+                    </h:dataTable>
+                </h:panelGroup>
+                <br />
+                <h:commandLink action="#{licensorsDetailAnimeController.prepareCreate}" value="#{bundle.ListLicensorsDetailAnimeCreateLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ListLicensorsDetailAnimeIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

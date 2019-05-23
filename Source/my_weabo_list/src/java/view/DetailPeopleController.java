@@ -17,7 +17,6 @@ import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
-import model.MasterPeople;
 
 @Named("detailPeopleController")
 @SessionScoped
@@ -79,8 +78,6 @@ public class DetailPeopleController implements Serializable {
         selectedItemIndex = -1;
         return "Create";
     }
-    
-    
 
     public String create() {
         try {

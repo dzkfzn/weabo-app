@@ -9,17 +9,17 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -69,11 +69,8 @@ public class Genres implements Serializable {
     @NotNull
     @Column(name = "is_active")
     private int isActive;
-    @JoinTable(name = "genres_detail_anime", joinColumns = {
-        @JoinColumn(name = "genre_id", referencedColumnName = "genre_id")}, inverseJoinColumns = {
-        @JoinColumn(name = "detail_anime_id", referencedColumnName = "detail_anime_id")})
-    @ManyToMany
-    private Collection<DetailAnime> detailAnimeCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "genres")
+    private Collection<GenresDetailAnime> genresDetailAnimeCollection;
     @JoinColumn(name = "created_by", referencedColumnName = "user_id")
     @ManyToOne
     private MasterUser createdBy;
@@ -137,12 +134,12 @@ public class Genres implements Serializable {
     }
 
     @XmlTransient
-    public Collection<DetailAnime> getDetailAnimeCollection() {
-        return detailAnimeCollection;
+    public Collection<GenresDetailAnime> getGenresDetailAnimeCollection() {
+        return genresDetailAnimeCollection;
     }
 
-    public void setDetailAnimeCollection(Collection<DetailAnime> detailAnimeCollection) {
-        this.detailAnimeCollection = detailAnimeCollection;
+    public void setGenresDetailAnimeCollection(Collection<GenresDetailAnime> genresDetailAnimeCollection) {
+        this.genresDetailAnimeCollection = genresDetailAnimeCollection;
     }
 
     public MasterUser getCreatedBy() {
@@ -185,5 +182,5 @@ public class Genres implements Serializable {
     public String toString() {
         return "model.Genres[ genreId=" + genreId + " ]";
     }
-    
+
 }

@@ -9,7 +9,6 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -48,7 +47,6 @@ public class Studios implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Basic(optional = false)
-//    @NotNull
     @Column(name = "studio_id")
     private Integer studioId;
     @Basic(optional = false)
@@ -76,7 +74,7 @@ public class Studios implements Serializable {
     @JoinColumn(name = "modified_by", referencedColumnName = "user_id")
     @ManyToOne
     private MasterUser modifiedBy;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "studioId")
+    @OneToMany(mappedBy = "studioId")
     private Collection<DetailAnime> detailAnimeCollection;
 
     public Studios() {
@@ -183,5 +181,5 @@ public class Studios implements Serializable {
     public String toString() {
         return "model.Studios[ studioId=" + studioId + " ]";
     }
-    
+
 }

@@ -10,8 +10,6 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -41,9 +39,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class DetailUserStaff implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Basic(optional = false)
+    @NotNull
     @Column(name = "staff_id")
     private Integer staffId;
     @Basic(optional = false)
@@ -156,5 +154,5 @@ public class DetailUserStaff implements Serializable {
     public String toString() {
         return "model.DetailUserStaff[ staffId=" + staffId + " ]";
     }
-
+    
 }

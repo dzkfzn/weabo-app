@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditDetailAnimeMasterCharactersTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.EditDetailAnimeMasterCharactersLabel_detailAnimeMasterCharactersPK_id}" for="detailAnimeMasterCharactersPK_id" />
+                    <h:inputText id="detailAnimeMasterCharactersPK_id" value="#{detailAnimeMasterCharactersController.selected.detailAnimeMasterCharactersPK.id}" title="#{bundle.EditDetailAnimeMasterCharactersTitle_detailAnimeMasterCharactersPK_id}" required="true" requiredMessage="#{bundle.EditDetailAnimeMasterCharactersRequiredMessage_detailAnimeMasterCharactersPK_id}"/>
+                    <h:outputLabel value="#{bundle.EditDetailAnimeMasterCharactersLabel_isActive}" for="isActive" />
+                    <h:inputText id="isActive" value="#{detailAnimeMasterCharactersController.selected.isActive}" title="#{bundle.EditDetailAnimeMasterCharactersTitle_isActive}" required="true" requiredMessage="#{bundle.EditDetailAnimeMasterCharactersRequiredMessage_isActive}"/>
+                    <h:outputLabel value="#{bundle.EditDetailAnimeMasterCharactersLabel_roleCharacter}" for="roleCharacter" />
+                    <h:inputText id="roleCharacter" value="#{detailAnimeMasterCharactersController.selected.roleCharacter}" title="#{bundle.EditDetailAnimeMasterCharactersTitle_roleCharacter}" />
+                    <h:outputLabel value="#{bundle.EditDetailAnimeMasterCharactersLabel_detailAnime}" for="detailAnime" />
+                    <h:selectOneMenu id="detailAnime" value="#{detailAnimeMasterCharactersController.selected.detailAnime}" title="#{bundle.EditDetailAnimeMasterCharactersTitle_detailAnime}" required="true" requiredMessage="#{bundle.EditDetailAnimeMasterCharactersRequiredMessage_detailAnime}">
+                        <f:selectItems value="#{detailAnimeController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.EditDetailAnimeMasterCharactersLabel_masterCharacters}" for="masterCharacters" />
+                    <h:selectOneMenu id="masterCharacters" value="#{detailAnimeMasterCharactersController.selected.masterCharacters}" title="#{bundle.EditDetailAnimeMasterCharactersTitle_masterCharacters}" required="true" requiredMessage="#{bundle.EditDetailAnimeMasterCharactersRequiredMessage_masterCharacters}">
+                        <f:selectItems value="#{masterCharactersController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.EditDetailAnimeMasterCharactersLabel_masterPeople}" for="masterPeople" />
+                    <h:selectOneMenu id="masterPeople" value="#{detailAnimeMasterCharactersController.selected.masterPeople}" title="#{bundle.EditDetailAnimeMasterCharactersTitle_masterPeople}" required="true" requiredMessage="#{bundle.EditDetailAnimeMasterCharactersRequiredMessage_masterPeople}">
+                        <f:selectItems value="#{masterPeopleController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <h:commandLink action="#{detailAnimeMasterCharactersController.update}" value="#{bundle.EditDetailAnimeMasterCharactersSaveLink}"/>
+                <br />
+                <br />
+                <h:link outcome="View" value="#{bundle.EditDetailAnimeMasterCharactersViewLink}"/>
+                <br />
+                <h:commandLink action="#{detailAnimeMasterCharactersController.prepareList}" value="#{bundle.EditDetailAnimeMasterCharactersShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.EditDetailAnimeMasterCharactersIndexLink}" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

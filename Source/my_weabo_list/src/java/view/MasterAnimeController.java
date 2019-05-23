@@ -18,14 +18,15 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 
+
 @Named("masterAnimeController")
 @SessionScoped
 public class MasterAnimeController implements Serializable {
 
+
     private MasterAnime current;
     private DataModel items = null;
-    @EJB
-    private controller.MasterAnimeFacade ejbFacade;
+    @EJB private controller.MasterAnimeFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
 
@@ -43,7 +44,6 @@ public class MasterAnimeController implements Serializable {
     private MasterAnimeFacade getFacade() {
         return ejbFacade;
     }
-
     public PaginationHelper getPagination() {
         if (pagination == null) {
             pagination = new PaginationHelper(10) {
@@ -55,7 +55,7 @@ public class MasterAnimeController implements Serializable {
 
                 @Override
                 public DataModel createPageDataModel() {
-                    return new ListDataModel(getFacade().findRange(new int[]{getPageFirstItem(), getPageFirstItem() + getPageSize()}));
+                    return new ListDataModel(getFacade().findRange(new int[]{getPageFirstItem(), getPageFirstItem()+getPageSize()}));
                 }
             };
         }
@@ -68,7 +68,7 @@ public class MasterAnimeController implements Serializable {
     }
 
     public String prepareView() {
-        current = (MasterAnime) getItems().getRowData();
+        current = (MasterAnime)getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "View";
     }
@@ -91,7 +91,7 @@ public class MasterAnimeController implements Serializable {
     }
 
     public String prepareEdit() {
-        current = (MasterAnime) getItems().getRowData();
+        current = (MasterAnime)getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "Edit";
     }
@@ -108,7 +108,7 @@ public class MasterAnimeController implements Serializable {
     }
 
     public String destroy() {
-        current = (MasterAnime) getItems().getRowData();
+        current = (MasterAnime)getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         performDestroy();
         recreatePagination();
@@ -142,14 +142,14 @@ public class MasterAnimeController implements Serializable {
         int count = getFacade().count();
         if (selectedItemIndex >= count) {
             // selected index cannot be bigger than number of items:
-            selectedItemIndex = count - 1;
+            selectedItemIndex = count-1;
             // go to previous page if last page disappeared:
             if (pagination.getPageFirstItem() >= count) {
                 pagination.previousPage();
             }
         }
         if (selectedItemIndex >= 0) {
-            current = getFacade().findRange(new int[]{selectedItemIndex, selectedItemIndex + 1}).get(0);
+            current = getFacade().findRange(new int[]{selectedItemIndex, selectedItemIndex+1}).get(0);
         }
     }
 
@@ -188,11 +188,11 @@ public class MasterAnimeController implements Serializable {
         return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
     }
 
-    public MasterAnime getMasterAnime(java.lang.Integer id) {
+    public MasterAnime getMasterAnime(java.lang.String id) {
         return ejbFacade.find(id);
     }
 
-    @FacesConverter(forClass = MasterAnime.class)
+    @FacesConverter(forClass=MasterAnime.class)
     public static class MasterAnimeControllerConverter implements Converter {
 
         @Override
@@ -200,18 +200,18 @@ public class MasterAnimeController implements Serializable {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            MasterAnimeController controller = (MasterAnimeController) facesContext.getApplication().getELResolver().
+            MasterAnimeController controller = (MasterAnimeController)facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "masterAnimeController");
             return controller.getMasterAnime(getKey(value));
         }
 
-        java.lang.Integer getKey(String value) {
-            java.lang.Integer key;
-            key = Integer.valueOf(value);
+        java.lang.String getKey(String value) {
+            java.lang.String key;
+            key = value;
             return key;
         }
 
-        String getStringKey(java.lang.Integer value) {
+        String getStringKey(java.lang.String value) {
             StringBuilder sb = new StringBuilder();
             sb.append(value);
             return sb.toString();
@@ -226,7 +226,7 @@ public class MasterAnimeController implements Serializable {
                 MasterAnime o = (MasterAnime) object;
                 return getStringKey(o.getAnimeId());
             } else {
-                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + MasterAnime.class.getName());
+                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: "+MasterAnime.class.getName());
             }
         }
 

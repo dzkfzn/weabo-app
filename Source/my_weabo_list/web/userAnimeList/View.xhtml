@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewUserAnimeListTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewUserAnimeListLabel_userAnimeListPK_id}"/>
+                    <h:outputText value="#{userAnimeListController.selected.userAnimeListPK.id}" title="#{bundle.ViewUserAnimeListTitle_userAnimeListPK_id}"/>
+                    <h:outputText value="#{bundle.ViewUserAnimeListLabel_status}"/>
+                    <h:outputText value="#{userAnimeListController.selected.status}" title="#{bundle.ViewUserAnimeListTitle_status}"/>
+                    <h:outputText value="#{bundle.ViewUserAnimeListLabel_score}"/>
+                    <h:outputText value="#{userAnimeListController.selected.score}" title="#{bundle.ViewUserAnimeListTitle_score}"/>
+                    <h:outputText value="#{bundle.ViewUserAnimeListLabel_episodeProgress}"/>
+                    <h:outputText value="#{userAnimeListController.selected.episodeProgress}" title="#{bundle.ViewUserAnimeListTitle_episodeProgress}"/>
+                    <h:outputText value="#{bundle.ViewUserAnimeListLabel_startDate}"/>
+                    <h:outputText value="#{userAnimeListController.selected.startDate}" title="#{bundle.ViewUserAnimeListTitle_startDate}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText>
+                    <h:outputText value="#{bundle.ViewUserAnimeListLabel_finishDate}"/>
+                    <h:outputText value="#{userAnimeListController.selected.finishDate}" title="#{bundle.ViewUserAnimeListTitle_finishDate}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText>
+                    <h:outputText value="#{bundle.ViewUserAnimeListLabel_notes}"/>
+                    <h:outputText value="#{userAnimeListController.selected.notes}" title="#{bundle.ViewUserAnimeListTitle_notes}"/>
+                    <h:outputText value="#{bundle.ViewUserAnimeListLabel_masterAnime}"/>
+                    <h:outputText value="#{userAnimeListController.selected.masterAnime}" title="#{bundle.ViewUserAnimeListTitle_masterAnime}"/>
+                    <h:outputText value="#{bundle.ViewUserAnimeListLabel_masterUser}"/>
+                    <h:outputText value="#{userAnimeListController.selected.masterUser}" title="#{bundle.ViewUserAnimeListTitle_masterUser}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{userAnimeListController.destroyAndView}" value="#{bundle.ViewUserAnimeListDestroyLink}"/>
+                <br />
+                <br />
+                <h:link outcome="Edit" value="#{bundle.ViewUserAnimeListEditLink}"/>
+                <br />
+                <h:commandLink action="#{userAnimeListController.prepareCreate}" value="#{bundle.ViewUserAnimeListCreateLink}" />
+                <br />
+                <h:commandLink action="#{userAnimeListController.prepareList}" value="#{bundle.ViewUserAnimeListShowAllLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ViewUserAnimeListIndexLink}"/>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

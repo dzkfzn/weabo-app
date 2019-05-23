@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreateGenresDetailAnimeTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.CreateGenresDetailAnimeLabel_genresDetailAnimePK_id}" for="genresDetailAnimePK_id" />
+                    <h:inputText id="genresDetailAnimePK_id" value="#{genresDetailAnimeController.selected.genresDetailAnimePK.id}" title="#{bundle.CreateGenresDetailAnimeTitle_genresDetailAnimePK_id}" required="true" requiredMessage="#{bundle.CreateGenresDetailAnimeRequiredMessage_genresDetailAnimePK_id}"/>
+                    <h:outputLabel value="#{bundle.CreateGenresDetailAnimeLabel_isActive}" for="isActive" />
+                    <h:inputText id="isActive" value="#{genresDetailAnimeController.selected.isActive}" title="#{bundle.CreateGenresDetailAnimeTitle_isActive}" />
+                    <h:outputLabel value="#{bundle.CreateGenresDetailAnimeLabel_detailAnime}" for="detailAnime" />
+                    <h:selectOneMenu id="detailAnime" value="#{genresDetailAnimeController.selected.detailAnime}" title="#{bundle.CreateGenresDetailAnimeTitle_detailAnime}" required="true" requiredMessage="#{bundle.CreateGenresDetailAnimeRequiredMessage_detailAnime}">
+                        <f:selectItems value="#{detailAnimeController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.CreateGenresDetailAnimeLabel_genres}" for="genres" />
+                    <h:selectOneMenu id="genres" value="#{genresDetailAnimeController.selected.genres}" title="#{bundle.CreateGenresDetailAnimeTitle_genres}" required="true" requiredMessage="#{bundle.CreateGenresDetailAnimeRequiredMessage_genres}">
+                        <f:selectItems value="#{genresController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{genresDetailAnimeController.create}" value="#{bundle.CreateGenresDetailAnimeSaveLink}" />
+                <br />
+                <br />
+                <h:commandLink action="#{genresDetailAnimeController.prepareList}" value="#{bundle.CreateGenresDetailAnimeShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.CreateGenresDetailAnimeIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

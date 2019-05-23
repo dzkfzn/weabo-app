@@ -22,6 +22,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -35,6 +36,10 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "MasterCharacters.findAll", query = "SELECT m FROM MasterCharacters m")
     , @NamedQuery(name = "MasterCharacters.findByCharacterId", query = "SELECT m FROM MasterCharacters m WHERE m.characterId = :characterId")
+    , @NamedQuery(name = "MasterCharacters.findByName", query = "SELECT m FROM MasterCharacters m WHERE m.name = :name")
+    , @NamedQuery(name = "MasterCharacters.findByThumbnail", query = "SELECT m FROM MasterCharacters m WHERE m.thumbnail = :thumbnail")
+    , @NamedQuery(name = "MasterCharacters.findByFavorited", query = "SELECT m FROM MasterCharacters m WHERE m.favorited = :favorited")
+    , @NamedQuery(name = "MasterCharacters.findByAbout", query = "SELECT m FROM MasterCharacters m WHERE m.about = :about")
     , @NamedQuery(name = "MasterCharacters.findByCreatedDate", query = "SELECT m FROM MasterCharacters m WHERE m.createdDate = :createdDate")
     , @NamedQuery(name = "MasterCharacters.findByLastModifiedDate", query = "SELECT m FROM MasterCharacters m WHERE m.lastModifiedDate = :lastModifiedDate")
     , @NamedQuery(name = "MasterCharacters.findByStatusDelete", query = "SELECT m FROM MasterCharacters m WHERE m.statusDelete = :statusDelete")})
@@ -44,8 +49,20 @@ public class MasterCharacters implements Serializable {
     @Id
     @Basic(optional = false)
     @NotNull
+    @Size(min = 1, max = 50)
     @Column(name = "character_id")
-    private Integer characterId;
+    private String characterId;
+    @Size(max = 50)
+    @Column(name = "name")
+    private String name;
+    @Size(max = 50)
+    @Column(name = "thumbnail")
+    private String thumbnail;
+    @Column(name = "favorited")
+    private Integer favorited;
+    @Size(max = 255)
+    @Column(name = "about")
+    private String about;
     @Basic(optional = false)
     @NotNull
     @Column(name = "created_date")
@@ -63,28 +80,60 @@ public class MasterCharacters implements Serializable {
     @ManyToOne
     private MasterUser lastModifiedBy;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "masterCharacters")
-    private Collection<CharactersDetailAnime> charactersDetailAnimeCollection;
+    private Collection<DetailAnimeMasterCharacters> detailAnimeMasterCharactersCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "characterId")
     private Collection<DetailCharacter> detailCharacterCollection;
 
     public MasterCharacters() {
     }
 
-    public MasterCharacters(Integer characterId) {
+    public MasterCharacters(String characterId) {
         this.characterId = characterId;
     }
 
-    public MasterCharacters(Integer characterId, Date createdDate) {
+    public MasterCharacters(String characterId, Date createdDate) {
         this.characterId = characterId;
         this.createdDate = createdDate;
     }
 
-    public Integer getCharacterId() {
+    public String getCharacterId() {
         return characterId;
     }
 
-    public void setCharacterId(Integer characterId) {
+    public void setCharacterId(String characterId) {
         this.characterId = characterId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
+    }
+
+    public Integer getFavorited() {
+        return favorited;
+    }
+
+    public void setFavorited(Integer favorited) {
+        this.favorited = favorited;
+    }
+
+    public String getAbout() {
+        return about;
+    }
+
+    public void setAbout(String about) {
+        this.about = about;
     }
 
     public Date getCreatedDate() {
@@ -128,12 +177,12 @@ public class MasterCharacters implements Serializable {
     }
 
     @XmlTransient
-    public Collection<CharactersDetailAnime> getCharactersDetailAnimeCollection() {
-        return charactersDetailAnimeCollection;
+    public Collection<DetailAnimeMasterCharacters> getDetailAnimeMasterCharactersCollection() {
+        return detailAnimeMasterCharactersCollection;
     }
 
-    public void setCharactersDetailAnimeCollection(Collection<CharactersDetailAnime> charactersDetailAnimeCollection) {
-        this.charactersDetailAnimeCollection = charactersDetailAnimeCollection;
+    public void setDetailAnimeMasterCharactersCollection(Collection<DetailAnimeMasterCharacters> detailAnimeMasterCharactersCollection) {
+        this.detailAnimeMasterCharactersCollection = detailAnimeMasterCharactersCollection;
     }
 
     @XmlTransient

@@ -30,10 +30,11 @@ public class DetailPeopleFacade extends AbstractFacade<DetailPeople> {
     public DetailPeopleFacade() {
         super(DetailPeople.class);
     }
-    
+        
     public List<DetailPeople> getIdPeople(MasterPeople people_id){
         return em.createNamedQuery("DetailPeople.findByDetailPeopleId",DetailPeople.class)
                 .setParameter("detail_people_id", people_id).getResultList();
     }
+    
     
 }

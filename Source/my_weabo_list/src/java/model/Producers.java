@@ -9,16 +9,17 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -65,14 +66,14 @@ public class Producers implements Serializable {
     @Basic(optional = false)
     @Column(name = "is_active")
     private int isActive;
-    @ManyToMany(mappedBy = "producersCollection")
-    private Collection<DetailAnime> detailAnimeCollection;
     @JoinColumn(name = "created_by", referencedColumnName = "user_id")
     @ManyToOne
     private MasterUser createdBy;
     @JoinColumn(name = "modified_by", referencedColumnName = "user_id")
     @ManyToOne
     private MasterUser modifiedBy;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "producers")
+    private Collection<ProducersDetailAnime> producersDetailAnimeCollection;
 
     public Producers() {
     }
@@ -129,15 +130,6 @@ public class Producers implements Serializable {
         this.isActive = isActive;
     }
 
-    @XmlTransient
-    public Collection<DetailAnime> getDetailAnimeCollection() {
-        return detailAnimeCollection;
-    }
-
-    public void setDetailAnimeCollection(Collection<DetailAnime> detailAnimeCollection) {
-        this.detailAnimeCollection = detailAnimeCollection;
-    }
-
     public MasterUser getCreatedBy() {
         return createdBy;
     }
@@ -152,6 +144,15 @@ public class Producers implements Serializable {
 
     public void setModifiedBy(MasterUser modifiedBy) {
         this.modifiedBy = modifiedBy;
+    }
+
+    @XmlTransient
+    public Collection<ProducersDetailAnime> getProducersDetailAnimeCollection() {
+        return producersDetailAnimeCollection;
+    }
+
+    public void setProducersDetailAnimeCollection(Collection<ProducersDetailAnime> producersDetailAnimeCollection) {
+        this.producersDetailAnimeCollection = producersDetailAnimeCollection;
     }
 
     @Override

@@ -94,6 +94,8 @@ public class MasterUser implements Serializable {
     private Collection<Studios> studiosCollection;
     @OneToMany(mappedBy = "modifiedBy")
     private Collection<Studios> studiosCollection1;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "masterUser")
+    private Collection<UserAnimeList> userAnimeListCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
     private Collection<DetailUserStaff> detailUserStaffCollection;
     @OneToMany(mappedBy = "createdBy")
@@ -114,9 +116,9 @@ public class MasterUser implements Serializable {
     private Collection<Genres> genresCollection;
     @OneToMany(mappedBy = "modifiedBy")
     private Collection<Genres> genresCollection1;
-    @OneToMany(mappedBy = "lastModifiedBy")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "createdBy")
     private Collection<MasterAnime> masterAnimeCollection;
-    @OneToMany(mappedBy = "createdBy")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "lastModifiedBy")
     private Collection<MasterAnime> masterAnimeCollection1;
     @OneToMany(mappedBy = "createdBy")
     private Collection<MasterPeople> masterPeopleCollection;
@@ -248,6 +250,15 @@ public class MasterUser implements Serializable {
 
     public void setStudiosCollection1(Collection<Studios> studiosCollection1) {
         this.studiosCollection1 = studiosCollection1;
+    }
+
+    @XmlTransient
+    public Collection<UserAnimeList> getUserAnimeListCollection() {
+        return userAnimeListCollection;
+    }
+
+    public void setUserAnimeListCollection(Collection<UserAnimeList> userAnimeListCollection) {
+        this.userAnimeListCollection = userAnimeListCollection;
     }
 
     @XmlTransient

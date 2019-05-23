@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListUserAnimeListTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:form styleClass="jsfcrud_list_form">
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+                <h:outputText escape="false" value="#{bundle.ListUserAnimeListEmpty}" rendered="#{userAnimeListController.items.rowCount == 0}"/>
+                <h:panelGroup rendered="#{userAnimeListController.items.rowCount > 0}">
+                    <h:outputText value="#{userAnimeListController.pagination.pageFirstItem + 1}..#{userAnimeListController.pagination.pageLastItem + 1}/#{userAnimeListController.pagination.itemsCount}"/>&nbsp;
+                    <h:commandLink action="#{userAnimeListController.previous}" value="#{bundle.Previous} #{userAnimeListController.pagination.pageSize}" rendered="#{userAnimeListController.pagination.hasPreviousPage}"/>&nbsp;
+                    <h:commandLink action="#{userAnimeListController.next}" value="#{bundle.Next} #{userAnimeListController.pagination.pageSize}" rendered="#{userAnimeListController.pagination.hasNextPage}"/>&nbsp;
+                    <h:dataTable value="#{userAnimeListController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListUserAnimeListTitle_userAnimeListPK_id}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.userAnimeListPK.id}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListUserAnimeListTitle_status}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.status}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListUserAnimeListTitle_score}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.score}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListUserAnimeListTitle_episodeProgress}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.episodeProgress}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListUserAnimeListTitle_startDate}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.startDate}">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListUserAnimeListTitle_finishDate}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.finishDate}">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListUserAnimeListTitle_notes}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.notes}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListUserAnimeListTitle_masterAnime}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.masterAnime}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListUserAnimeListTitle_masterUser}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.masterUser}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="&nbsp;"/>
+                            </f:facet>
+                            <h:commandLink action="#{userAnimeListController.prepareView}" value="#{bundle.ListUserAnimeListViewLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{userAnimeListController.prepareEdit}" value="#{bundle.ListUserAnimeListEditLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{userAnimeListController.destroy}" value="#{bundle.ListUserAnimeListDestroyLink}"/>
+                        </h:column>
+                    </h:dataTable>
+                </h:panelGroup>
+                <br />
+                <h:commandLink action="#{userAnimeListController.prepareCreate}" value="#{bundle.ListUserAnimeListCreateLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ListUserAnimeListIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

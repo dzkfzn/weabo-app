@@ -188,7 +188,7 @@ public class MasterCharactersController implements Serializable {
         return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
     }
 
-    public MasterCharacters getMasterCharacters(java.lang.Integer id) {
+    public MasterCharacters getMasterCharacters(java.lang.String id) {
         return ejbFacade.find(id);
     }
 
@@ -205,13 +205,13 @@ public class MasterCharactersController implements Serializable {
             return controller.getMasterCharacters(getKey(value));
         }
 
-        java.lang.Integer getKey(String value) {
-            java.lang.Integer key;
-            key = Integer.valueOf(value);
+        java.lang.String getKey(String value) {
+            java.lang.String key;
+            key = value;
             return key;
         }
 
-        String getStringKey(java.lang.Integer value) {
+        String getStringKey(java.lang.String value) {
             StringBuilder sb = new StringBuilder();
             sb.append(value);
             return sb.toString();

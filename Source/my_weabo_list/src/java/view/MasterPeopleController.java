@@ -1,15 +1,12 @@
 package view;
 
-import controller.DetailPeopleFacade;
 import model.MasterPeople;
 import view.util.JsfUtil;
 import view.util.PaginationHelper;
 import controller.MasterPeopleFacade;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.ResourceBundle;
-import java.util.UUID;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
@@ -20,34 +17,21 @@ import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
-import javax.servlet.http.Part;
-import model.DetailPeople;
 
 @Named("masterPeopleController")
 @SessionScoped
 public class MasterPeopleController implements Serializable {
-    
-    private Part mFotoPeople;
-    private String mPhotoUrlPeople; 
-    private MasterPeople peopleId;
 
     private MasterPeople current;
-    private DetailPeople currentPeople;
     private DataModel items = null;
-    
     @EJB
     private controller.MasterPeopleFacade ejbFacade;
-    @EJB
-    private controller.DetailPeopleFacade ejbpeopleFacade;
-    
-    
     private PaginationHelper pagination;
     private int selectedItemIndex;
 
     public MasterPeopleController() {
-        recreateModel();
     }
-//masterUser
+
     public MasterPeople getSelected() {
         if (current == null) {
             current = new MasterPeople();
@@ -59,23 +43,6 @@ public class MasterPeopleController implements Serializable {
     private MasterPeopleFacade getFacade() {
         return ejbFacade;
     }
-    //end of master people
-    
-    //strart of master detail people
-    public DetailPeople getSelectedPeople(){
-        if (currentPeople == null) {
-            currentPeople = new DetailPeople();
-            selectedItemIndex = -1;
-        }
-        return currentPeople;
-    }
-    
-    private DetailPeopleFacade getFacadePeopleFacade() {
-        return ejbpeopleFacade;
-    }
-    //end
-    
-    
 
     public PaginationHelper getPagination() {
         if (pagination == null) {
@@ -111,47 +78,16 @@ public class MasterPeopleController implements Serializable {
         selectedItemIndex = -1;
         return "Create";
     }
-    
 
     public String create() {
         try {
-            
-            peopleId = current;
-            current = new MasterPeople();
-            selectedItemIndex = -1;
-            
-            current.setStatusDelete(1);
-            
             getFacade().create(current);
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("MasterPeopleCreated"));
-            return "List";
+            return prepareCreate();
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
             return null;
         }
-    }
-    
-    
-    
-    public String CreatDeatailPeople(){
-        //inisialisasi Date
-            Date createdDate = new Date();
-            current.setCreatedDate(createdDate);
-
-            //inisialisasi status
-            currentPeople.setStatusActive(1);
-            currentPeople.setStatusConfirm(1);
-
-            //inisialisasi ID
-            
-            currentPeople.setIdPeople(peopleId);
-
-            //create ke 2 tabel sekaligus
-            getFacade().create(current);
-            getFacadePeopleFacade().create(currentPeople);
-
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("MasterUserCreated"));
-            return "List";
     }
 
     public String prepareEdit() {
@@ -252,7 +188,7 @@ public class MasterPeopleController implements Serializable {
         return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
     }
 
-    public MasterPeople getMasterPeople(java.lang.Integer id) {
+    public MasterPeople getMasterPeople(java.lang.String id) {
         return ejbFacade.find(id);
     }
 
@@ -269,13 +205,13 @@ public class MasterPeopleController implements Serializable {
             return controller.getMasterPeople(getKey(value));
         }
 
-        java.lang.Integer getKey(String value) {
-            java.lang.Integer key;
-            key = Integer.valueOf(value);
+        java.lang.String getKey(String value) {
+            java.lang.String key;
+            key = value;
             return key;
         }
 
-        String getStringKey(java.lang.Integer value) {
+        String getStringKey(java.lang.String value) {
             StringBuilder sb = new StringBuilder();
             sb.append(value);
             return sb.toString();

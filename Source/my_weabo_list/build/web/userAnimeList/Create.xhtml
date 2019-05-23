@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreateUserAnimeListTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.CreateUserAnimeListLabel_userAnimeListPK_id}" for="userAnimeListPK_id" />
+                    <h:inputText id="userAnimeListPK_id" value="#{userAnimeListController.selected.userAnimeListPK.id}" title="#{bundle.CreateUserAnimeListTitle_userAnimeListPK_id}" required="true" requiredMessage="#{bundle.CreateUserAnimeListRequiredMessage_userAnimeListPK_id}"/>
+                    <h:outputLabel value="#{bundle.CreateUserAnimeListLabel_status}" for="status" />
+                    <h:inputText id="status" value="#{userAnimeListController.selected.status}" title="#{bundle.CreateUserAnimeListTitle_status}" />
+                    <h:outputLabel value="#{bundle.CreateUserAnimeListLabel_score}" for="score" />
+                    <h:inputText id="score" value="#{userAnimeListController.selected.score}" title="#{bundle.CreateUserAnimeListTitle_score}" />
+                    <h:outputLabel value="#{bundle.CreateUserAnimeListLabel_episodeProgress}" for="episodeProgress" />
+                    <h:inputText id="episodeProgress" value="#{userAnimeListController.selected.episodeProgress}" title="#{bundle.CreateUserAnimeListTitle_episodeProgress}" />
+                    <h:outputLabel value="#{bundle.CreateUserAnimeListLabel_startDate}" for="startDate" />
+                    <h:inputText id="startDate" value="#{userAnimeListController.selected.startDate}" title="#{bundle.CreateUserAnimeListTitle_startDate}" >
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundle.CreateUserAnimeListLabel_finishDate}" for="finishDate" />
+                    <h:inputText id="finishDate" value="#{userAnimeListController.selected.finishDate}" title="#{bundle.CreateUserAnimeListTitle_finishDate}" >
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundle.CreateUserAnimeListLabel_notes}" for="notes" />
+                    <h:inputText id="notes" value="#{userAnimeListController.selected.notes}" title="#{bundle.CreateUserAnimeListTitle_notes}" />
+                    <h:outputLabel value="#{bundle.CreateUserAnimeListLabel_masterAnime}" for="masterAnime" />
+                    <h:selectOneMenu id="masterAnime" value="#{userAnimeListController.selected.masterAnime}" title="#{bundle.CreateUserAnimeListTitle_masterAnime}" required="true" requiredMessage="#{bundle.CreateUserAnimeListRequiredMessage_masterAnime}">
+                        <f:selectItems value="#{masterAnimeController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.CreateUserAnimeListLabel_masterUser}" for="masterUser" />
+                    <h:selectOneMenu id="masterUser" value="#{userAnimeListController.selected.masterUser}" title="#{bundle.CreateUserAnimeListTitle_masterUser}" required="true" requiredMessage="#{bundle.CreateUserAnimeListRequiredMessage_masterUser}">
+                        <f:selectItems value="#{masterUserController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{userAnimeListController.create}" value="#{bundle.CreateUserAnimeListSaveLink}" />
+                <br />
+                <br />
+                <h:commandLink action="#{userAnimeListController.prepareList}" value="#{bundle.CreateUserAnimeListShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.CreateUserAnimeListIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

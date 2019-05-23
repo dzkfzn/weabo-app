@@ -6,15 +6,12 @@
 package model;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -24,7 +21,6 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -83,11 +79,6 @@ public class DetailPeople implements Serializable {
     private Integer statusActive;
     @Column(name = "status_confirm")
     private Integer statusConfirm;
-    @JoinTable(name = "people_detail_anime", joinColumns = {
-        @JoinColumn(name = "people_id", referencedColumnName = "detail_people_id")}, inverseJoinColumns = {
-        @JoinColumn(name = "detail_anime_id", referencedColumnName = "detail_anime_id")})
-    @ManyToMany
-    private Collection<DetailAnime> detailAnimeCollection;
     @JoinColumn(name = "people_id", referencedColumnName = "people_id")
     @ManyToOne(optional = false)
     private MasterPeople peopleId;
@@ -109,10 +100,6 @@ public class DetailPeople implements Serializable {
         this.birthDay = birthDay;
     }
 
-    public void setIdPeople(MasterPeople people_id) {
-        this.peopleId = people_id;
-    }
-    
     public Integer getDetailPeopleId() {
         return detailPeopleId;
     }
@@ -191,15 +178,6 @@ public class DetailPeople implements Serializable {
 
     public void setStatusConfirm(Integer statusConfirm) {
         this.statusConfirm = statusConfirm;
-    }
-
-    @XmlTransient
-    public Collection<DetailAnime> getDetailAnimeCollection() {
-        return detailAnimeCollection;
-    }
-
-    public void setDetailAnimeCollection(Collection<DetailAnime> detailAnimeCollection) {
-        this.detailAnimeCollection = detailAnimeCollection;
     }
 
     public MasterPeople getPeopleId() {

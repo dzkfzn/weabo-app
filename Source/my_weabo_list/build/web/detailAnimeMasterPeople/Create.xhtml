@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreateDetailAnimeMasterPeopleTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.CreateDetailAnimeMasterPeopleLabel_detailAnimeMasterPeoplePK_id}" for="detailAnimeMasterPeoplePK_id" />
+                    <h:inputText id="detailAnimeMasterPeoplePK_id" value="#{detailAnimeMasterPeopleController.selected.detailAnimeMasterPeoplePK.id}" title="#{bundle.CreateDetailAnimeMasterPeopleTitle_detailAnimeMasterPeoplePK_id}" required="true" requiredMessage="#{bundle.CreateDetailAnimeMasterPeopleRequiredMessage_detailAnimeMasterPeoplePK_id}"/>
+                    <h:outputLabel value="#{bundle.CreateDetailAnimeMasterPeopleLabel_isActive}" for="isActive" />
+                    <h:inputText id="isActive" value="#{detailAnimeMasterPeopleController.selected.isActive}" title="#{bundle.CreateDetailAnimeMasterPeopleTitle_isActive}" required="true" requiredMessage="#{bundle.CreateDetailAnimeMasterPeopleRequiredMessage_isActive}"/>
+                    <h:outputLabel value="#{bundle.CreateDetailAnimeMasterPeopleLabel_role}" for="role" />
+                    <h:inputText id="role" value="#{detailAnimeMasterPeopleController.selected.role}" title="#{bundle.CreateDetailAnimeMasterPeopleTitle_role}" />
+                    <h:outputLabel value="#{bundle.CreateDetailAnimeMasterPeopleLabel_detailAnime}" for="detailAnime" />
+                    <h:selectOneMenu id="detailAnime" value="#{detailAnimeMasterPeopleController.selected.detailAnime}" title="#{bundle.CreateDetailAnimeMasterPeopleTitle_detailAnime}" required="true" requiredMessage="#{bundle.CreateDetailAnimeMasterPeopleRequiredMessage_detailAnime}">
+                        <f:selectItems value="#{detailAnimeController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.CreateDetailAnimeMasterPeopleLabel_masterPeople}" for="masterPeople" />
+                    <h:selectOneMenu id="masterPeople" value="#{detailAnimeMasterPeopleController.selected.masterPeople}" title="#{bundle.CreateDetailAnimeMasterPeopleTitle_masterPeople}" required="true" requiredMessage="#{bundle.CreateDetailAnimeMasterPeopleRequiredMessage_masterPeople}">
+                        <f:selectItems value="#{masterPeopleController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{detailAnimeMasterPeopleController.create}" value="#{bundle.CreateDetailAnimeMasterPeopleSaveLink}" />
+                <br />
+                <br />
+                <h:commandLink action="#{detailAnimeMasterPeopleController.prepareList}" value="#{bundle.CreateDetailAnimeMasterPeopleShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.CreateDetailAnimeMasterPeopleIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

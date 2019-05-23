@@ -18,14 +18,15 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 
+
 @Named("detailAnimeController")
 @SessionScoped
 public class DetailAnimeController implements Serializable {
 
+
     private DetailAnime current;
     private DataModel items = null;
-    @EJB
-    private controller.DetailAnimeFacade ejbFacade;
+    @EJB private controller.DetailAnimeFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
 
@@ -43,7 +44,6 @@ public class DetailAnimeController implements Serializable {
     private DetailAnimeFacade getFacade() {
         return ejbFacade;
     }
-
     public PaginationHelper getPagination() {
         if (pagination == null) {
             pagination = new PaginationHelper(10) {
@@ -55,7 +55,7 @@ public class DetailAnimeController implements Serializable {
 
                 @Override
                 public DataModel createPageDataModel() {
-                    return new ListDataModel(getFacade().findRange(new int[]{getPageFirstItem(), getPageFirstItem() + getPageSize()}));
+                    return new ListDataModel(getFacade().findRange(new int[]{getPageFirstItem(), getPageFirstItem()+getPageSize()}));
                 }
             };
         }
@@ -68,7 +68,7 @@ public class DetailAnimeController implements Serializable {
     }
 
     public String prepareView() {
-        current = (DetailAnime) getItems().getRowData();
+        current = (DetailAnime)getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "View";
     }
@@ -91,7 +91,7 @@ public class DetailAnimeController implements Serializable {
     }
 
     public String prepareEdit() {
-        current = (DetailAnime) getItems().getRowData();
+        current = (DetailAnime)getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "Edit";
     }
@@ -108,7 +108,7 @@ public class DetailAnimeController implements Serializable {
     }
 
     public String destroy() {
-        current = (DetailAnime) getItems().getRowData();
+        current = (DetailAnime)getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         performDestroy();
         recreatePagination();
@@ -142,14 +142,14 @@ public class DetailAnimeController implements Serializable {
         int count = getFacade().count();
         if (selectedItemIndex >= count) {
             // selected index cannot be bigger than number of items:
-            selectedItemIndex = count - 1;
+            selectedItemIndex = count-1;
             // go to previous page if last page disappeared:
             if (pagination.getPageFirstItem() >= count) {
                 pagination.previousPage();
             }
         }
         if (selectedItemIndex >= 0) {
-            current = getFacade().findRange(new int[]{selectedItemIndex, selectedItemIndex + 1}).get(0);
+            current = getFacade().findRange(new int[]{selectedItemIndex, selectedItemIndex+1}).get(0);
         }
     }
 
@@ -188,11 +188,11 @@ public class DetailAnimeController implements Serializable {
         return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
     }
 
-    public DetailAnime getDetailAnime(java.lang.Integer id) {
+    public DetailAnime getDetailAnime(java.lang.String id) {
         return ejbFacade.find(id);
     }
 
-    @FacesConverter(forClass = DetailAnime.class)
+    @FacesConverter(forClass=DetailAnime.class)
     public static class DetailAnimeControllerConverter implements Converter {
 
         @Override
@@ -200,18 +200,18 @@ public class DetailAnimeController implements Serializable {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            DetailAnimeController controller = (DetailAnimeController) facesContext.getApplication().getELResolver().
+            DetailAnimeController controller = (DetailAnimeController)facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "detailAnimeController");
             return controller.getDetailAnime(getKey(value));
         }
 
-        java.lang.Integer getKey(String value) {
-            java.lang.Integer key;
-            key = Integer.valueOf(value);
+        java.lang.String getKey(String value) {
+            java.lang.String key;
+            key = value;
             return key;
         }
 
-        String getStringKey(java.lang.Integer value) {
+        String getStringKey(java.lang.String value) {
             StringBuilder sb = new StringBuilder();
             sb.append(value);
             return sb.toString();
@@ -226,7 +226,7 @@ public class DetailAnimeController implements Serializable {
                 DetailAnime o = (DetailAnime) object;
                 return getStringKey(o.getDetailAnimeId());
             } else {
-                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + DetailAnime.class.getName());
+                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: "+DetailAnime.class.getName());
             }
         }
 
