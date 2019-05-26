@@ -1,1 +1,3 @@
 /Source/my_weabo_list/dist/
+/Source/my_weabo_list/web/WEB-INF/
+**/Source/my_weabo_list/build/
