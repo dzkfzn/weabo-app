@@ -45,4 +45,21 @@ public class MasterUserFacade extends AbstractFacade<MasterUser> {
                 .getResultList();
     }
 
+    public boolean validate(String email, String password) {
+        try {
+            em.createQuery("SELECT p FROM MasterUser p WHERE p.email = :Email AND p.password = :Password")
+                    .setParameter("Email", email)
+                    .setParameter("Password", password)
+                    .getResultList();
+        } catch (Exception e) {
+            return false;
+        }
+        return em != null;
+    }
+    
+    public List<MasterUser> getCurrentUser(String email) {
+        return em.createQuery("SELECT p FROM MasterUser p WHERE p.email = :Email")
+                .setParameter("Email", email)
+                .getResultList();
+    }
 }

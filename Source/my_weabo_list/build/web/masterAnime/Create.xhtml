@@ -1,51 +1,593 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:jsf="http://xmlns.jcp.org/jsf">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="../TemplatePage.xhtml">
 
-    <ui:composition template="/template.xhtml">
-        <ui:define name="title">
-            <h:outputText value="#{bundle.CreateMasterAnimeTitle}"></h:outputText>
-        </ui:define>
-        <ui:define name="body">
-            <h:panelGroup id="messagePanel" layout="block">
-                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
-            </h:panelGroup>
-            <h:form>
-                <h:panelGrid columns="2">
-                    <h:outputLabel value="#{bundle.CreateMasterAnimeLabel_animeId}" for="animeId" />
-                    <h:inputText id="animeId" value="#{masterAnimeController.selected.animeId}" title="#{bundle.CreateMasterAnimeTitle_animeId}" required="true" requiredMessage="#{bundle.CreateMasterAnimeRequiredMessage_animeId}"/>
-                    <h:outputLabel value="#{bundle.CreateMasterAnimeLabel_lastModifiedDate}" for="lastModifiedDate" />
-                    <h:inputText id="lastModifiedDate" value="#{masterAnimeController.selected.lastModifiedDate}" title="#{bundle.CreateMasterAnimeTitle_lastModifiedDate}" >
-                        <f:convertDateTime pattern="MM/dd/yyyy" />
-                    </h:inputText>
-                    <h:outputLabel value="#{bundle.CreateMasterAnimeLabel_createdDate}" for="createdDate" />
-                    <h:inputText id="createdDate" value="#{masterAnimeController.selected.createdDate}" title="#{bundle.CreateMasterAnimeTitle_createdDate}" >
-                        <f:convertDateTime pattern="MM/dd/yyyy" />
-                    </h:inputText>
-                    <h:outputLabel value="#{bundle.CreateMasterAnimeLabel_statusDelete}" for="statusDelete" />
-                    <h:inputText id="statusDelete" value="#{masterAnimeController.selected.statusDelete}" title="#{bundle.CreateMasterAnimeTitle_statusDelete}" />
-                    <h:outputLabel value="#{bundle.CreateMasterAnimeLabel_lastModifiedBy}" for="lastModifiedBy" />
-                    <h:selectOneMenu id="lastModifiedBy" value="#{masterAnimeController.selected.lastModifiedBy}" title="#{bundle.CreateMasterAnimeTitle_lastModifiedBy}" >
-                        <f:selectItems value="#{masterUserController.itemsAvailableSelectOne}"/>
-                    </h:selectOneMenu>
-                    <h:outputLabel value="#{bundle.CreateMasterAnimeLabel_createdBy}" for="createdBy" />
-                    <h:selectOneMenu id="createdBy" value="#{masterAnimeController.selected.createdBy}" title="#{bundle.CreateMasterAnimeTitle_createdBy}" >
-                        <f:selectItems value="#{masterUserController.itemsAvailableSelectOne}"/>
-                    </h:selectOneMenu>
-                </h:panelGrid>
-                <br />
-                <h:commandLink action="#{masterAnimeController.create}" value="#{bundle.CreateMasterAnimeSaveLink}" />
-                <br />
-                <br />
-                <h:commandLink action="#{masterAnimeController.prepareList}" value="#{bundle.CreateMasterAnimeShowAllLink}" immediate="true"/>
-                <br />
-                <br />
-                <h:link outcome="/index" value="#{bundle.CreateMasterAnimeIndexLink}"/>
-            </h:form>
-        </ui:define>
-    </ui:composition>
+            <!--START OF TITLE-->
+            <ui:define name="role">
+                Admin
+            </ui:define>
+            <ui:define name="title">
+                Kelola Genre
+            </ui:define>
+            <!--END OF TITLE-->
 
+
+            <ui:define name="header_top">
+                Kelola Genre
+            </ui:define>
+            <ui:define name="breadcrumb">
+
+                <li class="breadcrumb-item"> Kelola Master</li>
+                <li class="breadcrumb-item"> Kelola Genres</li>    
+                <li class="breadcrumb-item"> Tambah Genres</li>
+
+
+            </ui:define>
+
+            <!--START OF CSS-->
+            <ui:define name="begin_css">
+
+                <script src="../assets/js/modernizr.min.js"></script>
+                <script src="../assets/js/moment.min.js"></script>	
+                <link href="../assets/plugins/datetimepicker/css/daterangepicker.css" rel="stylesheet" /> 
+                <style>
+                    .parsley-error {
+                        border-color: #ff5d48 !important;
+                    }
+                    .parsley-errors-list.filled {
+                        display: block;
+                    }
+                    .parsley-errors-list {
+                        display: none;
+                        margin: 0;
+                        padding: 0;
+                    }
+                    .parsley-errors-list > li {
+                        font-size: 12px;
+                        list-style: none;
+                        color: #ff5d48;
+                        margin-top: 5px;
+                    }
+                    .form-section {
+                        padding-left: 15px;
+                        border-left: 2px solid #FF851B;
+                        display: none;
+                    }
+                    .form-section.current {
+                        display: inherit;
+                    }
+                </style>	
+                <link href="../assets/plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css"/>
+
+            </ui:define>
+            <!--END OF CSS-->
+            <ui:define name="content">
+                <b:form enctype="multipart/form-data">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12"	>					
+                            <div class="card mb-3">
+                                <div class="card-header">
+                                    <span class="pull-right">
+                                        <!--<button class="" >Add new user</button>-->
+                                    </span>
+                                    <h3><i class="fa fa-certificate"></i> Tambah Genre</h3>								
+                                </div>
+                                <div class="card-body">
+                                    <h:panelGroup id="messagePanel" layout="block">
+                                        <b:messages />
+                                    </h:panelGroup>
+
+                                    <div class="card border-light mb-12" style="max-width: available;">
+                                        <div class="card-header"><strong>Titles</strong></div>
+                                        <div class="card-body text-secondary">
+                                            <div class="form-row">
+                                                <div class="form-group col-md-4">
+                                                    <label>Romaji<span class="text-danger">*</span></label>
+                                                    <b:inputText styleClass="form-control" 
+                                                                 value="#{masterAnimeController.selected.nameRomaji}" 
+                                                                 required="true" 
+                                                                 mask="{regex:'^[a-zA-Z0-9_]*$'}"
+                                                                 placeholder="ex: Shingeki no Kyojin"
+                                                                 >
+                                                    </b:inputText>
+                                                </div> 
+                                                <div class="form-group col-md-4">
+                                                    <label>English</label>
+                                                    <b:inputText styleClass="form-control" 
+                                                                 value="#{masterAnimeController.selected.nameEnglish}" 
+                                                                 required="true" 
+                                                                 mask="{regex:'^[a-zA-Z0-9_]*$'}"
+                                                                 placeholder="ex: Attack on Titan"
+                                                                 requiredMessage="Nama Harus Diisi">
+                                                    </b:inputText>
+                                                </div> 
+                                                <div class="form-group col-md-4">
+                                                    <label>Native<span class="text-danger">*</span></label>
+                                                    <b:inputText styleClass="form-control" 
+                                                                 value="#{masterAnimeController.selected.nameJapan}" 
+                                                                 required="true" 
+                                                                 mask="{regex:'^[a-zA-Z0-9_]*$'}"
+                                                                 placeholder="ex: 進撃の巨人"
+                                                                 requiredMessage="Nama Harus Diisi">
+                                                    </b:inputText>
+                                                </div> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br/>
+
+
+                                    <div class="card border-light mb-12" style="max-width: available;">
+                                        <div class="card-header"><strong>Release Data</strong></div>
+                                        <div class="card-body text-secondary">
+                                            <div class="form-row">
+                                                <div class="form-group col-md-4">
+                                                    <label>Release Status<span class="text-danger">*</span></label>
+                                                    <b:selectOneMenu 
+                                                        value="#{masterAnimeController.selected.airingStatus}" 
+                                                        >
+                                                        <f:selectItem itemLabel="Select" itemValue="" />
+                                                        <f:selectItem itemLabel="Finished Releasing" itemValue="1" />
+                                                        <f:selectItem itemLabel="Currently Releasing" itemValue="2" />
+                                                        <f:selectItem itemLabel="Not Yet Released" itemValue="3" />
+                                                    </b:selectOneMenu>
+                                                </div> 
+                                                <div class="form-group col-md-4">
+                                                    <label>Season</label>
+                                                    <b:selectOneMenu 
+                                                        value="#{masterAnimeController.selected.season}" 
+                                                        >
+                                                        <f:selectItem itemLabel="Select"  />
+
+                                                        <!--separator year-->
+                                                        <f:selectItem itemLabel="Fall 2020" itemValue="Fall 2020" />
+                                                        <f:selectItem itemLabel="Summer 2020" itemValue="Summer 2020" />
+                                                        <f:selectItem itemLabel="Spring 2020" itemValue="Spring 2020" />
+                                                        <f:selectItem itemLabel="Winter 2020" itemValue="Winter 2020" />
+                                                        <!--separator year-->
+                                                        <f:selectItem itemLabel="Fall 2019" itemValue="Fall 2019" />
+                                                        <f:selectItem itemLabel="Summer 2019" itemValue="Summer 2019" />
+                                                        <f:selectItem itemLabel="Spring 2019" itemValue="Spring 2019" />
+                                                        <f:selectItem itemLabel="Winter 2019" itemValue="Winter 2019" />
+                                                        <!--separator year-->
+                                                        <f:selectItem itemLabel="Fall 2018" itemValue="Fall 2018" />
+                                                        <f:selectItem itemLabel="Summer 2018" itemValue="Summer 2018" />
+                                                        <f:selectItem itemLabel="Spring 2018" itemValue="Spring 2018" />
+                                                        <f:selectItem itemLabel="Winter 2018" itemValue="Winter 2018" />
+                                                        <!--separator year-->
+                                                        <f:selectItem itemLabel="Fall 2017" itemValue="Fall 2017" />
+                                                        <f:selectItem itemLabel="Summer 2017" itemValue="Summer 2017" />
+                                                        <f:selectItem itemLabel="Spring 2017" itemValue="Spring 2017" />
+                                                        <f:selectItem itemLabel="Winter 2017" itemValue="Winter 2017" />
+                                                        <!--separator year-->
+                                                        <f:selectItem itemLabel="Fall 2016" itemValue="Fall 2016" />
+                                                        <f:selectItem itemLabel="Summer 2016" itemValue="Summer 2016" />
+                                                        <f:selectItem itemLabel="Spring 2016" itemValue="Spring 2016" />
+                                                        <f:selectItem itemLabel="Winter 2016" itemValue="Winter 2016" />
+                                                        <!--separator year-->
+                                                        <f:selectItem itemLabel="Fall 2015" itemValue="Fall 2015" />
+                                                        <f:selectItem itemLabel="Summer 2015" itemValue="Summer 2015" />
+                                                        <f:selectItem itemLabel="Spring 2015" itemValue="Spring 2015" />
+                                                        <f:selectItem itemLabel="Winter 2015" itemValue="Winter 2015" />
+                                                        <!--separator year-->
+                                                        <f:selectItem itemLabel="Fall 2020" itemValue="Fall 2020" />
+                                                        <f:selectItem itemLabel="Summer 2020" itemValue="Summer 2020" />
+                                                        <f:selectItem itemLabel="Spring 2020" itemValue="Spring 2020" />
+                                                        <f:selectItem itemLabel="Winter 2020" itemValue="Winter 2020" />
+                                                        <!--separator year-->
+                                                        <f:selectItem itemLabel="Fall 2014" itemValue="Fall 2014" />
+                                                        <f:selectItem itemLabel="Summer 2014" itemValue="Summer 2014" />
+                                                        <f:selectItem itemLabel="Spring 2014" itemValue="Spring 2014" />
+                                                        <f:selectItem itemLabel="Winter 2014" itemValue="Winter 2014" />
+                                                        <!--separator year-->
+                                                        <f:selectItem itemLabel="Fall 2013" itemValue="Fall 2013" />
+                                                        <f:selectItem itemLabel="Summer 2013" itemValue="Summer 2013" />
+                                                        <f:selectItem itemLabel="Spring 2013" itemValue="Spring 2013" />
+                                                        <f:selectItem itemLabel="Winter 2013" itemValue="Winter 2013" />
+                                                        <!--separator year-->
+                                                        <f:selectItem itemLabel="Fall 2012" itemValue="Fall 2012" />
+                                                        <f:selectItem itemLabel="Summer 2012" itemValue="Summer 2012" />
+                                                        <f:selectItem itemLabel="Spring 2012" itemValue="Spring 2012" />
+                                                        <f:selectItem itemLabel="Winter 2012" itemValue="Winter 2012" />
+                                                        <!--separator year-->
+                                                        <f:selectItem itemLabel="Fall 2011" itemValue="Fall 2011" />
+                                                        <f:selectItem itemLabel="Summer 2011" itemValue="Summer 2011" />
+                                                        <f:selectItem itemLabel="Spring 2011" itemValue="Spring 2011" />
+                                                        <f:selectItem itemLabel="Winter 2011" itemValue="Winter 2011" />
+                                                        <!--separator year-->
+                                                        <f:selectItem itemLabel="Fall 2010" itemValue="Fall 2010" />
+                                                        <f:selectItem itemLabel="Summer 2010" itemValue="Summer 2010" />
+                                                        <f:selectItem itemLabel="Spring 2010" itemValue="Spring 2010" />
+                                                        <f:selectItem itemLabel="Winter 2010" itemValue="Winter 2010" />
+                                                        <!--separator year-->
+                                                        <f:selectItem itemLabel="Fall 2009" itemValue="Fall 2009" />
+                                                        <f:selectItem itemLabel="Summer 2009" itemValue="Summer 2009" />
+                                                        <f:selectItem itemLabel="Spring 2009" itemValue="Spring 2009" />
+                                                        <f:selectItem itemLabel="Winter 2009" itemValue="Winter 2009" />
+                                                        <!--separator year-->
+                                                        <f:selectItem itemLabel="Fall 2008" itemValue="Fall 2008" />
+                                                        <f:selectItem itemLabel="Summer 2008" itemValue="Summer 2008" />
+                                                        <f:selectItem itemLabel="Spring 2008" itemValue="Spring 2008" />
+                                                        <f:selectItem itemLabel="Winter 2008" itemValue="Winter 2008" />
+                                                        <!--separator year-->
+                                                        <f:selectItem itemLabel="Fall 2007" itemValue="Fall 2007" />
+                                                        <f:selectItem itemLabel="Summer 2007" itemValue="Summer 2007" />
+                                                        <f:selectItem itemLabel="Spring 2007" itemValue="Spring 2007" />
+                                                        <f:selectItem itemLabel="Winter 2007" itemValue="Winter 2007" />
+                                                        <!--separator year-->
+                                                        <f:selectItem itemLabel="Fall 2006" itemValue="Fall 2006" />
+                                                        <f:selectItem itemLabel="Summer 2006" itemValue="Summer 2006" />
+                                                        <f:selectItem itemLabel="Spring 2006" itemValue="Spring 2006" />
+                                                        <f:selectItem itemLabel="Winter 2006" itemValue="Winter 2006" />
+                                                        <!--separator year-->
+                                                        <f:selectItem itemLabel="Fall 2005" itemValue="Fall 2005" />
+                                                        <f:selectItem itemLabel="Summer 2005" itemValue="Summer 2005" />
+                                                        <f:selectItem itemLabel="Spring 2005" itemValue="Spring 2005" />
+                                                        <f:selectItem itemLabel="Winter 2005" itemValue="Winter 2005" />
+                                                        <!--separator year-->
+                                                        <f:selectItem itemLabel="Fall 2004" itemValue="Fall 2004" />
+                                                        <f:selectItem itemLabel="Summer 2004" itemValue="Summer 2004" />
+                                                        <f:selectItem itemLabel="Spring 2004" itemValue="Spring 2004" />
+                                                        <f:selectItem itemLabel="Winter 2004" itemValue="Winter 2004" />
+                                                        <!--separator year-->
+                                                        <f:selectItem itemLabel="Fall 2003" itemValue="Fall 2003" />
+                                                        <f:selectItem itemLabel="Summer 2003" itemValue="Summer 2003" />
+                                                        <f:selectItem itemLabel="Spring 2003" itemValue="Spring 2003" />
+                                                        <f:selectItem itemLabel="Winter 2003" itemValue="Winter 2003" />
+                                                        <!--separator year-->
+                                                        <f:selectItem itemLabel="Fall 2002" itemValue="Fall 2002" />
+                                                        <f:selectItem itemLabel="Summer 2002" itemValue="Summer 2002" />
+                                                        <f:selectItem itemLabel="Spring 2002" itemValue="Spring 2002" />
+                                                        <f:selectItem itemLabel="Winter 2002" itemValue="Winter 2002" />
+                                                        <!--separator year-->
+                                                        <f:selectItem itemLabel="Fall 2001" itemValue="Fall 2001" />
+                                                        <f:selectItem itemLabel="Summer 2001" itemValue="Summer 2001" />
+                                                        <f:selectItem itemLabel="Spring 2001" itemValue="Spring 2001" />
+                                                        <f:selectItem itemLabel="Winter 2001" itemValue="Winter 2001" />
+                                                        <!--separator year-->
+                                                        <f:selectItem itemLabel="Fall 2000" itemValue="Fall 2000" />
+                                                        <f:selectItem itemLabel="Summer 2000" itemValue="Summer 2000" />
+                                                        <f:selectItem itemLabel="Spring 2000" itemValue="Spring 2000" />
+                                                        <f:selectItem itemLabel="Winter 2000" itemValue="Winter 2000" />
+                                                        <!--separator year-->
+
+                                                    </b:selectOneMenu>
+                                                </div>
+                                                <div class="form-group col-md-4">
+                                                </div>
+
+                                                <div class="form-group col-md-12">
+                                                    <div class="card border-light mb-12" style="max-width: available;">
+                                                        <div class="card-header"><strong>Start Date</strong></div>
+                                                        <div class="card-body text-secondary">
+                                                            <div class="form-row">
+                                                                <div class="form-group col-md-4">
+                                                                    <label>Year<span class="text-danger">*</span></label>
+                                                                    <b:inputText styleClass="form-control" 
+                                                                                 value="#{masterAnimeController.selected.airingStartYear}" 
+                                                                                 requiredMessage="Nama Harus Diisi">
+                                                                    </b:inputText>
+                                                                </div> 
+                                                                <div class="form-group col-md-4">
+
+                                                                    <label>Month</label>
+                                                                    <b:inputText styleClass="form-control" 
+                                                                                 value="#{masterAnimeController.selected.airingStartMonth}" 
+                                                                                 mask="{regex:'^[a-zA-Z0-9_]*$'}"
+                                                                                 requiredMessage="Nama Harus Diisi">
+                                                                    </b:inputText>
+                                                                </div> 
+                                                                <div class="form-group col-md-4">
+
+                                                                    <label>Day</label>
+                                                                    <b:inputText styleClass="form-control" 
+                                                                                 value="#{masterAnimeController.selected.airingStartDay}" 
+                                                                                 mask="{regex:'^[a-zA-Z0-9_]*$'}"
+                                                                                 requiredMessage="Nama Harus Diisi">
+                                                                    </b:inputText>
+                                                                </div> 
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="form-group col-md-12">
+
+                                                    <div class="card border-light mb-12" style="max-width: available;">
+                                                        <div class="card-header"><strong>End Date</strong></div>
+                                                        <div class="card-body text-secondary">
+                                                            <div class="form-row">
+                                                                <div class="form-group col-md-4">
+                                                                    <label>Year</label>
+                                                                    <b:inputText styleClass="form-control" 
+                                                                                 value="#{masterAnimeController.selected.airingEndYear}" 
+                                                                                 mask="{regex:'^[a-zA-Z0-9_]*$'}"
+                                                                                 requiredMessage="Nama Harus Diisi">
+                                                                    </b:inputText>
+                                                                </div> 
+                                                                <div class="form-group col-md-4">
+
+                                                                    <label>Month</label>
+                                                                    <b:inputText styleClass="form-control" 
+                                                                                 value="#{masterAnimeController.selected.airingEndMonth}" 
+                                                                                 mask="{regex:'^[a-zA-Z0-9_]*$'}"
+                                                                                 requiredMessage="Nama Harus Diisi">
+                                                                    </b:inputText>
+                                                                </div> 
+                                                                <div class="form-group col-md-4">
+
+                                                                    <label>Day</label>
+                                                                    <b:inputText styleClass="form-control" 
+                                                                                 value="#{masterAnimeController.selected.airingEndDay}" 
+                                                                                 mask="{regex:'^[a-zA-Z0-9_]*$'}"
+                                                                                 requiredMessage="Nama Harus Diisi">
+                                                                    </b:inputText>
+                                                                </div> 
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-md-12">
+
+                                                    <div class="card border-light mb-12" style="max-width: available;">
+                                                        <div class="card-header"><strong>Airing Schedule</strong></div>
+                                                        <div class="card-body text-secondary">
+                                                            <div class="form-row">
+                                                                <div class="form-group col-md-4">
+                                                                    <label>Day</label>
+                                                                    <b:selectOneMenu 
+                                                                        value="#{masterAnimeController.selected.airingDay}" 
+                                                                        >
+                                                                        <f:selectItem itemLabel="Select"  />
+                                                                        <f:selectItem itemLabel="Sunday" itemValue="Sunday" />
+                                                                        <f:selectItem itemLabel="Monday" itemValue="Monday" />
+                                                                        <f:selectItem itemLabel="Tuesday" itemValue="Tuesday" />
+                                                                        <f:selectItem itemLabel="Wednesday" itemValue="Wednesday" />
+                                                                        <f:selectItem itemLabel="Thursday" itemValue="Thursday" />
+                                                                        <f:selectItem itemLabel="Friday" itemValue="Friday" />
+                                                                        <f:selectItem itemLabel="Saturday" itemValue="Saturday" />
+                                                                    </b:selectOneMenu>
+                                                                </div> 
+                                                                <div class="form-group col-md-4">
+
+                                                                    <label>Time</label>
+                                                                    <b:inputText styleClass="form-control" 
+                                                                                 value="#{masterAnimeController.selected.airingTime}" 
+                                                                                 mask="{regex:'^[a-zA-Z0-9_]*$'}"
+                                                                                 >
+                                                                    </b:inputText>
+                                                                </div> 
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br/>
+
+
+                                    <div class="card border-light mb-12" style="max-width: available;">
+                                        <div class="card-header"><strong>Typings</strong></div>
+                                        <div class="card-body text-secondary">
+                                            <div class="form-row">
+                                                <div class="form-group col-md-4">
+                                                    <label>Format<span class="text-danger">*</span></label>
+                                                    <b:selectOneMenu 
+                                                        value="#{masterAnimeController.selected.seriesType}" 
+                                                        requiredMessage="Role Harus Diisi"
+                                                        >
+                                                        <f:selectItem itemLabel="Select" itemValue="" />
+                                                        <f:selectItem itemLabel="TV" itemValue="1" />
+                                                        <f:selectItem itemLabel="TV Short" itemValue="2" />
+                                                        <f:selectItem itemLabel="Movie" itemValue="3" />
+                                                        <f:selectItem itemLabel="Special" itemValue="4" />
+                                                        <f:selectItem itemLabel="OVA" itemValue="5" />
+                                                        <f:selectItem itemLabel="ONA" itemValue="6" />
+                                                    </b:selectOneMenu>
+                                                </div> 
+                                                <div class="form-group col-md-4">
+                                                    <label>Source<span class="text-danger">*</span></label>
+                                                    <b:selectOneMenu 
+                                                        value="#{masterAnimeController.selected.sourceType}" 
+                                                        >
+                                                        <f:selectItem itemLabel="Select" itemValue="" />
+                                                        <f:selectItem itemLabel="Original" itemValue="1" />
+                                                        <f:selectItem itemLabel="Manga" itemValue="2" />
+                                                        <f:selectItem itemLabel="Anime" itemValue="3" />
+                                                        <f:selectItem itemLabel="Light Novel" itemValue="4" />
+                                                        <f:selectItem itemLabel="Novel" itemValue="5" />
+                                                        <f:selectItem itemLabel="Visual Novel" itemValue="6" />
+                                                        <f:selectItem itemLabel="Video Game" itemValue="7" />
+                                                    </b:selectOneMenu>
+                                                </div> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    <div class="card border-light mb-12" style="max-width: available;">
+                                        <div class="card-header"><strong>Lengths</strong></div>
+                                        <div class="card-body text-secondary">
+                                            <div class="form-row">
+                                                <div class="form-group col-md-4">
+                                                    <label>Episodes</label>
+                                                    <b:inputText styleClass="form-control" 
+                                                                 value="#{masterAnimeController.selected.totalEpisode}" 
+                                                                 mask="{regex:'^[a-zA-Z0-9_]*$'}"
+                                                                 requiredMessage="Nama Harus Diisi">
+                                                    </b:inputText>
+                                                </div> 
+                                                <div class="form-group col-md-4">
+                                                    <label>Episode Duration</label>
+                                                    <b:inputText styleClass="form-control" 
+                                                                 value="#{masterAnimeController.selected.duration}" 
+                                                                 mask="{regex:'^[a-zA-Z0-9_]*$'}"
+                                                                 requiredMessage="Nama Harus Diisi">
+                                                    </b:inputText>
+                                                </div> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    <div class="card border-light mb-12" style="max-width: available;">
+                                        <div class="card-header"><strong>Genres</strong></div>
+                                        <div class="card-body text-secondary">
+                                            <div class="form-row">
+                                                <div class="form-group col-md-12">
+                                                    <h:selectManyListbox styleClass="form-control select2" value="#{masterAnimeController.selectedGenres}"> 
+                                                        <f:selectItems value="#{masterAnimeController.avaibleGenres}" var="i" itemLabel="#{i.name}" itemValue="#{i.genreId}" /> 
+                                                    </h:selectManyListbox>
+                                                </div> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    <!--                                    <div class="card border-light mb-12" style="max-width: available;">
+                                                                            <div class="card-header"><strong>Characters</strong></div>
+                                                                            <div class="card-body text-secondary">
+                                                                                <div class="form-row">
+                                                                                    <div class="form-group col-md-4">
+                                                                                        <b:inputText styleClass="form-control" 
+                                                                                                     value="" 
+                                                                                                     required="true" 
+                                                                                                     mask="{regex:'^[a-zA-Z0-9_]*$'}"
+                                                                                                     placeholder="Nama Genre"
+                                                                                                     requiredMessage="Nama Harus Diisi">
+                                                                                        </b:inputText>
+                                                                                    </div> 
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <br/>
+                                                                        <div class="card border-light mb-12" style="max-width: available;">
+                                                                            <div class="card-header"><strong>Staff</strong></div>
+                                                                            <div class="card-body text-secondary">
+                                                                                <div class="form-row">
+                                                                                    <div class="form-group col-md-4">
+                                                                                        <b:inputText styleClass="form-control" 
+                                                                                                     value="" 
+                                                                                                     required="true" 
+                                                                                                     mask="{regex:'^[a-zA-Z0-9_]*$'}"
+                                                                                                     placeholder="Nama Genre"
+                                                                                                     requiredMessage="Nama Harus Diisi">
+                                                                                        </b:inputText>
+                                                                                    </div> 
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <br/>-->
+                                    <div class="card border-light mb-12" style="max-width: available;">
+                                        <div class="card-header"><strong>Maker</strong></div>
+                                        <div class="card-body text-secondary">
+                                            <div class="form-row">
+                                                <div class="form-group col-md-12">
+                                                    <label>Studio<span class="text-danger">*</span></label>
+                                                    <b:selectOneMenu 
+                                                        value="#{masterAnimeController.selected.studioId}" 
+                                                        >
+                                                        <f:selectItem itemLabel="Select" itemValue="" />
+                                                        <f:selectItems value="#{studiosController.itemsAvailableSelectOne}" />
+
+                                                    </b:selectOneMenu>
+                                                </div> 
+                                                <div class="form-group col-md-6">
+                                                    <label>Licencors</label>
+                                                    <h:selectManyListbox styleClass="form-control select2" value="#{masterAnimeController.selectedLicencors}"> 
+                                                        <f:selectItems value="#{masterAnimeController.avaibleLicencors}" var="i" itemLabel="#{i.name}" itemValue="#{i.licensorId}" /> 
+                                                    </h:selectManyListbox>
+                                                </div> 
+                                                <div class="form-group col-md-6">
+                                                    <label>Producers</label>
+                                                    <h:selectManyListbox styleClass="form-control select2" value="#{masterAnimeController.selectedProducers}"> 
+                                                        <f:selectItems value="#{masterAnimeController.avaibleProducers}" var="i" itemLabel="#{i.name}" itemValue="#{i.licensorId}" /> 
+                                                    </h:selectManyListbox>
+                                                </div> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    <div class="card border-light mb-12" style="max-width: available;">
+                                        <div class="card-header"><strong>Images</strong></div>
+                                        <div class="card-body text-secondary">
+                                            <div class="form-row">
+                                                <div class="form-group col-md-6">
+                                                    <label>Cover</label>
+                                                    <h:inputFile class="form-control" 
+                                                                 requiredMessage="Gambar tidak boleh kosong" 
+                                                                 value="#{masterAnimeController.selected.thumbnail}" title="Gambar" />
+
+                                                </div> 
+                                                <div class="form-group col-md-6">
+                                                    <label>Banner</label>
+                                                    <h:inputFile class="form-control" 
+                                                                 requiredMessage="Gambar tidak boleh kosong" 
+                                                                 value="#{masterAnimeController.selected.banner}" title="Gambar" />
+                                                </div> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    <div class="card border-light mb-12" style="max-width: available;">
+                                        <div class="card-header"><strong>Description</strong></div>
+                                        <div class="card-body text-secondary">
+                                            <div class="form-row">
+                                                <div class="form-group col-md-12">
+                                                    <b:inputTextarea  styleClass="form-control" 
+                                                                      value="#{masterAnimeController.selected.sysnopsis}" 
+                                                                      placeholder="Nama Genre"
+                                                                      requiredMessage="Nama Harus Diisi">
+                                                    </b:inputTextarea >
+                                                </div> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br/>
+
+
+
+
+
+                                    <center>
+                                        <div class="button-list">
+                                            <h:commandLink  styleClass="btn btn-primary" action="#{masterAnimeController.create}" value="Simpan" />
+                                            <h:commandLink action="#{masterAnimeController.prepareList()}" styleClass="btn btn-danger" immediate="true" value="Batal dan Kembali ke List"/>
+
+                                        </div>
+                                    </center>
+                                </div>							
+                            </div><!-- end card-->					
+                        </div>
+                    </div>			
+                </b:form>
+            </ui:define>
+            <ui:define name="end_of_body">
+                <script src="../assets/plugins/parsleyjs/parsley.min.js"></script>
+                <script>
+                    $('#form').parsley();
+                </script>
+                <script src="../assets/plugins/datetimepicker/js/moment.min.js"></script>
+                <script src="../assets/plugins/datetimepicker/js/daterangepicker.js"></script>
+                <script src="../assets/plugins/select2/js/select2.min.js"></script>
+                <script>
+                    $(document).ready(function () {
+                        $('.select2').select2();
+                    });
+                </script>
+            </ui:define>
+
+        </ui:composition>
+    </h:body>
 </html>
+

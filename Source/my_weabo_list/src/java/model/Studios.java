@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -40,8 +41,12 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Studios.findByName", query = "SELECT s FROM Studios s WHERE s.name = :name")
     , @NamedQuery(name = "Studios.findByCreatedDate", query = "SELECT s FROM Studios s WHERE s.createdDate = :createdDate")
     , @NamedQuery(name = "Studios.findByModifiedDate", query = "SELECT s FROM Studios s WHERE s.modifiedDate = :modifiedDate")
-    , @NamedQuery(name = "Studios.findByIsActive", query = "SELECT s FROM Studios s WHERE s.isActive = :isActive")})
+    , @NamedQuery(name = "Studios.findByIsActive", query = "SELECT s FROM Studios s WHERE s.isActive = :isActive")
+    , @NamedQuery(name = "Studios.findByMasterAnimeanimeId", query = "SELECT s FROM Studios s WHERE s.masterAnimeanimeId = :masterAnimeanimeId")})
 public class Studios implements Serializable {
+
+    @OneToMany(mappedBy = "studioId")
+    private Collection<DetailAnime> detailAnimeCollection;
 
     private static final long serialVersionUID = 1L;
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -68,14 +73,18 @@ public class Studios implements Serializable {
     @NotNull
     @Column(name = "is_active")
     private int isActive;
+    @Basic(optional = false)
+    @Size(min = 1, max = 50)
+    @Column(name = "master_animeanime_id")
+    private String masterAnimeanimeId;
     @JoinColumn(name = "created_by", referencedColumnName = "user_id")
     @ManyToOne
     private MasterUser createdBy;
     @JoinColumn(name = "modified_by", referencedColumnName = "user_id")
     @ManyToOne
     private MasterUser modifiedBy;
-    @OneToMany(mappedBy = "studioId")
-    private Collection<DetailAnime> detailAnimeCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "studioId")
+    private Collection<MasterAnime> masterAnimeCollection;
 
     public Studios() {
     }
@@ -84,12 +93,13 @@ public class Studios implements Serializable {
         this.studioId = studioId;
     }
 
-    public Studios(Integer studioId, String name, Date createdDate, Date modifiedDate, int isActive) {
+    public Studios(Integer studioId, String name, Date createdDate, Date modifiedDate, int isActive, String masterAnimeanimeId) {
         this.studioId = studioId;
         this.name = name;
         this.createdDate = createdDate;
         this.modifiedDate = modifiedDate;
         this.isActive = isActive;
+        this.masterAnimeanimeId = masterAnimeanimeId;
     }
 
     public Integer getStudioId() {
@@ -132,6 +142,14 @@ public class Studios implements Serializable {
         this.isActive = isActive;
     }
 
+    public String getMasterAnimeanimeId() {
+        return masterAnimeanimeId;
+    }
+
+    public void setMasterAnimeanimeId(String masterAnimeanimeId) {
+        this.masterAnimeanimeId = masterAnimeanimeId;
+    }
+
     public MasterUser getCreatedBy() {
         return createdBy;
     }
@@ -149,12 +167,12 @@ public class Studios implements Serializable {
     }
 
     @XmlTransient
-    public Collection<DetailAnime> getDetailAnimeCollection() {
-        return detailAnimeCollection;
+    public Collection<MasterAnime> getMasterAnimeCollection() {
+        return masterAnimeCollection;
     }
 
-    public void setDetailAnimeCollection(Collection<DetailAnime> detailAnimeCollection) {
-        this.detailAnimeCollection = detailAnimeCollection;
+    public void setMasterAnimeCollection(Collection<MasterAnime> masterAnimeCollection) {
+        this.masterAnimeCollection = masterAnimeCollection;
     }
 
     @Override
@@ -180,6 +198,15 @@ public class Studios implements Serializable {
     @Override
     public String toString() {
         return "model.Studios[ studioId=" + studioId + " ]";
+    }
+
+    @XmlTransient
+    public Collection<DetailAnime> getDetailAnimeCollection() {
+        return detailAnimeCollection;
+    }
+
+    public void setDetailAnimeCollection(Collection<DetailAnime> detailAnimeCollection) {
+        this.detailAnimeCollection = detailAnimeCollection;
     }
 
 }

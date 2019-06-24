@@ -85,9 +85,7 @@
                                 </div>
 
                                 <div class="card-body">
-                                    <h:panelGroup id="messagePanel" layout="block">
-                                        <b:messages />
-                                    </h:panelGroup>
+
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <label>Nama<span class="text-danger">*</span>
@@ -180,20 +178,17 @@
                                                     <h:message for="birthDay" errorStyle="color:red" />
                                                 </span></label>
 
-                                            <b:dateTimePicker 
+                                             <b:inputText 
                                                 id="birthDay"    
-
                                                 value="#{masterUserController.selectedStaff.birthDay}"
-                                                allow-input-toggle="#{dateTimeBean.allowInputToggle}"
-                                                icon-position="#{dateTimeBean.iconPosition}"
-                                                mode="#{dateTimeBean.mode}"
-                                                side-by-side="#{dateTimeBean.sideBySide}"
-                                                show-date="#{dateTimeBean.showDate}"
-                                                show-time="#{dateTimeBean.showTime}"
-                                                show-icon="#{dateTimeBean.showIcon}"
-                                                use-current="#{dateTimeBean.useCurrent}"
-
-                                                />
+                                                mask="dd/mm/yyyy"
+                                                required="true"
+                                                requiredMessage="Tanggal Lahir Harus Diisi"
+                                                validatorMessage="Tanggal Tidak Valid"
+                                                converterMessage="Tanggal Tidak Valid"
+                                                >
+                                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                                            </b:inputText>
                                         </div>
                                     </div>
                                     <div class="form-row">
@@ -252,9 +247,9 @@
                 <script src="../assets/plugins/datetimepicker/js/moment.min.js"></script>
                 <script src="../assets/plugins/datetimepicker/js/daterangepicker.js"></script>
 
-                <h:outputScript  name="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js" /> 
+                <!--<h:outputScript  name="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js" />--> 
 
-                <h:outputScript name="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js" />
+                <!--<h:outputScript name="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js" />-->
 
             </ui:define>
 

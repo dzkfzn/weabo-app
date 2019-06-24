@@ -41,8 +41,12 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "MasterAnime.findByNameRomaji", query = "SELECT m FROM MasterAnime m WHERE m.nameRomaji = :nameRomaji")
     , @NamedQuery(name = "MasterAnime.findByAiringStatus", query = "SELECT m FROM MasterAnime m WHERE m.airingStatus = :airingStatus")
     , @NamedQuery(name = "MasterAnime.findBySeason", query = "SELECT m FROM MasterAnime m WHERE m.season = :season")
-    , @NamedQuery(name = "MasterAnime.findByAiringStartDate", query = "SELECT m FROM MasterAnime m WHERE m.airingStartDate = :airingStartDate")
-    , @NamedQuery(name = "MasterAnime.findByAiringEndDate", query = "SELECT m FROM MasterAnime m WHERE m.airingEndDate = :airingEndDate")
+    , @NamedQuery(name = "MasterAnime.findByAiringStartYear", query = "SELECT m FROM MasterAnime m WHERE m.airingStartYear = :airingStartYear")
+    , @NamedQuery(name = "MasterAnime.findByAiringStartMonth", query = "SELECT m FROM MasterAnime m WHERE m.airingStartMonth = :airingStartMonth")
+    , @NamedQuery(name = "MasterAnime.findByAiringStartDay", query = "SELECT m FROM MasterAnime m WHERE m.airingStartDay = :airingStartDay")
+    , @NamedQuery(name = "MasterAnime.findByAiringEndYear", query = "SELECT m FROM MasterAnime m WHERE m.airingEndYear = :airingEndYear")
+    , @NamedQuery(name = "MasterAnime.findByAiringEndMonth", query = "SELECT m FROM MasterAnime m WHERE m.airingEndMonth = :airingEndMonth")
+    , @NamedQuery(name = "MasterAnime.findByAiringEndDay", query = "SELECT m FROM MasterAnime m WHERE m.airingEndDay = :airingEndDay")
     , @NamedQuery(name = "MasterAnime.findByAiringDay", query = "SELECT m FROM MasterAnime m WHERE m.airingDay = :airingDay")
     , @NamedQuery(name = "MasterAnime.findByAiringTime", query = "SELECT m FROM MasterAnime m WHERE m.airingTime = :airingTime")
     , @NamedQuery(name = "MasterAnime.findBySeriesType", query = "SELECT m FROM MasterAnime m WHERE m.seriesType = :seriesType")
@@ -52,14 +56,18 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "MasterAnime.findBySysnopsis", query = "SELECT m FROM MasterAnime m WHERE m.sysnopsis = :sysnopsis")
     , @NamedQuery(name = "MasterAnime.findByThumbnail", query = "SELECT m FROM MasterAnime m WHERE m.thumbnail = :thumbnail")
     , @NamedQuery(name = "MasterAnime.findByBanner", query = "SELECT m FROM MasterAnime m WHERE m.banner = :banner")
-    , @NamedQuery(name = "MasterAnime.findByStudioId", query = "SELECT m FROM MasterAnime m WHERE m.studioId = :studioId")
-    , @NamedQuery(name = "MasterAnime.findByStatusReview", query = "SELECT m FROM MasterAnime m WHERE m.statusReview = :statusReview")
-    , @NamedQuery(name = "MasterAnime.findByStatusConfirm", query = "SELECT m FROM MasterAnime m WHERE m.statusConfirm = :statusConfirm")
     , @NamedQuery(name = "MasterAnime.findByCreatedDate", query = "SELECT m FROM MasterAnime m WHERE m.createdDate = :createdDate")
     , @NamedQuery(name = "MasterAnime.findByLastModifiedDate", query = "SELECT m FROM MasterAnime m WHERE m.lastModifiedDate = :lastModifiedDate")
     , @NamedQuery(name = "MasterAnime.findByStatusDelete", query = "SELECT m FROM MasterAnime m WHERE m.statusDelete = :statusDelete")
-    , @NamedQuery(name = "MasterAnime.findByFavorited", query = "SELECT m FROM MasterAnime m WHERE m.favorited = :favorited")})
+    , @NamedQuery(name = "MasterAnime.findByFavorited", query = "SELECT m FROM MasterAnime m WHERE m.favorited = :favorited")
+    , @NamedQuery(name = "MasterAnime.findByStatusConfrm", query = "SELECT m FROM MasterAnime m WHERE m.statusConfrm = :statusConfrm")
+    , @NamedQuery(name = "MasterAnime.findByStatusDraft", query = "SELECT m FROM MasterAnime m WHERE m.statusDraft = :statusDraft")})
 public class MasterAnime implements Serializable {
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "masterAnime")
+    private Collection<UserAnimeList> userAnimeListCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "animeId")
+    private Collection<DetailAnime> detailAnimeCollection;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -86,12 +94,18 @@ public class MasterAnime implements Serializable {
     @Size(max = 50)
     @Column(name = "season")
     private String season;
-    @Column(name = "airing_start_date")
-    @Temporal(TemporalType.DATE)
-    private Date airingStartDate;
-    @Column(name = "airing_end_date")
-    @Temporal(TemporalType.DATE)
-    private Date airingEndDate;
+    @Column(name = "airing_start_year")
+    private Integer airingStartYear;
+    @Column(name = "airing_start_month")
+    private Integer airingStartMonth;
+    @Column(name = "airing_start_day")
+    private Integer airingStartDay;
+    @Column(name = "airing_end_year")
+    private Integer airingEndYear;
+    @Column(name = "airing_end_month")
+    private Integer airingEndMonth;
+    @Column(name = "airing_end_day")
+    private Integer airingEndDay;
     @Size(max = 50)
     @Column(name = "airing_day")
     private String airingDay;
@@ -115,12 +129,6 @@ public class MasterAnime implements Serializable {
     @Size(max = 50)
     @Column(name = "banner")
     private String banner;
-    @Column(name = "studio_id")
-    private Integer studioId;
-    @Column(name = "status_review")
-    private Integer statusReview;
-    @Column(name = "status_confirm")
-    private Integer statusConfirm;
     @Column(name = "created_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
@@ -131,16 +139,19 @@ public class MasterAnime implements Serializable {
     private Integer statusDelete;
     @Column(name = "favorited")
     private Integer favorited;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "masterAnime")
-    private Collection<UserAnimeList> userAnimeListCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "animeId")
-    private Collection<DetailAnime> detailAnimeCollection;
+    @Column(name = "status_confrm")
+    private Integer statusConfrm;
+    @Column(name = "status_draft")
+    private Integer statusDraft;
     @JoinColumn(name = "created_by", referencedColumnName = "user_id")
     @ManyToOne(optional = false)
     private MasterUser createdBy;
     @JoinColumn(name = "last_modified_by", referencedColumnName = "user_id")
     @ManyToOne(optional = false)
     private MasterUser lastModifiedBy;
+    @JoinColumn(name = "studio_id", referencedColumnName = "studio_id")
+    @ManyToOne(optional = false)
+    private Studios studioId;
 
     public MasterAnime() {
     }
@@ -203,20 +214,52 @@ public class MasterAnime implements Serializable {
         this.season = season;
     }
 
-    public Date getAiringStartDate() {
-        return airingStartDate;
+    public Integer getAiringStartYear() {
+        return airingStartYear;
     }
 
-    public void setAiringStartDate(Date airingStartDate) {
-        this.airingStartDate = airingStartDate;
+    public void setAiringStartYear(Integer airingStartYear) {
+        this.airingStartYear = airingStartYear;
     }
 
-    public Date getAiringEndDate() {
-        return airingEndDate;
+    public Integer getAiringStartMonth() {
+        return airingStartMonth;
     }
 
-    public void setAiringEndDate(Date airingEndDate) {
-        this.airingEndDate = airingEndDate;
+    public void setAiringStartMonth(Integer airingStartMonth) {
+        this.airingStartMonth = airingStartMonth;
+    }
+
+    public Integer getAiringStartDay() {
+        return airingStartDay;
+    }
+
+    public void setAiringStartDay(Integer airingStartDay) {
+        this.airingStartDay = airingStartDay;
+    }
+
+    public Integer getAiringEndYear() {
+        return airingEndYear;
+    }
+
+    public void setAiringEndYear(Integer airingEndYear) {
+        this.airingEndYear = airingEndYear;
+    }
+
+    public Integer getAiringEndMonth() {
+        return airingEndMonth;
+    }
+
+    public void setAiringEndMonth(Integer airingEndMonth) {
+        this.airingEndMonth = airingEndMonth;
+    }
+
+    public Integer getAiringEndDay() {
+        return airingEndDay;
+    }
+
+    public void setAiringEndDay(Integer airingEndDay) {
+        this.airingEndDay = airingEndDay;
     }
 
     public String getAiringDay() {
@@ -291,30 +334,6 @@ public class MasterAnime implements Serializable {
         this.banner = banner;
     }
 
-    public Integer getStudioId() {
-        return studioId;
-    }
-
-    public void setStudioId(Integer studioId) {
-        this.studioId = studioId;
-    }
-
-    public Integer getStatusReview() {
-        return statusReview;
-    }
-
-    public void setStatusReview(Integer statusReview) {
-        this.statusReview = statusReview;
-    }
-
-    public Integer getStatusConfirm() {
-        return statusConfirm;
-    }
-
-    public void setStatusConfirm(Integer statusConfirm) {
-        this.statusConfirm = statusConfirm;
-    }
-
     public Date getCreatedDate() {
         return createdDate;
     }
@@ -347,22 +366,20 @@ public class MasterAnime implements Serializable {
         this.favorited = favorited;
     }
 
-    @XmlTransient
-    public Collection<UserAnimeList> getUserAnimeListCollection() {
-        return userAnimeListCollection;
+    public Integer getStatusConfrm() {
+        return statusConfrm;
     }
 
-    public void setUserAnimeListCollection(Collection<UserAnimeList> userAnimeListCollection) {
-        this.userAnimeListCollection = userAnimeListCollection;
+    public void setStatusConfrm(Integer statusConfrm) {
+        this.statusConfrm = statusConfrm;
     }
 
-    @XmlTransient
-    public Collection<DetailAnime> getDetailAnimeCollection() {
-        return detailAnimeCollection;
+    public Integer getStatusDraft() {
+        return statusDraft;
     }
 
-    public void setDetailAnimeCollection(Collection<DetailAnime> detailAnimeCollection) {
-        this.detailAnimeCollection = detailAnimeCollection;
+    public void setStatusDraft(Integer statusDraft) {
+        this.statusDraft = statusDraft;
     }
 
     public MasterUser getCreatedBy() {
@@ -379,6 +396,14 @@ public class MasterAnime implements Serializable {
 
     public void setLastModifiedBy(MasterUser lastModifiedBy) {
         this.lastModifiedBy = lastModifiedBy;
+    }
+
+    public Studios getStudioId() {
+        return studioId;
+    }
+
+    public void setStudioId(Studios studioId) {
+        this.studioId = studioId;
     }
 
     @Override
@@ -404,6 +429,24 @@ public class MasterAnime implements Serializable {
     @Override
     public String toString() {
         return "model.MasterAnime[ animeId=" + animeId + " ]";
+    }
+
+    @XmlTransient
+    public Collection<UserAnimeList> getUserAnimeListCollection() {
+        return userAnimeListCollection;
+    }
+
+    public void setUserAnimeListCollection(Collection<UserAnimeList> userAnimeListCollection) {
+        this.userAnimeListCollection = userAnimeListCollection;
+    }
+
+    @XmlTransient
+    public Collection<DetailAnime> getDetailAnimeCollection() {
+        return detailAnimeCollection;
+    }
+
+    public void setDetailAnimeCollection(Collection<DetailAnime> detailAnimeCollection) {
+        this.detailAnimeCollection = detailAnimeCollection;
     }
     
 }

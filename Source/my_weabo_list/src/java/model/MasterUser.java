@@ -45,15 +45,50 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "MasterUser.findByIsActive", query = "SELECT m FROM MasterUser m WHERE m.isActive = :isActive")})
 public class MasterUser implements Serializable {
 
+    @OneToMany(mappedBy = "createdBy")
+    private Collection<DetailPeople> detailPeopleCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "masterUser")
+    private Collection<UserAnimeList> userAnimeListCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
+    private Collection<DetailUserStaff> detailUserStaffCollection;
+    @OneToMany(mappedBy = "createdBy")
+    private Collection<MasterCharacters> masterCharactersCollection;
+    @OneToMany(mappedBy = "lastModifiedBy")
+    private Collection<MasterCharacters> masterCharactersCollection1;
+    @OneToMany(mappedBy = "createdBy")
+    private Collection<Licensors> licensorsCollection;
+    @OneToMany(mappedBy = "modifiedBy")
+    private Collection<Licensors> licensorsCollection1;
+    @OneToMany(mappedBy = "createdBy")
+    private Collection<Producers> producersCollection;
+    @OneToMany(mappedBy = "modifiedBy")
+    private Collection<Producers> producersCollection1;
+    @OneToMany(mappedBy = "createdBy")
+    private Collection<DetailAnime> detailAnimeCollection;
+    @OneToMany(mappedBy = "createdBy")
+    private Collection<Genres> genresCollection;
+    @OneToMany(mappedBy = "modifiedBy")
+    private Collection<Genres> genresCollection1;
+    @OneToMany(mappedBy = "createdBy")
+    private Collection<MasterPeople> masterPeopleCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "lastModifiedBy")
+    private Collection<MasterPeople> masterPeopleCollection1;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
+    private Collection<DetailUserCustomer> detailUserCustomerCollection;
+    @OneToMany(mappedBy = "createdBy")
+    private Collection<DetailCharacter> detailCharacterCollection;
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
+    @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "user_id")
     private String userId;
     @Size(max = 50)
     @Column(name = "name")
     private String name;
+    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
@@ -87,45 +122,13 @@ public class MasterUser implements Serializable {
     @Column(name = "is_active")
     private int isActive;
     @OneToMany(mappedBy = "createdBy")
-    private Collection<DetailPeople> detailPeopleCollection;
-    @OneToMany(mappedBy = "createdBy")
     private Collection<Studios> studiosCollection;
     @OneToMany(mappedBy = "modifiedBy")
     private Collection<Studios> studiosCollection1;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "masterUser")
-    private Collection<UserAnimeList> userAnimeListCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
-    private Collection<DetailUserStaff> detailUserStaffCollection;
-    @OneToMany(mappedBy = "createdBy")
-    private Collection<MasterCharacters> masterCharactersCollection;
-    @OneToMany(mappedBy = "lastModifiedBy")
-    private Collection<MasterCharacters> masterCharactersCollection1;
-    @OneToMany(mappedBy = "createdBy")
-    private Collection<Licensors> licensorsCollection;
-    @OneToMany(mappedBy = "modifiedBy")
-    private Collection<Licensors> licensorsCollection1;
-    @OneToMany(mappedBy = "createdBy")
-    private Collection<Producers> producersCollection;
-    @OneToMany(mappedBy = "modifiedBy")
-    private Collection<Producers> producersCollection1;
-    @OneToMany(mappedBy = "createdBy")
-    private Collection<DetailAnime> detailAnimeCollection;
-    @OneToMany(mappedBy = "createdBy")
-    private Collection<Genres> genresCollection;
-    @OneToMany(mappedBy = "modifiedBy")
-    private Collection<Genres> genresCollection1;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "createdBy")
     private Collection<MasterAnime> masterAnimeCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "lastModifiedBy")
     private Collection<MasterAnime> masterAnimeCollection1;
-    @OneToMany(mappedBy = "createdBy")
-    private Collection<MasterPeople> masterPeopleCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "lastModifiedBy")
-    private Collection<MasterPeople> masterPeopleCollection1;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
-    private Collection<DetailUserCustomer> detailUserCustomerCollection;
-    @OneToMany(mappedBy = "createdBy")
-    private Collection<DetailCharacter> detailCharacterCollection;
 
     public MasterUser() {
     }
@@ -224,15 +227,6 @@ public class MasterUser implements Serializable {
     }
 
     @XmlTransient
-    public Collection<DetailPeople> getDetailPeopleCollection() {
-        return detailPeopleCollection;
-    }
-
-    public void setDetailPeopleCollection(Collection<DetailPeople> detailPeopleCollection) {
-        this.detailPeopleCollection = detailPeopleCollection;
-    }
-
-    @XmlTransient
     public Collection<Studios> getStudiosCollection() {
         return studiosCollection;
     }
@@ -248,6 +242,58 @@ public class MasterUser implements Serializable {
 
     public void setStudiosCollection1(Collection<Studios> studiosCollection1) {
         this.studiosCollection1 = studiosCollection1;
+    }
+
+    @XmlTransient
+    public Collection<MasterAnime> getMasterAnimeCollection() {
+        return masterAnimeCollection;
+    }
+
+    public void setMasterAnimeCollection(Collection<MasterAnime> masterAnimeCollection) {
+        this.masterAnimeCollection = masterAnimeCollection;
+    }
+
+    @XmlTransient
+    public Collection<MasterAnime> getMasterAnimeCollection1() {
+        return masterAnimeCollection1;
+    }
+
+    public void setMasterAnimeCollection1(Collection<MasterAnime> masterAnimeCollection1) {
+        this.masterAnimeCollection1 = masterAnimeCollection1;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (userId != null ? userId.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof MasterUser)) {
+            return false;
+        }
+        MasterUser other = (MasterUser) object;
+        if ((this.userId == null && other.userId != null) || (this.userId != null && !this.userId.equals(other.userId))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "model.MasterUser[ userId=" + userId + " ]";
+    }
+
+    @XmlTransient
+    public Collection<DetailPeople> getDetailPeopleCollection() {
+        return detailPeopleCollection;
+    }
+
+    public void setDetailPeopleCollection(Collection<DetailPeople> detailPeopleCollection) {
+        this.detailPeopleCollection = detailPeopleCollection;
     }
 
     @XmlTransient
@@ -350,24 +396,6 @@ public class MasterUser implements Serializable {
     }
 
     @XmlTransient
-    public Collection<MasterAnime> getMasterAnimeCollection() {
-        return masterAnimeCollection;
-    }
-
-    public void setMasterAnimeCollection(Collection<MasterAnime> masterAnimeCollection) {
-        this.masterAnimeCollection = masterAnimeCollection;
-    }
-
-    @XmlTransient
-    public Collection<MasterAnime> getMasterAnimeCollection1() {
-        return masterAnimeCollection1;
-    }
-
-    public void setMasterAnimeCollection1(Collection<MasterAnime> masterAnimeCollection1) {
-        this.masterAnimeCollection1 = masterAnimeCollection1;
-    }
-
-    @XmlTransient
     public Collection<MasterPeople> getMasterPeopleCollection() {
         return masterPeopleCollection;
     }
@@ -401,31 +429,6 @@ public class MasterUser implements Serializable {
 
     public void setDetailCharacterCollection(Collection<DetailCharacter> detailCharacterCollection) {
         this.detailCharacterCollection = detailCharacterCollection;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (userId != null ? userId.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof MasterUser)) {
-            return false;
-        }
-        MasterUser other = (MasterUser) object;
-        if ((this.userId == null && other.userId != null) || (this.userId != null && !this.userId.equals(other.userId))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "model.MasterUser[ userId=" + userId + " ]";
     }
     
 }

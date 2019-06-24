@@ -10,22 +10,27 @@
     <h:body>
         <ui:composition template="template_customer_guest.xhtml">
             <ui:define name="page_content">
-               <b:form enctype="multipart/form-data">
-                    <div class="page-content">
-                        <div class="auth-form-unscoped">
-                            <div class="form container">
-                                <div class="title">Sign up to MyWeaboList</div>
+                <div class="page-content">
+                    <div class="auth-form-unscoped">
+                        <div class="form container">
+                            <div class="title">Sign up to MyWeaboList</div>
+                            <b:form enctype="multipart/form-data">
+
                                 <h:panelGroup id="messagePanel" layout="block">
                                     <b:messages />
                                 </h:panelGroup>
                                 <b:inputText class="al-input" placeholder="Email"  id="email" value="#{masterUserController.email}"/>
                                 <b:inputText class="al-input" placeholder="Username"  id="username" value="#{masterUserController.username}"/>
                                 <b:inputSecret class="al-input" placeholder="Password" id="password" value="#{masterUserController.password}"/>
-                                <h:commandLink class="submit" action="#{masterUserController.createMember()}" value="Simpan" />
+                                <b:inputSecret class="al-input" placeholder="Confirm Password" id="confirm_password" value="#{masterUserController.repassword}"/>
+                                <h:commandLink class="submit" action="#{masterUserController.createMember()}" value="Sign Up" />
+                            </b:form>
+                            <div class="link signup"><a href="/login" class="">Login</a> • 
+                                <a href="/reverify" class="">Resend Verification Email</a>
                             </div>
                         </div>
                     </div>
-                </b:form>
+                </div>
 
             </ui:define>
 

@@ -5,10 +5,13 @@
  */
 package controller;
 
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import model.DetailAnime;
 import model.MasterAnime;
+import view.util.SessionUtil;
 
 /**
  *
@@ -28,5 +31,15 @@ public class MasterAnimeFacade extends AbstractFacade<MasterAnime> {
     public MasterAnimeFacade() {
         super(MasterAnime.class);
     }
-    
+
+//    public List<DetailAnime> getListDetailAnimeDraft() {
+//        return em.createQuery("SELECT j FROM DetailAnime j WHERE j.statusDraft = :idJabatan")
+//                .setParameter("idJabatan", 0)
+//                .getResultList();
+//    }
+    public List<MasterAnime> getListAnimeDraft() {
+        return em.createQuery("SELECT j FROM MasterAnime")
+                .getResultList();
+    }
+
 }

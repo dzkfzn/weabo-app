@@ -5,10 +5,14 @@
  */
 package controller;
 
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import model.Genres;
 import model.GenresDetailAnime;
+import model.*;
+import view.util.SessionUtil;
 
 /**
  *
@@ -28,5 +32,22 @@ public class GenresDetailAnimeFacade extends AbstractFacade<GenresDetailAnime> {
     public GenresDetailAnimeFacade() {
         super(GenresDetailAnime.class);
     }
-    
+
+    public List<Genres> findAllGenres() {
+        return em.createQuery("SELECT j FROM Genres j")
+//                .setParameter("role", 1)
+                .getResultList();
+    }
+    public List<Producers> findAllProducers() {
+        return em.createQuery("SELECT j FROM Producers j")
+//                .setParameter("role", 1)
+                .getResultList();
+    }
+    public List<Licensors> findAllLicencors() {
+        return em.createQuery("SELECT j FROM Licensors j")
+//                .setParameter("role", 1)
+                .getResultList();
+    }
+
+  
 }

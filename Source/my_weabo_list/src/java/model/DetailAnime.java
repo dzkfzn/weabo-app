@@ -41,8 +41,12 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "DetailAnime.findByNameRomaji", query = "SELECT d FROM DetailAnime d WHERE d.nameRomaji = :nameRomaji")
     , @NamedQuery(name = "DetailAnime.findByAiringStatus", query = "SELECT d FROM DetailAnime d WHERE d.airingStatus = :airingStatus")
     , @NamedQuery(name = "DetailAnime.findBySeason", query = "SELECT d FROM DetailAnime d WHERE d.season = :season")
-    , @NamedQuery(name = "DetailAnime.findByAiringStartDate", query = "SELECT d FROM DetailAnime d WHERE d.airingStartDate = :airingStartDate")
-    , @NamedQuery(name = "DetailAnime.findByAiringEndDate", query = "SELECT d FROM DetailAnime d WHERE d.airingEndDate = :airingEndDate")
+    , @NamedQuery(name = "DetailAnime.findByAiringStartYear", query = "SELECT d FROM DetailAnime d WHERE d.airingStartYear = :airingStartYear")
+    , @NamedQuery(name = "DetailAnime.findByAiringStartMonth", query = "SELECT d FROM DetailAnime d WHERE d.airingStartMonth = :airingStartMonth")
+    , @NamedQuery(name = "DetailAnime.findByAiringStartDay", query = "SELECT d FROM DetailAnime d WHERE d.airingStartDay = :airingStartDay")
+    , @NamedQuery(name = "DetailAnime.findByAiringEndYear", query = "SELECT d FROM DetailAnime d WHERE d.airingEndYear = :airingEndYear")
+    , @NamedQuery(name = "DetailAnime.findByAiringEndMonth", query = "SELECT d FROM DetailAnime d WHERE d.airingEndMonth = :airingEndMonth")
+    , @NamedQuery(name = "DetailAnime.findByAiringEndDay", query = "SELECT d FROM DetailAnime d WHERE d.airingEndDay = :airingEndDay")
     , @NamedQuery(name = "DetailAnime.findByAiringDay", query = "SELECT d FROM DetailAnime d WHERE d.airingDay = :airingDay")
     , @NamedQuery(name = "DetailAnime.findByAiringTime", query = "SELECT d FROM DetailAnime d WHERE d.airingTime = :airingTime")
     , @NamedQuery(name = "DetailAnime.findBySeriesType", query = "SELECT d FROM DetailAnime d WHERE d.seriesType = :seriesType")
@@ -54,8 +58,22 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "DetailAnime.findByBanner", query = "SELECT d FROM DetailAnime d WHERE d.banner = :banner")
     , @NamedQuery(name = "DetailAnime.findByCreatedDate", query = "SELECT d FROM DetailAnime d WHERE d.createdDate = :createdDate")
     , @NamedQuery(name = "DetailAnime.findByStatusReview", query = "SELECT d FROM DetailAnime d WHERE d.statusReview = :statusReview")
-    , @NamedQuery(name = "DetailAnime.findByStatusConfirm", query = "SELECT d FROM DetailAnime d WHERE d.statusConfirm = :statusConfirm")})
+    , @NamedQuery(name = "DetailAnime.findByStatusConfirm", query = "SELECT d FROM DetailAnime d WHERE d.statusConfirm = :statusConfirm")
+    , @NamedQuery(name = "DetailAnime.findByStatusDraft", query = "SELECT d FROM DetailAnime d WHERE d.statusDraft = :statusDraft")})
 public class DetailAnime implements Serializable {
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "detailAnime")
+    private Collection<GenresDetailAnime> genresDetailAnimeCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "detailAnime")
+    private Collection<DetailAnimeMasterPeople> detailAnimeMasterPeopleCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "detailAnime")
+    private Collection<ProducersDetailAnime> producersDetailAnimeCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "animeId")
+    private Collection<DetailEpisode> detailEpisodeCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "detailAnime")
+    private Collection<LicensorsDetailAnime> licensorsDetailAnimeCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "detailAnime")
+    private Collection<DetailAnimeMasterCharacters> detailAnimeMasterCharactersCollection;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -82,12 +100,18 @@ public class DetailAnime implements Serializable {
     @Size(max = 50)
     @Column(name = "season")
     private String season;
-    @Column(name = "airing_start_date")
-    @Temporal(TemporalType.DATE)
-    private Date airingStartDate;
-    @Column(name = "airing_end_date")
-    @Temporal(TemporalType.DATE)
-    private Date airingEndDate;
+    @Column(name = "airing_start_year")
+    private Integer airingStartYear;
+    @Column(name = "airing_start_month")
+    private Integer airingStartMonth;
+    @Column(name = "airing_start_day")
+    private Integer airingStartDay;
+    @Column(name = "airing_end_year")
+    private Integer airingEndYear;
+    @Column(name = "airing_end_month")
+    private Integer airingEndMonth;
+    @Column(name = "airing_end_day")
+    private Integer airingEndDay;
     @Size(max = 50)
     @Column(name = "airing_day")
     private String airingDay;
@@ -118,10 +142,8 @@ public class DetailAnime implements Serializable {
     private Integer statusReview;
     @Column(name = "status_confirm")
     private Integer statusConfirm;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "detailAnime")
-    private Collection<GenresDetailAnime> genresDetailAnimeCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "detailAnime")
-    private Collection<DetailAnimeMasterPeople> detailAnimeMasterPeopleCollection;
+    @Column(name = "status_draft")
+    private Integer statusDraft;
     @JoinColumn(name = "anime_id", referencedColumnName = "anime_id")
     @ManyToOne(optional = false)
     private MasterAnime animeId;
@@ -131,14 +153,6 @@ public class DetailAnime implements Serializable {
     @JoinColumn(name = "studio_id", referencedColumnName = "studio_id")
     @ManyToOne
     private Studios studioId;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "detailAnime")
-    private Collection<ProducersDetailAnime> producersDetailAnimeCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "animeId")
-    private Collection<DetailEpisode> detailEpisodeCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "detailAnime")
-    private Collection<LicensorsDetailAnime> licensorsDetailAnimeCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "detailAnime")
-    private Collection<DetailAnimeMasterCharacters> detailAnimeMasterCharactersCollection;
 
     public DetailAnime() {
     }
@@ -201,20 +215,52 @@ public class DetailAnime implements Serializable {
         this.season = season;
     }
 
-    public Date getAiringStartDate() {
-        return airingStartDate;
+    public Integer getAiringStartYear() {
+        return airingStartYear;
     }
 
-    public void setAiringStartDate(Date airingStartDate) {
-        this.airingStartDate = airingStartDate;
+    public void setAiringStartYear(Integer airingStartYear) {
+        this.airingStartYear = airingStartYear;
     }
 
-    public Date getAiringEndDate() {
-        return airingEndDate;
+    public Integer getAiringStartMonth() {
+        return airingStartMonth;
     }
 
-    public void setAiringEndDate(Date airingEndDate) {
-        this.airingEndDate = airingEndDate;
+    public void setAiringStartMonth(Integer airingStartMonth) {
+        this.airingStartMonth = airingStartMonth;
+    }
+
+    public Integer getAiringStartDay() {
+        return airingStartDay;
+    }
+
+    public void setAiringStartDay(Integer airingStartDay) {
+        this.airingStartDay = airingStartDay;
+    }
+
+    public Integer getAiringEndYear() {
+        return airingEndYear;
+    }
+
+    public void setAiringEndYear(Integer airingEndYear) {
+        this.airingEndYear = airingEndYear;
+    }
+
+    public Integer getAiringEndMonth() {
+        return airingEndMonth;
+    }
+
+    public void setAiringEndMonth(Integer airingEndMonth) {
+        this.airingEndMonth = airingEndMonth;
+    }
+
+    public Integer getAiringEndDay() {
+        return airingEndDay;
+    }
+
+    public void setAiringEndDay(Integer airingEndDay) {
+        this.airingEndDay = airingEndDay;
     }
 
     public String getAiringDay() {
@@ -313,22 +359,12 @@ public class DetailAnime implements Serializable {
         this.statusConfirm = statusConfirm;
     }
 
-    @XmlTransient
-    public Collection<GenresDetailAnime> getGenresDetailAnimeCollection() {
-        return genresDetailAnimeCollection;
+    public Integer getStatusDraft() {
+        return statusDraft;
     }
 
-    public void setGenresDetailAnimeCollection(Collection<GenresDetailAnime> genresDetailAnimeCollection) {
-        this.genresDetailAnimeCollection = genresDetailAnimeCollection;
-    }
-
-    @XmlTransient
-    public Collection<DetailAnimeMasterPeople> getDetailAnimeMasterPeopleCollection() {
-        return detailAnimeMasterPeopleCollection;
-    }
-
-    public void setDetailAnimeMasterPeopleCollection(Collection<DetailAnimeMasterPeople> detailAnimeMasterPeopleCollection) {
-        this.detailAnimeMasterPeopleCollection = detailAnimeMasterPeopleCollection;
+    public void setStatusDraft(Integer statusDraft) {
+        this.statusDraft = statusDraft;
     }
 
     public MasterAnime getAnimeId() {
@@ -353,6 +389,49 @@ public class DetailAnime implements Serializable {
 
     public void setStudioId(Studios studioId) {
         this.studioId = studioId;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (detailAnimeId != null ? detailAnimeId.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof DetailAnime)) {
+            return false;
+        }
+        DetailAnime other = (DetailAnime) object;
+        if ((this.detailAnimeId == null && other.detailAnimeId != null) || (this.detailAnimeId != null && !this.detailAnimeId.equals(other.detailAnimeId))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "model.DetailAnime[ detailAnimeId=" + detailAnimeId + " ]";
+    }
+
+    @XmlTransient
+    public Collection<GenresDetailAnime> getGenresDetailAnimeCollection() {
+        return genresDetailAnimeCollection;
+    }
+
+    public void setGenresDetailAnimeCollection(Collection<GenresDetailAnime> genresDetailAnimeCollection) {
+        this.genresDetailAnimeCollection = genresDetailAnimeCollection;
+    }
+
+    @XmlTransient
+    public Collection<DetailAnimeMasterPeople> getDetailAnimeMasterPeopleCollection() {
+        return detailAnimeMasterPeopleCollection;
+    }
+
+    public void setDetailAnimeMasterPeopleCollection(Collection<DetailAnimeMasterPeople> detailAnimeMasterPeopleCollection) {
+        this.detailAnimeMasterPeopleCollection = detailAnimeMasterPeopleCollection;
     }
 
     @XmlTransient
@@ -389,31 +468,6 @@ public class DetailAnime implements Serializable {
 
     public void setDetailAnimeMasterCharactersCollection(Collection<DetailAnimeMasterCharacters> detailAnimeMasterCharactersCollection) {
         this.detailAnimeMasterCharactersCollection = detailAnimeMasterCharactersCollection;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (detailAnimeId != null ? detailAnimeId.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof DetailAnime)) {
-            return false;
-        }
-        DetailAnime other = (DetailAnime) object;
-        if ((this.detailAnimeId == null && other.detailAnimeId != null) || (this.detailAnimeId != null && !this.detailAnimeId.equals(other.detailAnimeId))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "model.DetailAnime[ detailAnimeId=" + detailAnimeId + " ]";
     }
     
 }

@@ -31,7 +31,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.util.List;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
+import view.util.SessionUtil;
 
 @Named("masterUserController")
 @SessionScoped
@@ -521,6 +523,58 @@ public class MasterUserController implements Serializable {
             e.printStackTrace();
         }
         return mPhotoUrlStaff;
+    }
+    
+    //login
+    private List<MasterUser> listMasterUser;
+    private String email_login;
+    private String password_login;
+
+    public List<MasterUser> getListMasterUser() {
+        return listMasterUser;
+    }
+
+    public void setListMasterUser(List<MasterUser> listMasterUser) {
+        this.listMasterUser = listMasterUser;
+    }
+
+    public String getEmail_login() {
+        return email_login;
+    }
+
+    public void setEmail_login(String email_login) {
+        this.email_login = email_login;
+    }
+
+    public String getPassword_login() {
+        return password_login;
+    }
+
+    public void setPassword_login(String password_login) {
+        this.password_login = password_login;
+    }
+    
+    
+    
+     public String validateLogin() {
+        try {
+            boolean isValid = ejbFacade.validate(email_login, password_login);
+            listMasterUser = ejbFacade.getCurrentUser(email_login);
+
+            if (isValid) {
+                HttpSession session = SessionUtil.getSession();
+                session.setAttribute("UserID", listMasterUser.get(0).getUserId());
+                session.setAttribute("UserName", listMasterUser.get(0).getUsername());
+                
+//                modelPemilih = ejbFacadePemilih.getById(nikPemilih);
+                return "browse.xhtml?faces-redirect=true";
+            } else {
+                return "index?faces-redirect=true";
+            }
+        } catch (Exception e) {
+            JsfUtil.addErrorMessage("Pengguna Tidak ditemukan");
+            return null;
+        }
     }
 
 }

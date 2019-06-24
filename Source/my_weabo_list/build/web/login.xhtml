@@ -13,18 +13,21 @@
     <h:body>
         <ui:composition template="template_customer_guest.xhtml">
             <ui:define name="page_content">
-                <h:panelGroup id="messagePanel" layout="block">
-                    <b:messages />
-                </h:panelGroup>
+
                 <div class="page-content">
                     <div class="auth-form-unscoped">
                         <div class="form container">
                             <div class="title">Login</div> 
-                            <form>
-                                <input placeholder="Email" class="al-input"/>
-                                <input type="password" placeholder="Password" class="al-input"/>  
-                                <div class="submit">Login</div>
-                            </form>  
+                            <b:form enctype="multipart/form-data">
+                                <h:panelGroup id="messagePanel" layout="block">
+                                    <b:messages />
+                                </h:panelGroup>
+                                <b:inputText class="al-input" placeholder="Email"  id="email" value="#{masterUserController.email_login}"/>
+                                <b:inputSecret class="al-input" placeholder="Password" id="password" value="#{masterUserController.password_login}"/>
+                                <h:commandLink class="submit" action="#{masterUserController.validateLogin()}" value="Login" />
+                            </b:form>
+                            <a href="/forgot" class="link">Forgot password?</a>
+                            <a href="sign_up.xhtml" class="link signup">Not registered? <span>Create an account</span></a>
                         </div>
                     </div>
                 </div>
